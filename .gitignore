@@ -1,7 +1,3 @@
-# Environment variables
-.env
-.env.*
-
 # Python
 __pycache__/
 *.py[cod]
@@ -26,18 +22,22 @@ wheels/
 
 # Virtual Environment
 venv/
-env/
 ENV/
+env/
+.env
 
-# IDE specific files
+# IDE
 .idea/
 .vscode/
 *.swp
 *.swo
-.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
 
 # Project specific
-extracted_*.txt
-*.json
-chromadb/
-*.pdf
+data/vector_store/
+*.pyc
+.coverage
+htmlcov/
+.pytest_cache/
