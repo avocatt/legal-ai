@@ -25,7 +25,8 @@ class DocumentRetriever:
 
         # Get embedding function
         hf_token = os.getenv("HUGGINGFACE_TOKEN")
-        self.embedding_function = get_embedding_function(embedding_model, hf_token)
+        self.embedding_function = get_embedding_function(
+            embedding_model, hf_token)
 
         # Initialize Chroma client and collection
         self.chroma_client = chromadb.Client()
