@@ -1,0 +1,33 @@
+services:
+  backend:
+    image: legal-ai-backend:latest  # Use the pre-built image
+    volumes:
+      - ./backend:/app
+      - ./data:/app/data
+    environment:
+      - PYTHONPATH=/app:/app/src
+      - ENVIRONMENT=development
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s      # Check every 30 seconds
+      timeout: 10s       # Allow up to 10 seconds for the check
+      retries: 5         # Try 5 times before marking as unhealthy
+      start_period: 120s # Allow 2 minutes for initial startup
+
+  frontend:
+    image: legal-ai-frontend:latest  # Use the pre-built image
+    volumes:
+      - ./frontend/src:/app/src  # Mount source code for hot-reload
+      - ./frontend/public:/app/public
+    environment:
+      - VITE_API_URL=http://backend:8000
+      - NODE_ENV=development
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy 

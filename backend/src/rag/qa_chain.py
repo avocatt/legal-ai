@@ -20,7 +20,8 @@ class LegalQAChain:
                  callbacks: Optional[List[BaseCallbackHandler]] = None):
         """Initialize the QA chain with a retriever and LLM."""
         if not isinstance(retriever, DocumentRetriever):
-            raise TypeError("retriever must be an instance of DocumentRetriever")
+            raise TypeError(
+                "retriever must be an instance of DocumentRetriever")
 
         self.retriever = retriever
         self.llm = llm
@@ -28,11 +29,11 @@ class LegalQAChain:
 
         # Default prompt template
         self.prompt = ChatPromptTemplate.from_messages([
-            ("system", """You are a legal expert assistant specializing in Turkish Criminal Law. 
-            Your task is to answer questions about the law using the provided context.
-            Always cite the specific articles you reference in your answer.
-            If the provided context doesn't contain enough information to answer the question confidently,
-            say so explicitly."""),
+            ("system", """Türk Ceza Hukuku konusunda uzmanlaşmış bir hukuk uzmanı asistanısıız.
+Göreviniz, sağlanan bağlamı kullanarak hukukla ilgili soruları cevaplamaktır.
+Cevabınızda atıfta bulunduğunuz belirli makaleleri her zaman belirtin.
+Sağlanan bağlam, soruyu güvenle cevaplamak için yeterli bilgi içermiyorsa,
+bu sorunun cevabını bilmiyorum diyin."""),
             ("human", "Context:\n{context}\n\nQuestion: {question}\n\nPlease provide a detailed answer based on the Turkish Criminal Law:"),
         ])
 
@@ -41,7 +42,8 @@ class LegalQAChain:
     def set_custom_prompt(self, prompt: ChatPromptTemplate):
         """Set a custom prompt template for the chain."""
         self.prompt = prompt
-        self.chain = LLMChain(llm=self.llm, prompt=prompt, callbacks=self.callbacks)
+        self.chain = LLMChain(llm=self.llm, prompt=prompt,
+                              callbacks=self.callbacks)
 
     def run(self,
             question: str,
@@ -53,7 +55,8 @@ class LegalQAChain:
 
         try:
             # Retrieve relevant documents
-            retrieved_docs = self.retriever.retrieve(question, n_results, metadata_filter)
+            retrieved_docs = self.retriever.retrieve(
+                question, n_results, metadata_filter)
             if not retrieved_docs:
                 return "I couldn't find any relevant information to answer your question."
 

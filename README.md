@@ -4,6 +4,9 @@ A Retrieval-Augmented Generation (RAG) based question-answering system for the T
 
 ## Features
 
+- **Web Interface**: Modern React frontend with FastAPI backend
+- **Docker Support**: Fully containerized development and production environments
+- **Hot Reload**: Automatic code reloading for rapid development
 - **Multilingual Support**: Uses a multilingual sentence transformer model for text embeddings
 - **Vector-based Search**: Utilizes ChromaDB for efficient similarity search
 - **Flexible Querying**: Supports both semantic search and metadata filtering
@@ -15,13 +18,40 @@ A Retrieval-Augmented Generation (RAG) based question-answering system for the T
 
 ## Prerequisites
 
-- Python 3.8+
+- Docker and Docker Compose
 - OpenAI API key (with billing enabled)
 - Hugging Face token (optional, but recommended for better performance)
 - At least 8GB RAM recommended
-- Sufficient disk space for vector storage
+- Sufficient disk space for vector storage and Docker images
 
-## Installation
+## Project Structure
+
+```
+legal-ai/
+├── backend/                 # Backend service
+│   ├── app/                # FastAPI application
+│   │   ├── api/           # API endpoints
+│   │   ├── core/          # Core configuration
+│   │   └── services/      # Business logic
+│   ├── src/               # RAG system components
+│   │   ├── rag/          # RAG implementation
+│   │   └── utils/        # Utility functions
+│   ├── requirements.txt   # Python dependencies
+│   └── Dockerfile        # Backend container definition
+├── frontend/              # Frontend service
+│   ├── src/              # React application source
+│   ├── public/           # Static assets
+│   ├── package.json      # Node.js dependencies
+│   └── Dockerfile        # Frontend container definition
+├── data/                 # Data files
+│   ├── raw/              # Raw input files
+│   └── processed/        # Processed data files
+├── docker-compose.yml    # Production container orchestration
+├── docker-compose.dev.yml # Development container orchestration
+└── README.md            # Project documentation
+```
+
+## Development Setup
 
 1. Clone the repository:
 ```bash
@@ -29,144 +59,61 @@ git clone <repository-url>
 cd legal-ai
 ```
 
-2. Install required packages:
-```bash
-pip install -r requirements.txt
-```
-
-3. Create a `.env` file in the project root:
+2. Create a `.env` file in the backend directory:
 ```bash
 OPENAI_API_KEY=your_openai_api_key
 HUGGINGFACE_TOKEN=your_huggingface_token  # Optional
 ```
 
-## Project Structure
-
-```
-legal-ai/
-├── src/                      # Source code
-│   ├── rag/                  # RAG system components
-│   │   ├── __init__.py      # Package exports
-│   │   ├── embeddings.py    # Embedding functionality
-│   │   ├── retriever.py     # Document retrieval logic
-│   │   └── qa_chain.py      # QA chain implementation
-│   ├── processors/          # Data processing
-│   │   └── __init__.py      # Package exports
-│   └── utils/               # Utility functions
-│       ├── __init__.py      # Package exports
-│       └── helpers.py       # Helper functions
-├── data/                    # Data files
-│   ├── raw/                 # Raw input files
-│   │   └── türk-ceza-kanunu.pdf
-│   ├── processed/          # Processed data files
-│   │   └── processed_law.json
-│   └── vector_store/       # Vector database files
-├── tests/                  # Test files
-│   ├── __init__.py        # Test package marker
-│   └── test_rag.py        # RAG system tests
-├── examples/              # Example scripts
-│   └── basic_usage.py    # Basic usage example
-├── notebooks/            # Jupyter notebooks
-│   └── system_demo.ipynb # Interactive system demo
-├── .env                  # Environment variables
-├── .gitignore           # Git ignore patterns
-├── requirements.txt      # Project dependencies
-├── setup.py             # Package setup configuration
-├── pytest.ini           # Pytest configuration
-├── .flake8             # Flake8 configuration
-├── README.md           # Project documentation
-└── LICENSE             # License file
-```
-
-## Development Tools
-
-The project uses several development tools for quality assurance:
-
-- **pytest**: For unit testing and code coverage
-  ```bash
-  pytest                # Run all tests
-  pytest --cov=src     # Run tests with coverage report
-  ```
-
-- **flake8**: For code style and quality checks
-  ```bash
-  flake8 src tests     # Check code style
-  ```
-
-## Usage
-
-### Basic Usage
-
-```python
-from legal_ai.rag import TurkishLegalRAG, LegalQAChain
-from langchain_openai import ChatOpenAI
-
-# Initialize the RAG system
-rag_system = TurkishLegalRAG("data/processed/processed_law.json")
-
-# Initialize LLM
-llm = ChatOpenAI(
-    model_name="gpt-3.5-turbo",
-    temperature=0
-)
-
-# Create QA chain
-qa_chain = LegalQAChain(rag_system, llm)
-
-# Ask a question
-question = "Ceza kanununun temel amacı nedir?"
-answer = qa_chain.run(question)
-print(answer)
-```
-
-### Interactive Demo
-
-The project includes a Jupyter notebook (`notebooks/system_demo.ipynb`) that demonstrates:
-- Basic question answering
-- Metadata filtering
-- Custom prompt templates
-- Document retrieval exploration
-- Error handling examples
-
-To run the notebook:
+3. Build the Docker images (first time only):
 ```bash
-jupyter notebook notebooks/system_demo.ipynb
+docker compose build
 ```
 
-### Metadata Filtering
-
-```python
-# Filter questions about specific books
-filtered_answer = qa_chain.run(
-    "Cezaların türleri nelerdir?",
-    metadata_filter={"book": "İKİNCİ KİTAP"}
-)
+4. Start the development environment:
+```bash
+docker compose -f docker-compose.dev.yml up
 ```
 
-### Custom Prompt Templates
+The development environment includes:
+- Hot reload for both frontend and backend
+- Pre-cached models for faster startup
+- Development-specific configurations
+- Health checks for service coordination
 
-```python
-from langchain_core.prompts import ChatPromptTemplate
+## Development Workflow
 
-# Create custom prompt
-custom_prompt = ChatPromptTemplate.from_messages([
-    ("system", "Your custom system message here"),
-    ("human", "Context:\n{context}\n\nQuestion: {question}")
-])
+1. Frontend Development:
+   - Edit files in `frontend/src/`
+   - Changes are automatically reflected
+   - Access the UI at http://localhost:80
 
-# Set custom prompt
-qa_chain.set_custom_prompt(custom_prompt)
+2. Backend Development:
+   - Edit files in `backend/`
+   - Changes are automatically reloaded
+   - Access the API at http://localhost:8000
+   - API documentation at http://localhost:8000/api/v1/docs
+
+3. Container Management:
+   - View logs: `docker compose -f docker-compose.dev.yml logs -f`
+   - Restart services: `docker compose -f docker-compose.dev.yml restart`
+   - Stop services: `docker compose -f docker-compose.dev.yml down`
+
+## Production Deployment
+
+For production deployment:
+
+```bash
+docker compose up -d
 ```
 
-## Components
+## API Documentation
 
-### RAG Module (`src/rag/`)
-- `embeddings.py`: Handles text embedding using sentence transformers
-- `retriever.py`: Manages document retrieval and vector store operations
-- `qa_chain.py`: Implements the question-answering chain
-
-### Utils Module (`src/utils/`)
-- `helpers.py`: Provides utility functions for file operations and API key validation
+The API documentation is available at `/api/v1/docs` when the backend is running. It provides:
+- Interactive API testing
+- Request/response schemas
+- Authentication details
+- Available endpoints
 
 ## Error Handling
 
@@ -187,6 +134,10 @@ Common issues and solutions:
 2. Memory issues: Reduce batch size or number of results
 3. Performance issues: Enable Hugging Face token for faster embedding
 4. Collection errors: Check disk space and permissions
+5. Docker issues: 
+   - Ensure Docker Desktop is running
+   - Check container logs with `docker compose logs`
+   - Verify environment variables in .env file
 
 ## Contributing
 
@@ -203,3 +154,5 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - ChromaDB for vector storage
 - LangChain for the chain implementation
 - Hugging Face for transformer models
+- FastAPI for the backend framework
+- React for the frontend framework
