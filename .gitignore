@@ -20,11 +20,14 @@ wheels/
 .installed.cfg
 *.egg
 
+# Environment variables
+.env
+.env.*
+!.env.example
+
 # Virtual Environment
 venv/
 ENV/
-env/
-.env
 
 # IDE
 .idea/
@@ -32,12 +35,30 @@ env/
 *.swp
 *.swo
 
-# Jupyter Notebook
-.ipynb_checkpoints
+# Logs
+*.log
 
-# Project specific
-data/vector_store/
-*.pyc
+# Local development
+.DS_Store
+node_modules/
+/dist
+.cache/
+
+# Testing
 .coverage
 htmlcov/
 .pytest_cache/
+
+# Docker
+.docker/
+
+# Data
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# ChromaDB
+*.sqlite3
+*.db
+vector_store/
