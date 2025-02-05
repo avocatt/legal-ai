@@ -8,6 +8,8 @@ services:
     volumes:
       - ./backend:/app
       - ./data:/app/data
+      - ./tools:/app/tools
+      - chroma_data:/app/chroma_db
     env_file:
       - ./backend/.env
     environment:
@@ -37,4 +39,7 @@ services:
 
 networks:
   default:
-    driver: bridge 
+    driver: bridge
+
+volumes:
+  chroma_data: 

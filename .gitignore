@@ -61,4 +61,4 @@ data/processed/*
 # ChromaDB
 *.sqlite3
 *.db
-vector_store/
+vector_store/chroma_db/
