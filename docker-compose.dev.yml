@@ -4,6 +4,7 @@ services:
     volumes:
       - ./backend:/app
       - ./data:/app/data
+      - ./tools:/app/tools  # Add tools directory mount
     environment:
       - PYTHONPATH=/app:/app/src
       - ENVIRONMENT=development

@@ -3,10 +3,9 @@ Turkish Legal RAG system package.
 """
 
 from .embeddings import get_embedding_function
-from .retriever import DocumentRetriever
+from .rag_system import TurkishLegalRAG
 from .qa_chain import LegalQAChain
+from .legal_terms import LegalTerminology
 
-# For backward compatibility
-TurkishLegalRAG = DocumentRetriever
-
-__all__ = ['DocumentRetriever', 'LegalQAChain', 'get_embedding_function', 'TurkishLegalRAG']
+__all__ = ['TurkishLegalRAG', 'LegalQAChain',
+           'get_embedding_function', 'LegalTerminology']
