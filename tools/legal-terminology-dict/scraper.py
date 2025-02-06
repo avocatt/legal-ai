@@ -1,108 +1,97 @@
+import os
+import json
 import requests
 from bs4 import BeautifulSoup
-import json
 import time
-from datetime import datetime
-from pathlib import Path
-import re
+from typing import Dict, List, Tuple
 
-class LegalTermScraper:
-    def __init__(self):
-        self.base_url = "https://sozluk.adalet.gov.tr"
-        self.terms = {}
-        self.turkish_alphabet = 'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZÂÎÛ'
+# Update output path to use the new data structure
+DATA_DIR = os.path.join(os.path.dirname(
+    os.path.dirname(os.path.dirname(__file__))), "data")
+RAW_OUTPUT_PATH = os.path.join(
+    DATA_DIR, "raw", "legal_terms", "legal_terms.json")
+PROCESSED_OUTPUT_PATH = os.path.join(
+    DATA_DIR, "processed", "legal_terms", "legal_terms.json")
 
-    def get_soup(self, url, delay=1):
-        time.sleep(delay)  # Rate limiting
-        response = requests.get(url)
+
+def scrape_legal_terms() -> Dict[str, str]:
+    """Scrape legal terms and their definitions from the website."""
+    base_url = "https://www.hukukiyardim.gov.tr/hukuk-sozlugu"
+
+    try:
+        response = requests.get(base_url)
         response.raise_for_status()
-        return BeautifulSoup(response.text, 'html.parser')
+        soup = BeautifulSoup(response.content, 'html.parser')
 
-    def scrape_terms_for_letter(self, letter_url, letter):
-        soup = self.get_soup(letter_url)
-        
-        # Find total pages from the pagination text
-        pagination_info = soup.find('div', class_='alert alert-info')
-        if pagination_info:
-            total_terms = int(pagination_info.text.split()[0])
-            total_pages = (total_terms + 39) // 40  # 40 terms per page
-        else:
-            total_pages = 1
-            
-        print(f"Processing letter {letter} ({total_pages} pages)")
-        terms_found = 0
-        
-        for page in range(1, total_pages + 1):
-            page_url = f"{letter_url}?Sayfa={page}" if page > 1 else letter_url
-            print(f"  Page {page}/{total_pages}", end='\r')
-            
-            soup = self.get_soup(page_url)
-            content_area = soup.find('div', class_='ankat')
-            
-            # Find all term divs
-            term_divs = content_area.find_all('div', class_='terim')
-            
-            for term_div in term_divs:
-                # Get term from col-md-4 div
-                term_element = term_div.find('div', class_='col-md-4')
-                # Get definition from col-md-8 div
-                definition_element = term_div.find('div', class_='col-md-8')
-                
-                if term_element and definition_element:
-                    term = term_element.get_text(strip=True)
-                    definition = definition_element.get_text(strip=True)
-                    
-                    # Skip empty or invalid terms
-                    if not term or not definition:
-                        continue
-                        
-                    # Clean up definition (remove any trailing labels)
-                    definition = re.sub(r'\s*\[.*?\]\s*$', '', definition)
-                    
-                    # Store only the definition
-                    self.terms[term] = definition
-                    terms_found += 1
-            
-            # Add a small delay between pages
-            if page < total_pages:
-                time.sleep(2)
-        
-        print(f"\nFound {terms_found} terms for letter {letter}")
-        return terms_found
+        terms_dict = {}
+        term_elements = soup.find_all('dt')
+        definition_elements = soup.find_all('dd')
 
-    def save_terms(self):
-        output_dir = Path("output")
-        output_dir.mkdir(exist_ok=True)
-        
-        output_file = output_dir / "legal_terms.json"
-        
-        with open(output_file, 'w', encoding='utf-8') as f:
-            json.dump(self.terms, f, ensure_ascii=False, indent=2)
-        
-        print(f"\nSaved {len(self.terms)} terms to {output_file}")
+        for term, definition in zip(term_elements, definition_elements):
+            term_text = term.get_text(strip=True)
+            definition_text = definition.get_text(strip=True)
+            if term_text and definition_text:
+                terms_dict[term_text] = definition_text
 
-    def run(self):
-        """Run the scraper for all letters."""
-        print("Starting to scrape all letters...")
-        total_terms = 0
-        
-        for letter in self.turkish_alphabet:
-            try:
-                url = f"{self.base_url}/Harf/{letter}"
-                terms_found = self.scrape_terms_for_letter(url, letter)
-                total_terms += terms_found
-                
-                # Add a delay between letters
-                if letter != self.turkish_alphabet[-1]:
-                    time.sleep(3)
-                    
-            except Exception as e:
-                print(f"Error processing letter {letter}: {str(e)}")
-                continue
-        
-        self.save_terms()
-        print(f"\nScraping completed! Total terms collected: {total_terms}")
+        return terms_dict
+
+    except requests.RequestException as e:
+        print(f"Error scraping legal terms: {str(e)}")
+        return {}
+
+
+def process_terms(terms: Dict[str, str]) -> Dict[str, str]:
+    """Process and clean the scraped terms."""
+    processed_terms = {}
+
+    for term, definition in terms.items():
+        # Clean and process the term
+        cleaned_term = term.strip().lower()
+
+        # Clean and process the definition
+        cleaned_definition = definition.strip()
+
+        # Add to processed terms if both term and definition are valid
+        if cleaned_term and cleaned_definition:
+            processed_terms[cleaned_term] = cleaned_definition
+
+    return processed_terms
+
+
+def save_terms(terms: Dict[str, str], is_processed: bool = False) -> None:
+    """Save terms to JSON file."""
+    output_path = PROCESSED_OUTPUT_PATH if is_processed else RAW_OUTPUT_PATH
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    try:
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(terms, f, ensure_ascii=False, indent=2)
+        print(f"Terms saved to {output_path}")
+    except Exception as e:
+        print(f"Error saving terms: {str(e)}")
+
+
+def main():
+    """Main function to run the scraper."""
+    print("Starting legal terms scraper...")
+
+    # Scrape terms
+    raw_terms = scrape_legal_terms()
+    if not raw_terms:
+        print("No terms were scraped. Exiting...")
+        return
+
+    # Save raw terms
+    save_terms(raw_terms, is_processed=False)
+    print(f"Saved {len(raw_terms)} raw terms")
+
+    # Process terms
+    processed_terms = process_terms(raw_terms)
+
+    # Save processed terms
+    save_terms(processed_terms, is_processed=True)
+    print(f"Saved {len(processed_terms)} processed terms")
+
 
 if __name__ == "__main__":
-    scraper = LegalTermScraper()
-    scraper.run()
+    main()

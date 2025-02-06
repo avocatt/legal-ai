@@ -37,28 +37,62 @@ ENV/
 
 # Logs
 *.log
+logs/
+log/
 
 # Local development
-.DS_Store
+.env
+.env.local
+.env.*.local
+
+# Dependencies
 node_modules/
-/dist
-.cache/
+.pnp/
+.pnp.js
 
 # Testing
+coverage/
 .coverage
 htmlcov/
+.tox/
+.nox/
 .pytest_cache/
 
-# Docker
-.docker/
+# Production
+build/
+dist/
 
-# Data
-data/raw/*
-data/processed/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
-
-# ChromaDB
+# Database
 *.sqlite3
 *.db
-vector_store/chroma_db/
+
+# ChromaDB
+chroma_db/
+backend/chroma_db/
+**/chroma_db/
+
+# Evaluation results
+evaluation_results/
+**/evaluation_results/
+
+# Cache
+.cache/
+.pytest_cache/
+.mypy_cache/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Data files
+data/raw/*
+data/processed/*
+data/vector_store/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/vector_store/.gitkeep
