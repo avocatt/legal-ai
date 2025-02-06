@@ -213,13 +213,21 @@ class TurkishLegalRAG:
     def format_context(self, retrieved_docs: List[Dict]) -> str:
         """Format retrieved documents into a context string."""
         context_parts = []
+
         for doc in retrieved_docs:
-            if doc['metadata']['type'] == 'article':
+            doc_type = doc['metadata'].get('type', 'unknown')
+
+            if doc_type == 'article':
                 context_parts.append(
-                    f"Article {doc['metadata']['number']}: {doc['content']}")
+                    f"Madde {doc['metadata']['number']}: {doc['content']}")
+            elif doc_type == 'provision':
+                context_parts.append(
+                    f"Madde {doc['metadata']['article_number']} - {doc['content']}")
+            elif doc_type == 'legal_term':
+                context_parts.append(doc['content'])
             else:
-                context_parts.append(
-                    f"From Article {doc['metadata']['article_number']}: {doc['content']}")
+                context_parts.append(doc['content'])
+
         return "\n\n".join(context_parts)
 
 
