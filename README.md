@@ -2,7 +2,7 @@
 
 > 🚧 **Project Status**: Under Active Development
 > 
-> Last Updated: February 2024
+> Last Updated: February 2025
 
 A modern, AI-powered assistant for Turkish Criminal Law that provides accurate, context-aware answers using RAG (Retrieval Augmented Generation) technology.
 
