@@ -16,9 +16,14 @@ This project implements a comprehensive legal question-answering system specific
 - [x] Advanced RAG system with ChromaDB vector store
 - [x] Legal terminology integration
 - [x] Context-aware responses with source citations
-- [x] Basic prompt templates and evaluation
-- [x] Prompt testing framework
-- [ ] Advanced prompt engineering (In Progress)
+- [x] Advanced prompt templates and evaluation
+  - Basic legal prompts
+  - Structured reasoning prompts
+  - Multi-step reasoning prompts
+- [x] Comprehensive prompt testing framework
+  - Automated evaluation pipeline
+  - Multiple evaluation metrics
+  - Performance analysis
 - [ ] Confidence scoring system (Planned)
 
 #### Frontend
@@ -35,6 +40,7 @@ This project implements a comprehensive legal question-answering system specific
 - [x] Docker containerization
 - [x] Basic error handling
 - [x] ChromaDB integration
+- [x] Prompt template system
 - [ ] Advanced error recovery (In Progress)
 - [ ] Rate limiting (Planned)
 - [ ] Caching layer (Planned)
@@ -58,6 +64,7 @@ Our documentation follows a standardized structure:
 - [Tools Documentation](tools/README.md) - Development and maintenance tools
 - [Technical Documentation](docs/) - Architecture, guides, and technical details
 - [Changelog](CHANGELOG.md) - Version history and changes
+- [Prompt Documentation](docs/prompts/) - Prompt templates and testing framework
 
 ## Quick Start
 

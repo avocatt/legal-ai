@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Comprehensive prompt testing framework
+- Multiple prompt templates (Basic, Structured, Multi-step)
+- Prompt evaluation metrics and scoring system
+- Automated prompt testing pipeline
 - Git workflow documentation and standards
 - Branch strategy with main and develop branches
 - Pull request templates and guidelines
@@ -23,6 +27,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Vector store management features
 
 ### Changed
+- Enhanced prompt template architecture
+- Improved prompt evaluation system
+- Added structured and multi-step reasoning
 - Switched to feature branch workflow
 - Implemented develop branch strategy
 - Updated PR process and templates
@@ -35,6 +42,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Restructured main README
 
 ### Fixed
+- Prompt template inheritance issues
+- Evaluation metric calculations
 - File path issues in data processing
 - Documentation inconsistencies
 - README formatting and structure
