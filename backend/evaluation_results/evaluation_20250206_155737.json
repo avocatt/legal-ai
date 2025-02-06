@@ -1,0 +1,461 @@
+[
+  {
+    "prompt_name": "basic",
+    "question": "Ceza sorumluluğunun esasları nelerdir?",
+    "answer": "Ceza sorumluluğunun esasları, ceza sorumluluğunun şahsiliği, kast ve taksir kavramlarıdır. Ceza sorumluluğu şahsidir ve suçun işlenmesi durumunda failin cezalandırılması gerekmektedir. Ancak, suçu önleme yükümlülüğünün varlığı dolayısıyla ceza sorumluluğuna ilişkin hükümler saklıdır. Ceza sorumluluğunu kaldıran veya azaltan nedenler kanunun hükmü ve amirin emri gibi durumlar söz konusu olabilir. Suçta ve cezada kanunilik ilkesi de ceza sorumluluğunun esaslarından biridir. Bu ilkeye göre, suç ve ceza konularında kanunun açık ve önceden belirlenmiş olması gerekmektedir. Bu esaslar doğrultusunda, ceza sorumluluğu belirlenir ve uygulanır.",
+    "metrics": {
+      "length_score": 1.0,
+      "structure_score": 0.0,
+      "legal_reference_score": 0.0,
+      "term_usage_score": 0.45,
+      "formatting_score": 0.0,
+      "section_completeness": 0.0,
+      "overall_score": 0.19
+    },
+    "metadata": {
+      "template_type": "basic",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "high",
+      "expected_terms": [
+        "kusur",
+        "isnat yeteneği",
+        "kast",
+        "taksir"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  },
+  {
+    "prompt_name": "basic",
+    "question": "Türk Ceza Kanunu'nda taksir nasıl düzenlenmiştir?",
+    "answer": "Türk Ceza Kanunu'na göre, taksir, bir kişinin dikkatsizlik, tedbirsizlik veya özensizlik sonucunda suç işlemesi durumunu ifade eder. Bu durum, kişinin kusurlu davranışıyla meydana gelir ve suçun işlenmesinde kasıt olmamasına rağmen dikkatsizlik sonucunda gerçekleşir. Taksirli suçlar, genellikle daha hafif cezaları gerektirir ve Türk Ceza Kanunu'nun ilgili maddelerinde düzenlenmiştir. Örneğin, TCK'nın 20. maddesinde taksirli suçlar ve cezaları ayrıntılı bir şekilde belirtilmiştir. Bu maddede, taksirle işlenen suçlara ilişkin cezaların ne şekilde belirleneceği ve uygulanacağı açıkça ifade edilmiştir.",
+    "metrics": {
+      "length_score": 1.0,
+      "structure_score": 0.0,
+      "legal_reference_score": 0.0,
+      "term_usage_score": 0.6666666666666666,
+      "formatting_score": 0.2,
+      "section_completeness": 0.0,
+      "overall_score": 0.25333333333333335
+    },
+    "metadata": {
+      "template_type": "basic",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "medium",
+      "expected_terms": [
+        "taksir",
+        "ihmal",
+        "öngörme"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  },
+  {
+    "prompt_name": "basic",
+    "question": "Hukuka uygunluk nedenleri nelerdir?",
+    "answer": "Hukuka uygunluk nedenleri, kanunun hükmü ve amirin emri (Madde 23), hakkın kullanılması ve ilgilinin rızası (Madde 25), kanunun sıfatı esasen nazarıitibara almış olması (Madde 219) ve şahsi cezasızlık veya cezanın azaltılmasını gerektiren sebepler (Madde 272) gibi yasal düzenlemelerle belirlenmektedir. Bu nedenler doğrultusunda hareket edilerek, hukuka uygun bir şekilde davranılması gerekmektedir. Ayrıca, feteva (hukuki sorular ve cevapları), tüze (doğrunun, hakkın korunması), alel usul (yöntemine uygun olarak), tedvîn (hukuku birleştirmek amacıyla, hukukun bir dalı ile ilgili yasa halinde kurallar koyma) ve mübaşir (yargıç tarafından verilen emir ve tedvirleri tatbik ile vazifeli adliye memuru) gibi terimler de hukuka uygunluk nedenlerini anlamak ve uygulamak için önemli kavramlardır.",
+    "metrics": {
+      "length_score": 1.0,
+      "structure_score": 0.0,
+      "legal_reference_score": 1.0,
+      "term_usage_score": 0.525,
+      "formatting_score": 0.0,
+      "section_completeness": 0.0,
+      "overall_score": 0.405
+    },
+    "metadata": {
+      "template_type": "basic",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "high",
+      "expected_terms": [
+        "meşru müdafaa",
+        "zorunluluk hali",
+        "hakkın kullanılması",
+        "görevin ifası"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  },
+  {
+    "prompt_name": "basic",
+    "question": "Teşebbüs halinde ceza nasıl belirlenir?",
+    "answer": "Teşebbüs halinde ceza, Türk Ceza Kanunu'nun ilgili maddelerine göre belirlenir. Madde 14'e göre, soruşturma koşulu olan cezanın hesaplanması gerekmektedir. Ayrıca, Madde 224 ve Madde 223'e göre, suçun işlenmesi sırasında kişilerin hürriyetinin tahdit edilmesi durumunda ayrıca cezaya hükmolunmaktadır. Teşdiden ceza verilmesi de mümkündür. Bu durumda, asıl cezaya ek olarak verilen fer'i ceza uygulanabilir. Teşebbüs halinde ceza belirlenirken, suçun tamamlanmış gibi cezaya hükmolunabilir, yani menfaat temini konusunda anlaşmaya varılmış olsa dahi ceza uygulanabilir. İtiyadi suçlu durumunda ise, aynı suçu bir yıl içinde ve farklı zamanlarda ikiden fazla işleyen kişi daha ağır cezaya çarptırılabilir.",
+    "metrics": {
+      "length_score": 1.0,
+      "structure_score": 0.0,
+      "legal_reference_score": 1.0,
+      "term_usage_score": 0.3666666666666667,
+      "formatting_score": 0.0,
+      "section_completeness": 0.0,
+      "overall_score": 0.3733333333333334
+    },
+    "metadata": {
+      "template_type": "basic",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "medium",
+      "expected_terms": [
+        "teşebbüs",
+        "hazırlık hareketi",
+        "icra hareketi"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  },
+  {
+    "prompt_name": "basic",
+    "question": "İştirak halinde işlenen suçlarda sorumluluk nasıl belirlenir?",
+    "answer": "İştirak halinde işlenen suçlarda sorumluluk, her bir katılımcının kast ve taksir durumuna göre belirlenir. İştirak halinde suç işleyenlerden biri kasten suçu işlerken diğeri taksirle de olsa suça iştirak etmişse, her ikisi de cezalandırılır. Bu durum, Türk Ceza Kanunu'nun 35. maddesinde belirtilen teşebbüs ilkesine dayanmaktadır. Ayrıca, suçun işlenmesinde etkin rol oynayan kişiye daha ağır ceza verilebilir, bu durum ise Türk Ceza Kanunu'nun 22. maddesinde düzenlenen netice sebebiyle ağırlaşmış suç kapsamında değerlendirilir. Ancak, suçu önleme yükümlülüğünün varlığı dolayısıyla ceza sorumluluğuna ilişkin hükümler saklı tutulur, bu da Türk Ceza Kanunu'nun 278. maddesinde belirtilmiştir.",
+    "metrics": {
+      "length_score": 1.0,
+      "structure_score": 0.0,
+      "legal_reference_score": 0.0,
+      "term_usage_score": 0.625,
+      "formatting_score": 0.2,
+      "section_completeness": 0.0,
+      "overall_score": 0.245
+    },
+    "metadata": {
+      "template_type": "basic",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "high",
+      "expected_terms": [
+        "iştirak",
+        "fail",
+        "azmettirme",
+        "yardım etme"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  },
+  {
+    "prompt_name": "structured",
+    "question": "Ceza sorumluluğunun esasları nelerdir?",
+    "answer": "1. SORU KAPSAMI:\n   - Ceza sorumluluğunun esasları\n   - Fer'i Ceza: Asıl cezaya ek olarak verilen ceza\n   - Ceza şartı: Ceza koşulu; alacaklının zararını karşılama şartı\n   - Mevdaddı mahsusa: Özel hükümler\n   - ahkamı huzuriye: Hakim önünde yargılanmayla ilgili yöntem hükümleri\n   - Şahsi cezasızlık sebepleri: Suçun işlendiği sırada var olan ve failin cezalandırılmasına mani olan şahsa bağlı sebeplerdir.\n\n2. İLGİLİ KANUN MADDELERİ:\n   - Madde 19: Ceza Sorumluluğunun Esasları\n   - Madde 278: Suçu önleme yükümlülüğünün varlığı dolayısıyla ceza sorumluluğuna ilişkin hükümler saklıdır.\n   - Madde 23: Ceza Sorumluluğunu Kaldıran veya Azaltan Nedenler\n   - Madde 20: Ceza sorumluluğu şahsidir.\n   - Madde 1: Suçta ve cezada kanunîlik ilkesi\n\n3. HUKUKİ ANALİZ:\n   - **Madde 19** ceza sorumluluğunun şahsiliği, kast ve taksir gibi esasları belirler. Ceza sorumluluğu kişisel olup, failin kast veya taksirli davranışlarına bağlıdır.\n   - **Madde 278** ise suçu önleme yükümlülüğünün varlığı durumunda ceza sorumluluğuna ilişkin hükümlerin saklı olduğunu belirtir. Yani, suçu önleme yükümlülüğü olan kişi ceza sorumluluğundan muaf tutulamaz.\n   - **Madde 23** ceza sorumluluğunu kaldıran veya azaltan nedenleri düzenler. Kanunun hükmü veya amirin emri gibi nedenler ceza sorumluluğunu etkileyebilir.\n   - **Madde 20** ceza sorumluluğunun şahsi olduğunu belirtir. Yani, ceza kişisel bir sorumluluktur ve failin davranışlarına bağlıdır.\n   - **Madde 1** ise suçta ve cezada kanunilik ilkesini düzenler. Yani, suç ve ceza konularında kanunun açık bir şekilde belirlemesi gereklidir.\n\n4. SONUÇ:\n   - Ceza sorumluluğunun esasları, kişisel sorumluluk, kast ve taksir gibi unsurlara dayanır.\n   - Suçu önleme yükümlülüğü olan kişiler ceza sorumluluğundan muaf tutulamazlar.\n   - Ceza sorumluluğunu kaldıran veya azaltan nedenler kanunun hükmü veya amirin emri gibi durumlar olabilir.\n   - Ceza sorumluluğu kişisel bir sorumluluktur ve failin davranışlarına bağlıdır.\n   - Suç ve cezada kanunilik ilkesi gereği, her suç ve ceza kanunla belirlenmelidir.",
+    "metrics": {
+      "length_score": -0.04299999999999993,
+      "structure_score": 1.0,
+      "legal_reference_score": 1.0,
+      "term_usage_score": 0.75,
+      "formatting_score": 0.8,
+      "section_completeness": 0.41666666666666663,
+      "overall_score": 0.7090333333333335
+    },
+    "metadata": {
+      "template_type": "structured",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "high",
+      "expected_terms": [
+        "kusur",
+        "isnat yeteneği",
+        "kast",
+        "taksir"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  },
+  {
+    "prompt_name": "structured",
+    "question": "Türk Ceza Kanunu'nda taksir nasıl düzenlenmiştir?",
+    "answer": "1. SORU KAPSAMI:\n   - Türk Ceza Kanunu'nda taksirin nasıl düzenlendiğini açıkla.\n   - Taksir, kaza-î merci ve hâkim gibi yasal terimleri tanımla.\n   - Taksirin ceza hukuku açısından önemini belirt.\n\n2. İLGİLİ KANUN MADDELERİ:\n   - Madde 20: \"Taksirle işlenen suçlar.\"\n   - Madde 21: \"Taksirle işlenen suçlarda ceza.\"\n   - Madde 22: \"Taksirle işlenen suçlarda sorumluluk.\"\n   - Bu maddeler taksirle işlenen suçların tanımını, cezasını ve sorumluluğunu düzenler.\n\n3. HUKUKİ ANALİZ:\n   - **Madde 20** taksirle işlenen suçları tanımlar ve kusurun dikkatsizlik, tedbirsizlik veya özensizlikten kaynaklanması gerektiğini belirtir.\n   - **Madde 21** taksirle işlenen suçlarda verilecek cezaları düzenler, genellikle kasıtla işlenen suçlara göre daha hafif cezalar öngörülür.\n   - **Madde 22** ise taksirle işlenen suçlarda sorumluluğu belirler, kişinin kusurlu davranışı sonucunda meydana gelen suçtan sorumlu tutulacağını ifade eder.\n   - Taksirle işlenen suçlarda failin kusurunun belirlenmesi ve bu kusurun suçun oluşmasında etkili olup olmadığının değerlendirilmesi önemlidir.\n\n4. SONUÇ:\n   - Taksirle işlenen suçlar, dikkatsizlik, tedbirsizlik veya özensizlik sonucunda gerçekleşen suçlardır.\n   - Taksirle işlenen suçlarda cezalar genellikle kasıtla işlenen suçlara göre daha hafif olabilir.\n   - Taksirle işlenen suçlarda failin kusurunun belirlenmesi ve bu kusurun suçun oluşmasında etkili olup olmadığının değerlendirilmesi gerekmektedir.\n   - Türk Ceza Kanunu'nun **Madde 20, 21 ve 22** hükümleri taksirle işlenen suçların düzenlenmesinde önemli rol oynamaktadır.",
+    "metrics": {
+      "length_score": 0.43400000000000005,
+      "structure_score": 1.0,
+      "legal_reference_score": 1.0,
+      "term_usage_score": 0.6666666666666666,
+      "formatting_score": 0.8,
+      "section_completeness": 0.4920833333333333,
+      "overall_score": 0.7551500000000001
+    },
+    "metadata": {
+      "template_type": "structured",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "medium",
+      "expected_terms": [
+        "taksir",
+        "ihmal",
+        "öngörme"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  },
+  {
+    "prompt_name": "structured",
+    "question": "Hukuka uygunluk nedenleri nelerdir?",
+    "answer": "1. SORU KAPSAMI:\n   - Hukuka uygunluk nedenlerini açıklamak\n   - İlgili yasal terimler: Feteva, Tüze, Alel Usul, Tedvîn, Mübaşir\n   - Ana noktalar: Hukuka uygunluk nedenlerinin ne olduğu ve nasıl belirlendiği\n\n2. İLGİLİ KANUN MADDELERİ:\n   - Madde 3: Kanunun bağlayıcılığı\n   - Madde 23: Ceza Sorumluluğunu Kaldıran veya Azaltan Nedenler Kanunun hükmü ve amirin emri\n   - Madde 25: Hakkın kullanılması ve ilgilinin rızası\n   - Madde 219: Şu kadar ki kanun işbu sıfatı esasen nazarıitibara almış ise cezayı çoğaltmaya mahal yoktur.\n   - Madde 272: Şahsi cezasızlık veya cezanın azaltılmasını gerektiren sebepler\n\n3. HUKUKİ ANALİZ:\n   - Hukuka uygunluk nedenleri, kanunun bağlayıcılığı ilkesine dayanır. Bu nedenler, ceza sorumluluğunu kaldıran veya azaltan durumlar, hakkın kullanılması ve ilgilinin rızası gibi unsurları içerir.\n   - Hukuka uygunluk nedenleri, genellikle kanun maddelerinde belirtilmiş olup, bu nedenlerin varlığı durumunda ceza çoğaltılmaz veya cezasızlık veya cezanın azaltılması gerekebilir.\n   - Örneğin, bir suçun işlenmesinde zorlama veya haksız tahrik gibi nedenler varsa, bu durum ceza sorumluluğunu azaltabilir veya kaldırabilir.\n   - Hukuka uygunluk nedenlerinin belirlenmesinde, ilgili kanun maddeleri ve içtihatlar önemli rol oynar. Mübaşir gibi adliye memurları da bu süreçte önemli bir rol oynar.\n\n4. SONUÇ:\n   - Hukuka uygunluk nedenleri, ceza sorumluluğunu etkileyen unsurlardır ve kanunun belirlediği şartlara göre değerlendirilir.\n   - Hukuka uygunluk nedenlerinin varlığı durumunda ceza çoğaltılmaz veya cezanın azaltılması gerekebilir.\n   - Bu nedenlerin belirlenmesinde kanun maddeleri, içtihatlar ve adliye memurlarının rolü büyüktür.\n   - **Hukuka uygunluk nedenleri, ceza hukukunda önemli bir konudur ve adaletin sağlanması için dikkate alınması gereken unsurlardır.**\n\nBu yanıt, hukuka uygunluk nedenlerinin ne olduğunu, ilgili kanun maddelerini ve bu nedenlerin nasıl yorumlanması gerektiğini açıklamaktadır.",
+    "metrics": {
+      "length_score": 0.049000000000000044,
+      "structure_score": 1.0,
+      "legal_reference_score": 1.0,
+      "term_usage_score": 0.625,
+      "formatting_score": 0.8,
+      "section_completeness": 0.476,
+      "overall_score": 0.7051000000000001
+    },
+    "metadata": {
+      "template_type": "structured",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "high",
+      "expected_terms": [
+        "meşru müdafaa",
+        "zorunluluk hali",
+        "hakkın kullanılması",
+        "görevin ifası"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  },
+  {
+    "prompt_name": "structured",
+    "question": "Teşebbüs halinde ceza nasıl belirlenir?",
+    "answer": "1. SORU KAPSAMI:\n   - Teşebbüs halinde ceza belirlenmesi\n   - İlgili terimler: Teşebbüs, ceza şartı, fer'i ceza\n\n2. İLGİLİ KANUN MADDELERİ:\n   - Madde 14: Soruşturma koşulu olan cezanın hesaplanması\n   - Madde 44: Yaptırımlar Cezalar Cezalar\n   - Madde 223: Bu suçların işlenmesi sırasında kişilerin hürriyetinin tahdit edilmesi dolayısıyla ayrıca cezaya hükmolunur.\n\n3. HUKUKİ ANALİZ:\n   - Teşebbüs, suçun tamamlanmamış hali olarak tanımlanır ve ceza hukukunda da önemli bir yer tutar. Teşebbüs halinde ceza belirlenirken, suçun tamamlanmış olup olmadığı, suçun niteliği ve suçun işlenme aşaması dikkate alınır.\n   - Ceza şartı, suçun işlenmesiyle birlikte alacaklının zararını karşılama şartıdır. Teşebbüs halinde, suç tamamlanmamış olsa bile ceza şartı göz önünde bulundurulabilir.\n   - Fer'i ceza, asıl cezaya ek olarak verilen cezadır. Teşebbüs halinde, suç tamamlanmamış olsa bile fer'i ceza verilebilir.\n\n4. SONUÇ:\n   - Teşebbüs halinde ceza belirlenirken, suçun tamamlanmış olup olmadığı, suçun niteliği ve suçun işlenme aşaması önemlidir. Ceza şartı ve fer'i ceza da teşebbüs halinde dikkate alınabilir.\n   - **Teşebbüs halinde ceza belirlenmesi için suçun tamamlanmış olmasının gerekli olmadığı, suçun işlenme aşaması ve suçun niteliğinin önemli olduğu unutulmamalıdır.**\n   - **Madde 14, Madde 44 ve Madde 223 bu konuda önemli referanslar sağlar ve teşebbüs halinde ceza belirlenmesinde dikkate alınmalıdır.**",
+    "metrics": {
+      "length_score": 0.5800000000000001,
+      "structure_score": 1.0,
+      "legal_reference_score": 1.0,
+      "term_usage_score": 0.6666666666666666,
+      "formatting_score": 0.8,
+      "section_completeness": 0.4145833333333333,
+      "overall_score": 0.75425
+    },
+    "metadata": {
+      "template_type": "structured",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "medium",
+      "expected_terms": [
+        "teşebbüs",
+        "hazırlık hareketi",
+        "icra hareketi"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  },
+  {
+    "prompt_name": "structured",
+    "question": "İştirak halinde işlenen suçlarda sorumluluk nasıl belirlenir?",
+    "answer": "1. SORU KAPSAMI:\n   - İştirak halinde işlenen suçlarda sorumluluğun belirlenmesi\n   - İlgili yasal terimler: İştirak, kast, mütemadi suç\n   - Ana noktalar: İştirak halinde suç işleyenlerin sorumluluğunun nasıl belirlendiği\n\n2. İLGİLİ KANUN MADDELERİ:\n   - Madde 35: \"Kişi, işlemeyi kastettiği bir suçu elverişli hareketlerle doğrudan doğruya icraya başlayıp da elinde olmayan nedenlerle tamamlayamaz ise teşebbüsten dolayı sorumlu tutulur.\"\n   - Madde 19: \"Ceza Sorumluluğunun Esasları Ceza Sorumluluğunun Şahsiliği, Kast ve Taksir Ceza sorumluluğunun şahsiliği\"\n   - Madde 41: \"Suçların İçtimaı Bileşik suç\"\n\n3. HUKUKİ ANALİZ:\n   - İştirak halinde işlenen suçlarda, her katılımcının kastı ve eylemi ayrı ayrı değerlendirilir. **İştirak**, birden fazla kişinin birlikte işlediği suç anlamına gelir. Her katılımcının kastı ve eylemi, suçun işlenmesindeki rolüne göre değerlendirilir.\n   - **Kast**, suçun işlenmesi için bilerek ve isteyerek hareket etmek anlamına gelir. İştirak halinde suç işleyenlerin kastı, suçun işlenmesindeki rol ve katkılarına göre belirlenir.\n   - **Mütemadi suç**, failin harekete geçmesiyle tamamlanmayan, bir süre devam eden suçlardır. İştirak halinde işlenen suçlarda, her katılımcının mütemadi suçunun derecesi ve süresi de dikkate alınır.\n\n4. SONUÇ:\n   - İştirak halinde işlenen suçlarda sorumluluk, her katılımcının kastı ve eylemi doğrultusunda belirlenir. **Her katılımcının suçun işlenmesindeki rolü ve kastı ayrı ayrı değerlendirilir.**\n   - İştirak halinde işlenen suçlarda, her katılımcının kastı ve eylemi, suçun işlenmesindeki katkılarına göre belirlenir. **Suçun işlenmesindeki rol ve kast dereceleri, her katılımcının sorumluluğunu belirler.**\n   - İştirak halinde işlenen suçlarda, her katılımcının mütemadi suçunun süresi ve derecesi de dikkate alınarak sorumluluk belirlenir. **Suçun işlenmesindeki süre ve devamlılık, her katılımcının ceza sorumluluğunu etkiler.**",
+    "metrics": {
+      "length_score": 0.09099999999999997,
+      "structure_score": 1.0,
+      "legal_reference_score": 1.0,
+      "term_usage_score": 0.625,
+      "formatting_score": 0.8,
+      "section_completeness": 0.47911111111111104,
+      "overall_score": 0.7099222222222223
+    },
+    "metadata": {
+      "template_type": "structured",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "high",
+      "expected_terms": [
+        "iştirak",
+        "fail",
+        "azmettirme",
+        "yardım etme"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  },
+  {
+    "prompt_name": "multi_step",
+    "question": "Ceza sorumluluğunun esasları nelerdir?",
+    "answer": "1. SORU ANALİZİ:\nCeza sorumluluğunun esasları nelerdir?\n\n2. YASAL ÇERÇEVE:\n- Madde 19: Ceza sorumluluğunun şahsiliği, kast ve taksir\n- Madde 20: Ceza sorumluluğu şahsidir\n- Madde 23: Ceza Sorumluluğunu Kaldıran veya Azaltan Nedenler\n- Madde 278: Suçu önleme yükümlülüğü\n\n3. HUKUKİ DEĞERLENDİRME:\n- Ceza sorumluluğunun esasları, suçun kişisel bir eylem olması, kast veya taksirle işlenmesi ve suçu önleme yükümlülüğünün varlığıdır.\n- Suçun kişisel bir eylem olması, yani ceza sorumluluğunun şahsiliği ilkesi gereği, suçun failine yüklenir.\n- Suçun kasıtlı veya ihmal edilerek işlenmesi, yani kast ve taksir durumları da ceza sorumluluğunu belirler.\n- Ceza sorumluluğunu kaldıran veya azaltan nedenler, kanunun hükmü ve amirin emri gibi durumları içerir.\n\n4. SONUÇ:\nCeza sorumluluğunun esasları, suçun kişisel bir eylem olması, kast veya taksirle işlenmesi ve suçu önleme yükümlülüğünün varlığıdır. Bu esaslar, Ceza Kanunu'nun ilgili maddelerinde belirtilmiştir.",
+    "metrics": {
+      "length_score": 1.0,
+      "structure_score": 0.16666666666666666,
+      "legal_reference_score": 1.0,
+      "term_usage_score": 0.75,
+      "formatting_score": 0.6000000000000001,
+      "section_completeness": 0.0768888888888889,
+      "overall_score": 0.5587111111111113
+    },
+    "metadata": {
+      "template_type": "multi_step",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "high",
+      "expected_terms": [
+        "kusur",
+        "isnat yeteneği",
+        "kast",
+        "taksir"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  },
+  {
+    "prompt_name": "multi_step",
+    "question": "Türk Ceza Kanunu'nda taksir nasıl düzenlenmiştir?",
+    "answer": "1. SORU ANALİZİ:\nTaksir kavramı Türk Ceza Kanunu'nda nasıl düzenlenmiştir?\n\n2. YASAL ÇERÇEVE:\n- Türk Ceza Kanunu'nda taksir, genel olarak kusur kavramı altında düzenlenmektedir. \n- Madde 20'de kusurun unsurları belirtilmiştir.\n- Madde 22'de taksirli suçlar ve cezaları düzenlenmiştir.\n\n3. HUKUKİ DEĞERLENDİRME:\n- Taksirli suçlar, kişinin dikkat ve özen yükümlülüğünü ihlal etmesi sonucunda gerçekleşen suçlardır.\n- Taksirli suçlar, kasten işlenen suçlardan farklı olarak daha hafif cezaları içerebilir.\n- Taksirli suçlarda failin kusurlu davranışı ve bu davranışın suça neden olması önemlidir.\n\n4. SONUÇ:\nTürk Ceza Kanunu'nda taksirli suçlar, kişinin dikkat ve özen yükümlülüğünü ihlal etmesi sonucunda gerçekleşen suçlar olarak düzenlenmiştir. Taksirli suçlar, kasten işlenen suçlardan farklı cezalar içerebilir ve failin kusurlu davranışı önemlidir. Taksirli suçlar, Madde 22'de düzenlenmiştir.",
+    "metrics": {
+      "length_score": 1.0,
+      "structure_score": 0.16666666666666666,
+      "legal_reference_score": 1.0,
+      "term_usage_score": 0.6666666666666666,
+      "formatting_score": 0.6000000000000001,
+      "section_completeness": 0.125,
+      "overall_score": 0.5516666666666667
+    },
+    "metadata": {
+      "template_type": "multi_step",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "medium",
+      "expected_terms": [
+        "taksir",
+        "ihmal",
+        "öngörme"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  },
+  {
+    "prompt_name": "multi_step",
+    "question": "Hukuka uygunluk nedenleri nelerdir?",
+    "answer": "1. SORU ANALİZİ:\nHukuka uygunluk nedenleri nelerdir?\n\n2. YASAL ÇERÇEVE:\n- Madde 3: Kanunun bağlayıcılığı ilkesi\n- Madde 23: Ceza Sorumluluğunu Kaldıran veya Azaltan Nedenler Kanunun hükmü ve amirin emri\n- Madde 25: Hakkın kullanılması ve ilgilinin rızası\n- Madde 219: Kanunun belirlediği sıfatın nazarıitibara alınması durumu\n- Madde 272: Şahsi cezasızlık veya cezanın azaltılmasını gerektiren sebepler\n\n3. HUKUKİ DEĞERLENDİRME:\n- Hukuka uygunluk nedenleri, kanunun bağlayıcılığı ilkesine uygun olmalıdır. Yani, bir eylemin hukuka uygun olması için kanunun açıkça izin veriyor olması gerekmektedir.\n- Ceza sorumluluğunu kaldıran veya azaltan nedenler, suçun işlenmesinde etkili olabilir. Örneğin, zorunlu müdafa, hukuka uygunluk nedenlerinden biridir.\n- Hakkın kullanılması ve ilgilinin rızası da hukuka uygunluk nedenleri arasında yer almaktadır. Bir eylemin hukuka uygun olması için ilgili kişinin rızası alınmış olmalıdır.\n- Kanunun belirlediği sıfatın nazarıitibara alınması durumunda, bu durum hukuka uygunluk nedeni olarak kabul edilir ve cezayı çoğaltmaya mahal yoktur.\n- Şahsi cezasızlık veya cezanın azaltılmasını gerektiren sebepler de hukuka uygunluk nedenleri arasında yer alır. Bu durumlar, kişisel durumlar veya hukuki sebeplerle ilgili olabilir.\n\n4. SONUÇ:\nHukuka uygunluk nedenleri, kanunun belirlediği kurallara uygun olarak hareket etmek, ceza sorumluluğunu kaldıran veya azaltan nedenlerin varlığı, ilgili kişinin rızası ve kanunun belirlediği sıfatın nazarıitibara alınması gibi durumları içerebilir. Bu nedenlerin varlığı durumunda bir eylem hukuka uygun kabul edilir ve cezalandırılmaz veya cezası azaltılabilir.",
+    "metrics": {
+      "length_score": 0.366,
+      "structure_score": 0.16666666666666666,
+      "legal_reference_score": 1.0,
+      "term_usage_score": 0.625,
+      "formatting_score": 0.6000000000000001,
+      "section_completeness": 0.1,
+      "overall_score": 0.4749333333333334
+    },
+    "metadata": {
+      "template_type": "multi_step",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "high",
+      "expected_terms": [
+        "meşru müdafaa",
+        "zorunluluk hali",
+        "hakkın kullanılması",
+        "görevin ifası"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  },
+  {
+    "prompt_name": "multi_step",
+    "question": "Teşebbüs halinde ceza nasıl belirlenir?",
+    "answer": "1. SORU ANALİZİ:\nTeşebbüs halinde ceza nasıl belirlenir?\n\n2. YASAL ÇERÇEVE:\n- Madde 14: Soruşturma koşulu olan cezanın hesaplanması\n- Madde 44: Yaptırımlar Cezalar Cezalar\n\n3. HUKUKİ DEĞERLENDİRME:\nTeşebbüs halinde ceza belirlenirken, suçun tamamlanmamış olması durumunda cezanın nasıl hesaplanacağı Madde 14'te belirtilmiştir. Yani, suç tamamlanmamış olsa bile, suçun işlenmesine yönelik girişimde bulunan kişi cezalandırılabilir. Ayrıca, suçun tamamlanmamış olmasına rağmen suçun işlenmesine yönelik bir anlaşma yapılmışsa, yine cezaya hükmedilebilir. Bu durum Madde 255'te belirtilmiştir.\n\n4. SONUÇ:\nTeşebbüs halinde ceza, suçun tamamlanmamış olmasına rağmen girişimde bulunan kişiye hükmedilebilir. Bu durum Madde 14 ve Madde 255'te açıklanmıştır. Dolayısıyla, suç teşebbüs aşamasında olsa bile, ceza verilebilir.",
+    "metrics": {
+      "length_score": 1.0,
+      "structure_score": 0.16666666666666666,
+      "legal_reference_score": 1.0,
+      "term_usage_score": 0.5666666666666667,
+      "formatting_score": 0.6000000000000001,
+      "section_completeness": 0.125,
+      "overall_score": 0.5316666666666667
+    },
+    "metadata": {
+      "template_type": "multi_step",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "medium",
+      "expected_terms": [
+        "teşebbüs",
+        "hazırlık hareketi",
+        "icra hareketi"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  },
+  {
+    "prompt_name": "multi_step",
+    "question": "İştirak halinde işlenen suçlarda sorumluluk nasıl belirlenir?",
+    "answer": "1. SORU ANALİZİ:\nİştirak halinde işlenen suçlarda sorumluluk nasıl belirlenir?\n\nİlgili yasal kavramlar:\n- İştirak: Birden fazla kişinin birlikte suç işlemesi durumu.\n- Kast: Suçun bilerek ve isteyerek işlenmesi.\n- Taksir: Suçun dikkatsizlik veya tedbirsizlik sonucu işlenmesi.\n\nİlgili kanun maddeleri:\n- Türk Ceza Kanunu Madde 35: Teşebbüsten sorumluluk.\n- Türk Ceza Kanunu Madde 19: Ceza sorumluluğunun esasları.\n- Türk Ceza Kanunu Madde 41: Suçların içtimaı.\n\n2. YASAL ÇERÇEVE:\n- İştirak halinde işlenen suçlarda, her katılımcının kastı ve taksiri ayrı ayrı değerlendirilir.\n- Türk Ceza Kanunu'na göre, iştirak halinde işlenen suçlarda her katılımcı, kendi kastı veya taksiri doğrultusunda sorumlu tutulur.\n- İştirak halinde işlenen suçlarda, suçun işlenme şekli ve katılımcıların rolleri dikkate alınarak sorumluluk belirlenir.\n\n3. HUKUKİ DEĞERLENDİRME:\n- İştirak halinde işlenen suçlarda, her katılımcının kastı ve taksiri ayrı ayrı değerlendirilir. Eğer bir kişi suça kasten iştirak etmişse, diğer kişilerin taksirli olarak katılması durumunda dahi cezai sorumlulukları olabilir.\n- Suçun işlenme şekli, katılımcıların rolleri ve kast durumları dikkate alınarak sorumluluk belirlenir. Örneğin, bir kişi suçu planlayıp diğerleri de bu plana dahil olmuşsa, sorumluluk paylaşılarak belirlenebilir.\n\n4. SONUÇ:\nİştirak halinde işlenen suçlarda sorumluluk, her katılımcının kastı ve taksiri doğrultusunda belirlenir. Suçun işlenme şekli, katılımcıların rolleri ve kast durumları önemlidir. Her katılımcı, kendi kastı veya taksiri doğrultusunda cezai sorumluluk taşır.\n\nYasal referanslar:\n- Türk Ceza Kanunu Madde 35, 19, 41.",
+    "metrics": {
+      "length_score": 0.378,
+      "structure_score": 0.25,
+      "legal_reference_score": 1.0,
+      "term_usage_score": 0.625,
+      "formatting_score": 0.6000000000000001,
+      "section_completeness": 0.1,
+      "overall_score": 0.4928
+    },
+    "metadata": {
+      "template_type": "multi_step",
+      "expected_structure": [
+        "SORU KAPSAMI",
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ],
+      "complexity": "high",
+      "expected_terms": [
+        "iştirak",
+        "fail",
+        "azmettirme",
+        "yardım etme"
+      ]
+    },
+    "timestamp": "2025-02-06T15:56:08.410343"
+  }
+]

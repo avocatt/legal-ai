@@ -1,0 +1,194 @@
+[
+  {
+    "prompt_name": "basic",
+    "question": "Ceza sorumluluğunun esasları nelerdir?",
+    "answer": "Ceza sorumluluğunun esasları, ceza sorumluluğunun şahsiliği, kast ve taksir kavramlarına dayanmaktadır. Ceza sorumluluğu şahsidir ve suçun işlenmesi durumunda failin cezalandırılması gerekmektedir. Ancak, suçu önleme yükümlülüğünün varlığı dolayısıyla ceza sorumluluğuna ilişkin hükümler saklıdır. Ceza sorumluluğunu kaldıran veya azaltan nedenler kanunun hükmü ve amirin emri gibi durumlar da bulunmaktadır. Suçta ve cezada kanunilik ilkesi gereği, ceza sorumluluğu belirli kanun maddelerine dayanmaktadır. Bu nedenle, ceza sorumluluğunun esasları belirli kurallar ve prensipler çerçevesinde belirlenmektedir.",
+    "metrics": {
+      "length_score": 0.61,
+      "structure_score": 0.0,
+      "legal_reference_score": 0.0,
+      "term_usage_score": 0.8,
+      "overall_score": 0.35250000000000004
+    },
+    "metadata": {
+      "template_type": "basic",
+      "expected_structure": [
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ]
+    },
+    "timestamp": "2025-02-06T15:39:49.868791"
+  },
+  {
+    "prompt_name": "basic",
+    "question": "Türk Ceza Kanunu'nda taksir nasıl düzenlenmiştir?",
+    "answer": "Türk Ceza Kanunu'na göre, taksir, kusurunun farkında olmakla birlikte gerekli özeni göstermeyen kişinin işlediği suç şeklinde tanımlanmaktadır. Madde 20'ye göre, taksirle işlenen suçlarda fail cezai sorumluluktan kurtulamaz. Bu durumda, failin kusurlu davranışı ve bu davranışın suça uygun olması durumunda cezai sorumluluk doğar. Taksirle işlenen suçlar, kasten işlenen suçlardan farklı cezalar öngörebilir. Bu durum, Türk Ceza Kanunu'nun genel ilkeleri arasında yer almaktadır.",
+    "metrics": {
+      "length_score": 0.479,
+      "structure_score": 0.0,
+      "legal_reference_score": 0.2,
+      "term_usage_score": 0.8,
+      "overall_score": 0.36975
+    },
+    "metadata": {
+      "template_type": "basic",
+      "expected_structure": [
+        "SORU ANALİZİ",
+        "YASAL ÇERÇEVE",
+        "HUKUKİ DEĞERLENDİRME",
+        "SONUÇ"
+      ]
+    },
+    "timestamp": "2025-02-06T15:39:49.868791"
+  },
+  {
+    "prompt_name": "basic",
+    "question": "Hukuka uygunluk nedenleri nelerdir?",
+    "answer": "Hukuka uygunluk nedenleri, kanunun hükmü ve amirin emri, hakkın kullanılması ve ilgilinin rızası gibi unsurlardır. Kanunun belirlediği kurallara uygun davranmak, doğruyu ve hakkı korumak (tüze), yöntemine uygun olarak hareket etmek (alel usul), hukuku birleştirmek amacıyla kurallar koymak (tedvîn) gibi nedenler de hukuka uygunluk için önemlidir. Ayrıca, yargıç tarafından verilen emir ve tedvirleri tatbik ile vazifeli olan mübaşirler de hukuka uygunluğun sağlanmasında önemli bir rol oynamaktadır. Bu nedenlerle, hukuka uygunluk sağlanarak hukuki sorunların çözümüne katkıda bulunulabilir.",
+    "metrics": {
+      "length_score": 0.592,
+      "structure_score": 0.0,
+      "legal_reference_score": 0.0,
+      "term_usage_score": 0.8,
+      "overall_score": 0.348
+    },
+    "metadata": {
+      "template_type": "basic",
+      "expected_structure": [
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ]
+    },
+    "timestamp": "2025-02-06T15:39:49.868791"
+  },
+  {
+    "prompt_name": "structured",
+    "question": "Ceza sorumluluğunun esasları nelerdir?",
+    "answer": "1. İLGİLİ KANUN MADDELERİ:\n- Madde 19: Ceza sorumluluğunun şahsiliği, kast ve taksir\n- Madde 20: Ceza sorumluluğu şahsidir\n- Madde 23: Ceza sorumluluğunu kaldıran veya azaltan nedenler\n- Madde 278: Suçu önleme yükümlülüğünün varlığı dolayısıyla ceza sorumluluğuna ilişkin hükümler saklıdır\n\n2. HUKUKİ ANALİZ:\nCeza sorumluluğunun esasları, ceza sorumluluğunun kişisel olması, kast ve taksirin önemli olması, ceza sorumluluğunu kaldıran veya azaltan nedenlerin varlığı, suçu önleme yükümlülüğünün etkisi gibi unsurları içerir. Ceza sorumluluğu kişisel olduğundan, suçun işlenmesi durumunda sadece fail cezalandırılabilir. Kast ve taksir, suçun işlenmesindeki niyet ve dikkatsizlik durumlarını belirler. Ceza sorumluluğunu kaldıran veya azaltan nedenler, suçun işlenmesindeki özel durumları ve etkileri ifade eder. Suçu önleme yükümlülüğü ise, suçun işlenmesini engellemek için alınması gereken tedbirlerin önemini vurgular.\n\nÖnemli yasal terimler:\n- Fer'i Ceza: Asıl cezaya ek olarak verilen ceza\n- Ceza şartı: Ceza koşulu; alacaklının zararını karşılama şartı\n- Mevdaddı mahsusa: Özel hükümler\n- Ahkamı huzuriye: Hakim önünde yargılanmayla ilgili yöntem hükümleri\n- Şahsi cezasızlık sebepleri: Suçun işlendiği sırada var olan ve failin cezalandırılmasına mani olan şahsa bağlı sebeplerdir.\n\n3. SONUÇ:\nCeza sorumluluğunun esasları, ceza sorumluluğunun kişisel olması, kast ve taksirin önemli olması, ceza sorumluluğunu kaldıran veya azaltan nedenlerin varlığı, suçu önleme yükümlülüğünün etkisi gibi unsurları içerir. Bu esaslar, Türk Ceza Kanunu'nun ilgili maddelerinde detaylı olarak düzenlenmiştir.",
+    "metrics": {
+      "length_score": 1.0,
+      "structure_score": 1.0,
+      "legal_reference_score": 0.8,
+      "term_usage_score": 0.8,
+      "overall_score": 0.8999999999999999
+    },
+    "metadata": {
+      "template_type": "structured",
+      "expected_structure": [
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ]
+    },
+    "timestamp": "2025-02-06T15:39:49.868791"
+  },
+  {
+    "prompt_name": "structured",
+    "question": "Türk Ceza Kanunu'nda taksir nasıl düzenlenmiştir?",
+    "answer": "1. İLGİLİ KANUN MADDELERİ:\n- Türk Ceza Kanunu Madde 20: \"Taksirle işlenen suçlar\"\n- Türk Ceza Kanunu Madde 21: \"Taksirle işlenen suçlarda ceza\"\n\n2. HUKUKİ ANALİZ:\nTürk Ceza Kanunu'na göre taksirle işlenen suçlar, kişinin dikkatsizlik veya tedbirsizlik sonucunda gerçekleşen suçlardır. Madde 20, taksirle işlenen suçları düzenlemekte ve bu suçlar genellikle kusurlu davranışlar sonucunda meydana gelir. Madde 21 ise taksirle işlenen suçlarda uygulanacak cezaları belirlemektedir. Taksirle işlenen suçlarda kusurlu davranışın varlığı ön plandadır ve ceza genellikle daha hafif olabilir.\n\nÖrneğin, bir kişinin dikkatsiz araç kullanımı sonucu bir kazaya sebep olması taksirle işlenen bir suç olabilir. Bu durumda, kişi kusurlu davranışı nedeniyle cezalandırılabilir ancak ceza türü ve miktarı, taksirle işlenen suçlar için belirlenen hükümlere göre belirlenir.\n\n3. SONUÇ:\nTürk Ceza Kanunu'na göre taksirle işlenen suçlar, kişinin dikkatsizlik veya tedbirsizlik sonucunda gerçekleşen suçlardır. Bu suçlar, genellikle kusurlu davranışlar sonucunda meydana gelir ve cezaları taksirle işlenen suçlar için özel olarak belirlenmiştir. Madde 20 ve Madde 21 bu tür suçların düzenlenmesi ve cezalandırılmasını sağlar.",
+    "metrics": {
+      "length_score": 1.0,
+      "structure_score": 0.25,
+      "legal_reference_score": 1.2,
+      "term_usage_score": 0.8,
+      "overall_score": 0.8125
+    },
+    "metadata": {
+      "template_type": "structured",
+      "expected_structure": [
+        "SORU ANALİZİ",
+        "YASAL ÇERÇEVE",
+        "HUKUKİ DEĞERLENDİRME",
+        "SONUÇ"
+      ]
+    },
+    "timestamp": "2025-02-06T15:39:49.868791"
+  },
+  {
+    "prompt_name": "structured",
+    "question": "Hukuka uygunluk nedenleri nelerdir?",
+    "answer": "1. İLGİLİ KANUN MADDELERİ:\n   - Madde 25 - Hakkın kullanılması ve ilgilinin rızası: Hukuka uygunluk nedenlerinden biri, hakkın kullanılması ve ilgilinin rızasıdır.\n\n2. HUKUKİ ANALİZ:\n   Hukuka uygunluk nedenleri arasında hakkın kullanılması ve ilgilinin rızası önemli bir yer tutar. Bu nedenle, bir eylemin hukuka uygun olup olmadığını belirlerken, ilgili kişinin rızası ve hakkın kullanılması da dikkate alınmalıdır. Örneğin, bir kişiye ait malın kullanılması için o kişinin rızası alınmalıdır. Aksi takdirde, bu eylem hukuka aykırı olabilir.\n\n3. SONUÇ:\n   Hukuka uygunluk nedenleri arasında hakkın kullanılması ve ilgilinin rızası önemli bir yer tutar. Bu nedenle, bir eylemin hukuka uygun olup olmadığını belirlerken, bu unsurların varlığı veya yokluğu dikkate alınmalıdır. Madde 25, bu konuda önemli bir referans olabilir.",
+    "metrics": {
+      "length_score": 0.826,
+      "structure_score": 1.0,
+      "legal_reference_score": 0.4,
+      "term_usage_score": 0.8,
+      "overall_score": 0.7565
+    },
+    "metadata": {
+      "template_type": "structured",
+      "expected_structure": [
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ]
+    },
+    "timestamp": "2025-02-06T15:39:49.868791"
+  },
+  {
+    "prompt_name": "multi_step",
+    "question": "Ceza sorumluluğunun esasları nelerdir?",
+    "answer": "1. SORU ANALİZİ:\nCeza sorumluluğunun esasları nelerdir?\n\n2. YASAL ÇERÇEVE:\n- Madde 19: Ceza sorumluluğunun şahsiliği, kast ve taksir\n- Madde 20: Ceza sorumluluğu şahsidir\n- Madde 23: Ceza Sorumluluğunu Kaldıran veya Azaltan Nedenler\n- Madde 278: Suçu önleme yükümlülüğünün varlığı dolayısıyla ceza sorumluluğuna ilişkin hükümler saklıdır\n\n3. HUKUKİ DEĞERLENDİRME:\n- Ceza sorumluluğunun esasları, suçun kişisel bir eylem olması, kast ve taksir gibi kusur tiplerinin değerlendirilmesi ve suçu önleme yükümlülüğünün varlığına göre belirlenir.\n- Ceza sorumluluğu kişisel bir sorumluluktur ve suçun işlenmesi durumunda fail birey olarak cezalandırılır.\n- Ceza sorumluluğunu kaldıran veya azaltan nedenler, kanunun hükmü ve amirin emri gibi durumlar olabilir.\n- Suçu önleme yükümlülüğü varsa, ceza sorumluluğuna ilişkin hükümler saklı tutulur.\n\n4. SONUÇ:\nCeza sorumluluğunun esasları, suçun kişisel bir eylem olması, kast ve taksir kavramlarının değerlendirilmesi, ceza sorumluluğunun kişisel olması ve suçu önleme yükümlülüğünün varlığına göre belirlenir. Bu esaslar doğrultusunda, ceza sorumluluğu belirlenir ve uygulanır.\n\nYasal referanslar: Türk Ceza Kanunu Madde 19, 20, 23, 278",
+    "metrics": {
+      "length_score": 1.0,
+      "structure_score": 0.3333333333333333,
+      "legal_reference_score": 1.0,
+      "term_usage_score": 0.8,
+      "overall_score": 0.7833333333333332
+    },
+    "metadata": {
+      "template_type": "multi_step",
+      "expected_structure": [
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ]
+    },
+    "timestamp": "2025-02-06T15:39:49.868791"
+  },
+  {
+    "prompt_name": "multi_step",
+    "question": "Türk Ceza Kanunu'nda taksir nasıl düzenlenmiştir?",
+    "answer": "1. SORU ANALİZİ:\nTaksir kavramı Türk Ceza Kanunu'nda nasıl düzenlenmiştir?\n\n2. YASAL ÇERÇEVE:\n- Türk Ceza Kanunu'nda taksir, genel olarak kusur kavramı altında düzenlenmektedir. \n- Madde 20'de kusurun unsurları belirtilmiştir.\n- Madde 22'de taksirle işlenen suçlar ve cezaları düzenlenmiştir.\n\n3. HUKUKİ DEĞERLENDİRME:\n- Taksir, kişinin dikkat ve özen yükümlülüğünü ihmal etmesi sonucunda meydana gelen suçlarda söz konusu olur.\n- Taksirle işlenen suçlar, kasten işlenen suçlardan farklı cezaları içerebilir.\n- Taksirle işlenen suçlarda failin kusurlu davranışı ve sonuç arasında nedensellik bağı aranır.\n\n4. SONUÇ:\nTürk Ceza Kanunu'nda taksir, kusur kavramı altında düzenlenmiş olup, failin dikkat ve özen yükümlülüğünü ihmal etmesi sonucunda meydana gelen suçlar taksirle işlenmiş sayılır. Taksirle işlenen suçlar, kasten işlenen suçlardan farklı cezaları içerebilir ve failin kusurlu davranışı ile sonuç arasında nedensellik bağı aranır. Bu çerçevede, taksirle işlenen suçlar Türk Ceza Kanunu'nda belirli maddelerde düzenlenmiştir.",
+    "metrics": {
+      "length_score": 1.0,
+      "structure_score": 1.0,
+      "legal_reference_score": 0.4,
+      "term_usage_score": 0.8,
+      "overall_score": 0.8
+    },
+    "metadata": {
+      "template_type": "multi_step",
+      "expected_structure": [
+        "SORU ANALİZİ",
+        "YASAL ÇERÇEVE",
+        "HUKUKİ DEĞERLENDİRME",
+        "SONUÇ"
+      ]
+    },
+    "timestamp": "2025-02-06T15:39:49.868791"
+  },
+  {
+    "prompt_name": "multi_step",
+    "question": "Hukuka uygunluk nedenleri nelerdir?",
+    "answer": "1. SORU ANALİZİ:\nHukuka uygunluk nedenleri nelerdir?\n\n2. YASAL ÇERÇEVE:\n- Madde 3 - Kanunun bağlayıcılığı\n- Madde 23 - Ceza Sorumluluğunu Kaldıran veya Azaltan Nedenler Kanunun hükmü ve amirin emri\n- Madde 25 - Hakkın kullanılması ve ilgilinin rızası\n\n3. HUKUKİ DEĞERLENDİRME:\n- Hukuka uygunluk nedenleri, kanunun bağlayıcılığına uygun olması, ceza sorumluluğunu kaldıran veya azaltan nedenlerin varlığı, hakkın kullanılması ve ilgilinin rızası gibi unsurları içerebilir.\n- Bir eylemin hukuka uygun olması için, ilgili kanun maddelerine uygun olması ve bu maddelerde belirtilen şartların sağlanması gerekmektedir.\n- Örneğin, bir eylemin suç olmaması için kanunda belirtilen unsurların bulunmaması veya ceza sorumluluğunu kaldıran bir nedenin varlığı söz konusu olabilir.\n\n4. SONUÇ:\nHukuka uygunluk nedenleri, bir eylemin yasal çerçevede gerçekleşmesini sağlayan unsurlardır. Bu unsurların varlığı, bir eylemin hukuka uygun olduğunu gösterir. Hukuka uygunluk nedenleri, kanunun bağlayıcılığı, ceza sorumluluğunu kaldıran veya azaltan nedenler, hakkın kullanılması ve ilgilinin rızası gibi faktörleri içerebilir.",
+    "metrics": {
+      "length_score": 1.0,
+      "structure_score": 0.3333333333333333,
+      "legal_reference_score": 0.6,
+      "term_usage_score": 0.8,
+      "overall_score": 0.6833333333333333
+    },
+    "metadata": {
+      "template_type": "multi_step",
+      "expected_structure": [
+        "İLGİLİ KANUN MADDELERİ",
+        "HUKUKİ ANALİZ",
+        "SONUÇ"
+      ]
+    },
+    "timestamp": "2025-02-06T15:39:49.868791"
+  }
+]
