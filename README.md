@@ -60,27 +60,26 @@ Key features:
 │   ├── workflows/             # GitHub Actions
 │   ├── scripts/               # Development automation
 │   └── ISSUE_TEMPLATE/        # Issue templates
-├── .vscode/                   # Editor settings
 ├── backend/                   # Backend service
 │   ├── app/                  # Application entry
 │   ├── src/                  # Core business logic
-│   └── tests/                # Test files
+│   ├── tests/                # Test files
+│   ├── migrations/           # Database migrations
+│   └── logs/                 # Application logs
 ├── frontend/                  # Frontend service
 │   ├── src/                  # Source code
+│   ├── public/               # Static files
 │   └── tests/                # Test files
-├── config/                    # Configuration files
-│   ├── development/          # Development configs
-│   └── production/           # Production configs
-├── tools/                     # Project tools
-│   ├── data-processing/      # Data processing
-│   ├── analysis/             # Analysis tools
-│   └── deployment/           # Deployment tools
-├── scripts/                   # Development scripts
-│   ├── setup/                # Setup scripts
-│   ├── ci/                   # CI scripts
-│   └── release/              # Release scripts
+├── data/                      # Project data
+│   ├── raw/                  # Raw data files
+│   └── processed/            # Processed data
 ├── docs/                      # Documentation
-└── data/                      # Project data
+│   ├── api/                  # API documentation
+│   ├── backend/              # Backend documentation
+│   └── frontend/             # Frontend documentation
+├── config/                    # Configuration files
+├── scripts/                   # Development scripts
+└── tools/                     # Project tools
 ```
 
 ## Prerequisites
