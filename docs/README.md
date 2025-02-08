@@ -1,99 +1,64 @@
-# Turkish Legal AI Documentation
+# Project Documentation
 
-> 📚 Detailed documentation for the Turkish Legal AI system
+This directory contains comprehensive documentation for the Turkish Legal AI Assistant project.
 
-## Documentation Structure
+## Directory Structure
 
-### Guides
-
-- [Getting Started](guides/getting-started.md)
-- [Development Guide](guides/development.md)
-- [Deployment Guide](guides/deployment.md)
-- [Contributing Guide](guides/contributing.md)
-
-### API Documentation
-
-- [API Overview](api/overview.md)
-- [Endpoints Reference](api/endpoints.md)
-- [Data Models](api/models.md)
-- [Error Codes](api/errors.md)
-
-### Architecture
-
-- [System Overview](architecture/overview.md)
-- [RAG System Design](architecture/rag-system.md)
-- [Data Flow](architecture/data-flow.md)
-- [Security](architecture/security.md)
-
-## When to Use What
-
-1. **README Files** (`/README.md`, `/backend/README.md`, etc.)
-
-   - Quick start guides
-   - Setup instructions
-   - Basic usage
-   - High-level overview
-   - Implementation status
-   - Current limitations
-
-2. **Documentation** (`/docs/*`)
-
-   - Detailed technical specifications
-   - In-depth guides
-   - API documentation
-   - Architecture decisions
-   - Best practices
-   - Troubleshooting guides
-
-3. **Code Documentation**
-   - Inline comments
-   - Function/class documentation
-   - Module documentation
-   - Type hints and interfaces
+```
+docs/
+├── api/              # API documentation
+│   ├── endpoints/    # API endpoint documentation
+│   └── schemas/      # Data models and schemas
+├── architecture/     # System architecture documentation
+│   ├── diagrams/    # Architecture diagrams
+│   └── decisions/   # Architecture decision records (ADRs)
+└── guides/          # User and developer guides
+    ├── development/ # Developer guides
+    └── usage/       # End-user guides
+```
 
 ## Documentation Standards
 
-### README Files
+All documentation should:
 
-- Keep them concise and focused
-- Include status indicators
-- Maintain setup instructions
-- List prerequisites
-- Show basic usage examples
+1. Be written in clear, concise Markdown
+2. Include examples where applicable
+3. Be kept up-to-date with code changes
+4. Follow the project's documentation standards
 
-### Technical Documentation
+## Documentation Types
 
-- Use clear headings
-- Include code examples
-- Add diagrams where helpful
-- Keep up to date with changes
-- Include version information
+### API Documentation
 
-### Code Documentation
+- REST API endpoints
+- Request/response formats
+- Authentication
+- Rate limiting
+- Error handling
 
-- Follow language conventions
-- Document public APIs
-- Explain complex logic
-- Include usage examples
-- Document assumptions
+### Architecture Documentation
+
+- System overview
+- Component interactions
+- Data flow diagrams
+- Technology stack
+- Design decisions
+
+### User Guides
+
+- Getting started
+- Feature guides
+- Troubleshooting
+- Best practices
 
 ## Contributing to Documentation
 
-1. **Update with Code**
+1. Keep documentation close to the code it documents
+2. Update docs with code changes
+3. Include code examples
+4. Add diagrams where helpful
+5. Follow Markdown best practices
 
-   - Document new features
-   - Update affected guides
-   - Review documentation in PRs
+## Building Documentation
 
-2. **Documentation PRs**
-
-   - Use clear commit messages
-   - Include context
-   - Reference related issues
-   - Update table of contents
-
-3. **Style Guide**
-   - Use consistent formatting
-   - Include code examples
-   - Add screenshots if relevant
-   - Keep language clear and concise
+Instructions for building and viewing documentation locally will be added here.

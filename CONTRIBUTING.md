@@ -64,7 +64,7 @@ tools/            # Development and automation tools
 We provide a git workflow automation tool to streamline the development process:
 
 ```bash
-./tools/git_workflow.py --type TYPE --description "Your commit message"
+./.github/scripts/git_workflow.py --type TYPE --description "Your commit message"
 ```
 
 This tool:
@@ -75,7 +75,7 @@ This tool:
 - Pushes to remote
 - Creates pull requests
 
-For detailed usage, see [tools/git_workflow.md](tools/git_workflow.md).
+For detailed usage, see [.github/scripts/git_workflow.md](.github/scripts/git_workflow.md).
 
 ## Code Standards
 
