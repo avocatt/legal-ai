@@ -1,196 +1,126 @@
-# Turkish Legal AI Assistant
+# Legal AI Assistant
 
-> 🚧 **Project Status**: Under Active Development
-> 
-> Last Updated: February 2024
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-A modern, AI-powered assistant for Turkish Criminal Law that provides accurate, context-aware answers using RAG (Retrieval Augmented Generation) technology.
+## Implementation Status
 
-## Project Overview
-
-This project implements a comprehensive legal question-answering system specifically designed for Turkish Criminal Law. It combines modern NLP techniques with legal domain knowledge to provide accurate and contextual answers to legal questions.
-
-### Implementation Status
-
-#### Core Features
-- [x] Advanced RAG system with ChromaDB vector store
-- [x] Legal terminology integration
-- [x] Context-aware responses with source citations
-- [x] Advanced prompt templates and evaluation
-  - Basic legal prompts
-  - Structured reasoning prompts
-  - Multi-step reasoning prompts
-- [x] Comprehensive prompt testing framework
-  - Automated evaluation pipeline
-  - Multiple evaluation metrics
-  - Performance analysis
-- [ ] Confidence scoring system (Planned)
-
-#### Frontend
-- [x] Modern React frontend with Material-UI
-- [x] Basic question-answer interface
-- [x] Loading states and error handling
-- [x] Markdown rendering support
-- [ ] Advanced UI features (In Progress)
-- [ ] User session management (Planned)
-- [ ] Response history (Planned)
-
-#### Backend
-- [x] FastAPI backend with basic endpoints
-- [x] Docker containerization
-- [x] Basic error handling
-- [x] ChromaDB integration
-- [x] Prompt template system
-- [ ] Advanced error recovery (In Progress)
-- [ ] Rate limiting (Planned)
-- [ ] Caching layer (Planned)
-
-#### Data Processing
-- [x] Basic legal terms processing
-- [x] Criminal law article processing
-- [x] Vector store management
-- [ ] Advanced text preprocessing (In Progress)
-- [ ] Multi-source data integration (Planned)
-- [ ] Automated updates pipeline (Planned)
+- ✅ RAG System
+- ✅ Frontend UI
+- ✅ Backend API
+- ✅ Data Processing
 
 ## Documentation
 
-Our documentation follows a standardized structure:
+- [Documentation Standards](docs/DOCUMENTATION_STANDARDS.md)
+- [Git Workflow](docs/GIT_WORKFLOW.md)
+- [Readme](docs/README.md)
 
-- [Documentation Standards](docs/DOCUMENTATION_STANDARDS.md) - Guidelines for maintaining documentation
-- [Backend Documentation](backend/README.md) - Backend service architecture and API details
-- [Frontend Documentation](frontend/README.md) - Frontend application structure and development
-- [Data Documentation](data/README.md) - Data organization and processing pipelines
-- [Tools Documentation](tools/README.md) - Development and maintenance tools
-- [Technical Documentation](docs/) - Architecture, guides, and technical details
-- [Changelog](CHANGELOG.md) - Version history and changes
-- [Prompt Documentation](docs/prompts/) - Prompt templates and testing framework
+## Overview
+
+Legal AI Assistant is an advanced question-answering system designed to help users understand legal concepts and documents. It uses state-of-the-art RAG (Retrieval-Augmented Generation) technology to provide accurate and contextual responses to legal queries.
 
 ## Quick Start
 
-### Prerequisites
-- Python 3.9+
-- Node.js 18+
-- Docker and Docker Compose (optional)
-- OpenAI API key
-- Hugging Face token (for embeddings)
-
-### Development Setup
-
 1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/legal-ai.git
-cd legal-ai
+
+   ```bash
+   git clone https://github.com/yourusername/legal-ai.git
+   cd legal-ai
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   # Backend
+   cd backend
+   python -m venv venv
+   source venv/bin/activate  # On Windows: .\venv\Scripts\activate
+   pip install -r requirements.txt
+
+   # Frontend
+   cd ../frontend
+   npm install
+   ```
+
+3. Set up environment variables:
+
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
+
+4. Run the application:
+
+   ```bash
+   # Backend
+   cd backend
+   uvicorn app.main:app --reload
+
+   # Frontend (in a new terminal)
+   cd frontend
+   npm run dev
+   ```
+
+## Development
+
+### Project Structure
+
+```
+legal-ai/
+├── backend/           # FastAPI backend
+├── frontend/         # React frontend
+├── tools/            # Development tools
+│   ├── data_processing/  # Data processing scripts
+│   ├── vector_store/     # Vector store management
+│   └── hierarchy/        # Legal hierarchy tools
+└── docs/             # Documentation
 ```
 
-2. Set up backend:
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate  # or `venv\Scripts\activate` on Windows
-pip install -r requirements.txt
-```
+### Development Workflow
 
-3. Set up frontend:
-```bash
-cd frontend
-npm install
-```
+1. Create a new branch for your feature:
 
-4. Set up environment variables:
-```bash
-cp backend/.env.example backend/.env
-# Edit .env with your API keys
-```
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
 
-### Running with Docker
+2. Make your changes and commit them:
 
-```bash
-docker-compose up --build
-```
+   ```bash
+   git add .
+   git commit -m "feat: add your feature"
+   ```
 
-Access the application:
-- Frontend: http://localhost:80
-- Backend API: http://localhost:8000
-- API Docs: http://localhost:8000/api/v1/docs
+3. Push your changes and create a pull request:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
 
-## Architecture Overview
+### Code Style
 
-The system consists of several key components:
+We use the following tools to maintain code quality:
 
-1. **RAG System**
-   - ChromaDB vector store
-   - Multilingual embeddings
-   - Context-aware retrieval
-   - Legal term integration
-
-2. **Backend Service**
-   - FastAPI application
-   - RESTful API endpoints
-   - Error handling middleware
-   - Docker containerization
-
-3. **Frontend Application**
-   - React with TypeScript
-   - Material-UI components
-   - Real-time API integration
-   - Responsive design
-
-4. **Data Pipeline**
-   - Raw data processing
-   - Vector store management
-   - Legal term extraction
-   - Automated updates
-
-## Known Issues & Limitations
-
-- Currently supports only Turkish Criminal Law
-- Limited to GPT-3.5-turbo model
-- No user authentication system yet
-- Basic error handling implementation
-- Rate limiting not implemented
-- Limited to single language (Turkish)
+- Black for Python code formatting
+- ESLint and Prettier for JavaScript/TypeScript
+- Pre-commit hooks for automated checks
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes following our commit message conventions
+4. Push to your fork
+5. Create a Pull Request
 
-### Active Development Areas
-- Prompt engineering improvements
-- Evaluation metrics enhancement
-- Error handling refinement
-- UI/UX improvements
-- Documentation updates
-- Test coverage expansion
+Please read [CONTRIBUTING.md](docs/CONTRIBUTING.md) for details on our code of conduct and development process.
 
-### Code Style
-- Python: PEP 8
-- TypeScript: ESLint + Prettier
-- Pre-commit hooks for code quality
-- Documentation: Markdown
+## Documentation
 
-### Testing
-- Unit tests required
-- Integration tests for critical paths
-- End-to-end testing for main flows
-- Documentation tests
+See the [docs](docs/) directory for detailed documentation on:
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Turkish Ministry of Justice for legal resources
-- OpenAI for GPT models
-- ChromaDB for vector store implementation
-- FastAPI and React communities
-- Contributors and maintainers
-
-## Support
-
-For support:
-1. Check the documentation
-2. Open an issue
-3. Contact maintainers
-4. Join our community discussions
+- Architecture Overview
+- API Documentation
+- Development Guidelines
+- Deployment Guide
