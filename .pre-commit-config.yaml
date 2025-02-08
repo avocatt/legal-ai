@@ -1,0 +1,60 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: check-case-conflict
+
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        language_version: python3.9
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        additional_dependencies: [flake8-docstrings]
+        args: ["--ignore=E501"]
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        types_or: [javascript, jsx, ts, tsx, json, yaml, markdown]
+
+  - repo: local
+    hooks:
+      - id: update-changelog
+        name: Update CHANGELOG.md
+        entry: python tools/scripts/update_changelog.py
+        language: python
+        pass_filenames: false
+        always_run: true
+
+      - id: update-readme
+        name: Update README.md
+        entry: python tools/scripts/update_readme.py
+        language: python
+        pass_filenames: false
+        always_run: true
+
+      - id: validate-docs
+        name: Validate Documentation
+        entry: python tools/scripts/validate_docs.py
+        language: python
+        pass_filenames: false
+        always_run: true

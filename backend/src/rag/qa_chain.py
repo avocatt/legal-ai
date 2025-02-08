@@ -1,132 +1,68 @@
-"""
-QA chain implementation for the Turkish Legal RAG system.
-"""
+"""Chain for question answering over Turkish legal documents."""
 
-from typing import Any, Dict, List, Optional
-from langchain_core.runnables import RunnablePassthrough
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.prompts import ChatPromptTemplate
+from typing import Dict, Optional
+
 from langchain_core.language_models import BaseLanguageModel
+from langchain_core.prompts import ChatPromptTemplate
 
-from .retriever import DocumentRetriever
-
-# Enhanced prompt template that better handles legal terminology
-PROMPT_TEMPLATE = """Sen Türk Ceza Kanunu konusunda uzmanlaşmış bir hukuk asistanısın. SADECE Türk Ceza Kanunu ve verilen bağlam çerçevesinde soruları yanıtlayabilirsin.
-
-Bağlam:
-{context}
-
-Soru: {question}
-
-Yanıtını oluştururken şu kurallara kesinlikle uy:
-1. SADECE verilen bağlamda bulunan bilgileri kullan
-2. Eğer verilen bağlamda soruyu yanıtlamak için yeterli bilgi yoksa, "Üzgünüm, bu soru Türk Ceza Kanunu kapsamı dışındadır veya verilen bağlamda bu soruyu yanıtlamak için yeterli bilgi bulunmamaktadır." şeklinde yanıt ver
-3. Verilen yasal terimleri doğru ve yerinde kullan
-4. Cevabını yasal terminoloji ve kanun maddeleriyle destekle
-5. Açık, anlaşılır ve profesyonel bir dil kullan
-6. Asla verilen bağlam dışında bilgi uydurma veya tahmin yürütme
-
-Yanıt:"""
+from .rag_system import TurkishLegalRAG
 
 
 class LegalQAChain:
-    """A chain for question-answering about Turkish legal texts."""
+    """Chain for question answering over Turkish legal documents using a RAG system."""
 
-    def __init__(
-        self,
-        rag_system: Any,
-        llm: BaseLanguageModel,
-    ):
-        """Initialize the QA chain with RAG system and LLM."""
+    def __init__(self, rag_system: TurkishLegalRAG, llm: BaseLanguageModel):
+        """Initialize the QA chain.
+
+        Args:
+            rag_system: The RAG system to use for document retrieval
+            llm: The language model to use for question answering
+        """
         self.rag_system = rag_system
         self.llm = llm
-        self._setup_chain()
 
-    def _setup_chain(self):
-        """Set up the chain using the new LangChain syntax."""
-        self.prompt = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
-
-        # Create the chain using the new syntax
-        self.chain = (
-            {
-                "context": lambda x: self.format_context(
-                    self.rag_system.retrieve(
-                        query=x["question"],
-                        metadata_filter=x.get("metadata_filter")
-                    )
+        # Define the prompt template
+        self.prompt = ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    "You are a Turkish legal expert assistant. Use the following "
+                    "context to answer the question. If you cannot find the answer "
+                    "in the context, say so. Do not make up information.\n\n"
+                    "Context:\n{context}\n\n",
                 ),
-                "question": lambda x: x["question"]
-            }
-            | self.prompt
-            | self.llm
-            | StrOutputParser()
+                ("human", "{question}"),
+            ]
         )
-
-    def format_context(self, retrieved_docs: List[Dict]) -> str:
-        """Format retrieved documents and legal terms into a context string."""
-        if not retrieved_docs:
-            return "No relevant information found."
-
-        context_parts = []
-
-        # Separate articles and terms
-        articles = [doc for doc in retrieved_docs if doc["metadata"].get(
-            "type") != "legal_term"]
-        terms = [doc for doc in retrieved_docs if doc["metadata"].get(
-            "type") == "legal_term"]
-
-        # Add relevant articles
-        if articles:
-            context_parts.append("İlgili Kanun Maddeleri:")
-            for doc in articles:
-                if doc["metadata"]["type"] == "article":
-                    context_parts.append(
-                        f"- Madde {doc['metadata']['number']}: {doc['content']}")
-                else:
-                    context_parts.append(f"- {doc['content']}")
-
-        # Add relevant legal terms
-        if terms:
-            context_parts.append("\nİlgili Yasal Terimler:")
-            for doc in terms:
-                context_parts.append(f"- {doc['content']}")
-
-        return "\n".join(context_parts)
 
     def run(
         self,
         question: str,
-        metadata_filter: Optional[Dict[str, str]] = None
+        metadata_filter: Optional[Dict[str, str]] = None,
+        include_blog: bool = True,
     ) -> str:
-        """
-        Run the QA chain to answer a question.
+        """Run the QA chain on a question.
 
         Args:
             question: The question to answer
             metadata_filter: Optional metadata filters for document retrieval
+            include_blog: Whether to include blog articles in retrieval
 
         Returns:
-            str: The generated answer
-
-        Raises:
-            ValueError: If the question is empty or invalid
-            Exception: If there's an error during processing
+            str: The answer to the question
         """
-        if not question or not isinstance(question, str):
-            raise ValueError("Question must be a non-empty string")
+        # Retrieve relevant documents
+        docs = self.rag_system.retrieve(
+            query=question,
+            metadata_filter=metadata_filter,
+            include_blog=include_blog,
+        )
 
-        try:
-            return self.chain.invoke({
-                "question": question,
-                "metadata_filter": metadata_filter
-            })
-        except Exception as e:
-            error_msg = str(e)
-            if "API key" in error_msg.lower():
-                return "Error: OpenAI API key is invalid or not configured properly."
-            elif "rate limit" in error_msg.lower():
-                return "Error: Rate limit exceeded. Please try again later."
-            elif "context length" in error_msg.lower():
-                return "Error: The question or context is too long to process."
-            else:
-                return f"An error occurred while processing your question: {error_msg}"
+        # Format the context
+        context = self.rag_system.format_context(docs)
+
+        # Generate the answer
+        chain = self.prompt | self.llm
+        response = chain.invoke({"context": context, "question": question})
+
+        return response.content

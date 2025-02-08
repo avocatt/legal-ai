@@ -1,270 +1,223 @@
+"""Turkish Legal RAG system implementation."""
+
 import json
 import os
-from pathlib import Path
-from typing import List, Dict, Any, Optional, Union
-import warnings
+from typing import Any, Dict, List, Optional
 
 import chromadb
 from chromadb.utils import embedding_functions
-from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate
-from langchain.schema import Document
-from langchain_core.language_models import BaseLanguageModel
-from sentence_transformers import SentenceTransformer
-import openai
+
 from .legal_terms import LegalTerminology
-from .qa_chain import LegalQAChain
-
-# Load environment variables
-load_dotenv(override=True)
-
-# Set OpenAI API key
-openai_api_key = os.getenv("OPENAI_API_KEY")
-if not openai_api_key:
-    raise ValueError("OPENAI_API_KEY not found in environment variables")
-
-# Set Hugging Face token if available
-hf_token = os.getenv("HUGGINGFACE_TOKEN")
-if hf_token:
-    os.environ["HUGGINGFACE_TOKEN"] = hf_token
-
-# Set tokenizers parallelism to avoid warnings
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 # Create persistent storage directory if it doesn't exist
-CHROMA_DB_DIR = os.path.join(os.path.dirname(
-    os.path.dirname(os.path.dirname(__file__))), "chroma_db")
+CHROMA_DB_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "chroma_db"
+)
 os.makedirs(CHROMA_DB_DIR, exist_ok=True)
 
 
 class TurkishLegalRAG:
-    """A flexible RAG system for Turkish legal text that can work with different LLMs."""
+    """RAG system for Turkish Criminal Law."""
 
     def __init__(
         self,
         law_json_path: str,
         terms_json_path: Optional[str] = None,
-        collection_name: str = "turkish_criminal_law",
-        embedding_model: str = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
+        law_collection_name: str = "turkish_criminal_law",
+        blog_collection_name: str = "turkish_criminal_law_blog",
+        embedding_model: str = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
     ):
-        """Initialize the RAG system with configurable components."""
-        self.law_data = self._load_law_data(law_json_path)
+        """Initialize the RAG system.
 
-        # Initialize embedding function with optional token
-        self.embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
-            model_name=embedding_model,
-            token=hf_token
+        Args:
+            law_json_path: Path to the processed law JSON file
+            terms_json_path: Path to the legal terms JSON file
+            law_collection_name: Name for the law articles collection
+            blog_collection_name: Name for the blog articles collection
+            embedding_model: Name of the embedding model to use
+        """
+        self.law_data = self._load_law_data(law_json_path)
+        self.embedding_function = (
+            embedding_functions.SentenceTransformerEmbeddingFunction(
+                model_name=embedding_model
+            )
         )
 
         # Initialize Chroma client with persistent storage
         self.chroma_client = chromadb.PersistentClient(path=CHROMA_DB_DIR)
 
-        # Get or create collection
+        # Initialize law collection
         try:
-            self.collection = self.chroma_client.get_collection(
-                name=collection_name,
-                embedding_function=self.embedding_function
+            self.law_collection = self.chroma_client.get_collection(
+                name=law_collection_name, embedding_function=self.embedding_function
             )
-            print(f"Using existing collection: {collection_name}")
-        except (ValueError, chromadb.errors.InvalidCollectionException):
-            print(f"Creating new collection: {collection_name}")
-            self.collection = self.chroma_client.create_collection(
-                name=collection_name,
+        except ValueError:
+            self.law_collection = self.chroma_client.create_collection(
+                name=law_collection_name,
                 embedding_function=self.embedding_function,
-                metadata={"description": "Turkish Legal Text Embeddings"}
+                metadata={"description": "Turkish Criminal Law Articles"},
             )
-            self._initialize_vector_store()
+            self._initialize_law_collection()
 
         # Initialize legal terminology if path provided
         self.legal_terms = None
         if terms_json_path:
             self.legal_terms = LegalTerminology(
-                terms_json_path=terms_json_path,
-                embedding_model=embedding_model,
-                hf_token=hf_token
+                terms_json_path=terms_json_path, embedding_model=embedding_model
             )
 
-    def _load_law_data(self, json_path: str) -> Dict[str, Any]:
-        """Load the processed law data from JSON."""
-        if not os.path.exists(json_path):
-            raise FileNotFoundError(f"Law data file not found: {json_path}")
+    def _validate_blog_against_law(self, blog_doc: Dict, law_docs: List[Dict]) -> bool:
+        """Validate blog content against law articles.
 
+        Args:
+            blog_doc: Blog document to validate
+            law_docs: List of relevant law articles
+
+        Returns:
+            bool: True if blog content is valid, False otherwise
+        """
         try:
-            with open(json_path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-            if not isinstance(data, dict):
-                raise ValueError("Invalid law data format")
-            return data
-        except json.JSONDecodeError as e:
-            raise ValueError(f"Invalid JSON format in law data: {str(e)}")
-        except Exception as e:
-            raise Exception(f"Error loading law data: {str(e)}")
+            # Extract TCK references from blog
+            blog_refs = blog_doc["metadata"].get("tck_references", [])
+            if not blog_refs:
+                return False
 
-    def _initialize_vector_store(self):
-        """Initialize the vector store with articles and provisions."""
-        documents = []
-        ids = []
-        metadatas = []
+            # Check if referenced articles are in law_docs
+            law_refs = {doc["metadata"]["number"] for doc in law_docs}
+            return any(ref in law_refs for ref in blog_refs)
 
-        # Process each article (same as before)
-        for book in self.law_data['books']:
-            for part in book['parts']:
-                for chapter in part['chapters']:
-                    for article in chapter['articles']:
-                        # Create a document for the full article
-                        article_text = f"Article {article['number']}: {article['content']}"
-                        article_id = f"article_{article['number']}"
-
-                        documents.append(article_text)
-                        ids.append(article_id)
-                        metadatas.append({
-                            'type': 'article',
-                            'number': article['number'],
-                            'book': book['title'],
-                            'part': part['title'],
-                            'chapter': chapter['title']
-                        })
-
-                        # Create documents for key provisions
-                        if 'key_provisions' in article:
-                            for idx, provision in enumerate(article['key_provisions']):
-                                provision_id = f"provision_{article['number']}_{idx}"
-                                documents.append(provision)
-                                ids.append(provision_id)
-                                metadatas.append({
-                                    'type': 'provision',
-                                    'article_number': article['number'],
-                                    'provision_index': idx,
-                                    'book': book['title'],
-                                    'part': part['title'],
-                                    'chapter': chapter['title']
-                                })
-
-        # Add documents to the collection
-        self.collection.add(
-            documents=documents,
-            ids=ids,
-            metadatas=metadatas
-        )
+        except KeyError:
+            return False
 
     def retrieve(
         self,
         query: str,
         n_results: int = 5,
-        metadata_filter: Optional[Dict[str, str]] = None
+        metadata_filter: Optional[Dict[str, str]] = None,
+        include_blog: bool = True,
     ) -> List[Dict]:
-        """
-        Retrieve relevant documents and legal terms for the given query.
+        """Retrieve relevant documents based on semantic similarity.
 
         Args:
-            query: The search query
-            n_results: Number of results to retrieve
-            metadata_filter: Optional metadata filters
+            query: Search query
+            n_results: Number of results to return
+            metadata_filter: Optional filters for document retrieval
+            include_blog: Whether to include blog articles
 
         Returns:
-            List of relevant documents and terms
+            List of relevant documents with metadata
         """
         # Get relevant law articles
-        results = self.collection.query(
-            query_texts=[query],
-            n_results=n_results,
-            where=metadata_filter
+        law_results = self.law_collection.query(
+            query_texts=[query], n_results=n_results, where=metadata_filter
         )
 
+        # Convert to list of dictionaries
         documents = []
-        for idx, doc in enumerate(results['documents'][0]):
-            metadata = results['metadatas'][0][idx]
-            documents.append({
-                "id": results['ids'][0][idx],
-                "content": doc,
-                "metadata": metadata,
-                "distance": results['distances'][0][idx] if 'distances' in results else None
-            })
+        for idx, doc in enumerate(law_results["documents"][0]):
+            metadata = law_results["metadatas"][0][idx]
+            distance = (
+                law_results["distances"][0][idx] if "distances" in law_results else None
+            )
+            documents.append(
+                {
+                    "id": law_results["ids"][0][idx],
+                    "content": doc,
+                    "metadata": metadata,
+                    "distance": distance,
+                }
+            )
 
         # Get relevant legal terms if available
         if self.legal_terms:
-            # Get terms based on both query and retrieved articles
-            term_contexts = [query] + [doc["content"] for doc in documents]
-            all_terms = []
-            for context in term_contexts:
-                terms = self.legal_terms.get_relevant_terms(
-                    context, n_results=3)
-                all_terms.extend(terms)
+            term_results = self.legal_terms.get_relevant_terms(
+                context=query, n_results=2
+            )
+            for term in term_results:
+                documents.append(
+                    {
+                        "id": f"term_{len(documents)}",
+                        "content": f"{term['term']}: {term['definition']}",
+                        "metadata": {"type": "legal_term"},
+                        "distance": term.get("distance"),
+                    }
+                )
 
-            # Remove duplicates and sort by relevance
-            seen_terms = set()
-            unique_terms = []
-            for term in all_terms:
-                if term["term"] not in seen_terms:
-                    seen_terms.add(term["term"])
-                    unique_terms.append({
-                        "id": f"term_{len(unique_terms)}",
-                        "content": f"[TERM] {term['term']}\n[DEFINITION] {term['definition']}",
-                        "metadata": {"type": "legal_term", "term": term["term"]},
-                        "distance": term.get("distance")
-                    })
-
-            # Add most relevant terms to the results
-            documents.extend(unique_terms[:n_results])
-
-        return documents
+        return sorted(documents, key=lambda x: x.get("distance", 1))
 
     def format_context(self, retrieved_docs: List[Dict]) -> str:
-        """Format retrieved documents into a context string."""
+        """Format retrieved documents into a context string.
+
+        Args:
+            retrieved_docs: List of retrieved documents
+
+        Returns:
+            str: Formatted context string
+        """
         context_parts = []
 
-        for doc in retrieved_docs:
-            doc_type = doc['metadata'].get('type', 'unknown')
+        # Process law articles
+        law_articles = [
+            doc for doc in retrieved_docs if doc["metadata"].get("type") != "legal_term"
+        ]
+        if law_articles:
+            context_parts.append("TCK Maddeleri:")
+            for doc in law_articles:
+                article_num = doc["metadata"].get("number", "?")
+                context_parts.append(f"Madde {article_num}: {doc['content']}")
 
-            if doc_type == 'article':
-                context_parts.append(
-                    f"Madde {doc['metadata']['number']}: {doc['content']}")
-            elif doc_type == 'provision':
-                context_parts.append(
-                    f"Madde {doc['metadata']['article_number']} - {doc['content']}")
-            elif doc_type == 'legal_term':
-                context_parts.append(doc['content'])
-            else:
-                context_parts.append(doc['content'])
+        # Process legal terms
+        legal_terms = [
+            doc for doc in retrieved_docs if doc["metadata"].get("type") == "legal_term"
+        ]
+        if legal_terms:
+            context_parts.append("\nHukuki Terimler:")
+            for doc in legal_terms:
+                context_parts.append(doc["content"])
 
         return "\n\n".join(context_parts)
 
+    def _load_law_data(self, json_path: str) -> Dict[str, Any]:
+        """Load law data from JSON file.
 
-# Example usage
-if __name__ == "__main__":
-    # Initialize the base RAG system
-    rag_system = TurkishLegalRAG("processed_law.json")
+        Args:
+            json_path: Path to the JSON file
 
-    # Initialize LLM (using GPT-3.5-turbo)
-    llm = ChatOpenAI(
-        model_name="gpt-3.5-turbo",
-        temperature=0,
-        openai_api_key=openai_api_key
-    )
+        Returns:
+            Dict containing the law data
+        """
+        try:
+            with open(json_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except (IOError, json.JSONDecodeError) as e:
+            raise ValueError(f"Error loading law data: {str(e)}")
 
-    # Create the QA chain
-    qa_chain = LegalQAChain(rag_system, llm)
+    def _initialize_law_collection(self):
+        """Initialize the law collection with articles."""
+        documents = []
+        ids = []
+        metadatas = []
 
-    print("\nTurkish Criminal Law QA System")
-    print("=" * 50)
+        for article in self.law_data["articles"]:
+            article_id = f"article_{len(ids)}"
+            ids.append(article_id)
+            documents.append(article["content"])
+            metadatas.append(
+                {
+                    "number": article["number"],
+                    "book": article.get("book"),
+                    "part": article.get("part"),
+                    "chapter": article.get("chapter"),
+                    "type": "article",
+                }
+            )
 
-    # Test questions
-    questions = [
-        "Ceza kanununun temel amacı nedir?",
-        "Türk Ceza Kanunu hangi durumlarda yabancı ülkelerde işlenen suçlara uygulanır?",
-        "Ceza sorumluluğunun esasları nelerdir?"
-    ]
-
-    for question in questions:
-        print(f"\nQ: {question}")
-        print("\nA:", qa_chain.run(question))
-        print("-" * 50)
-
-    # Example with metadata filtering
-    print("\nExample with metadata filtering (questions about Book 2):")
-    filtered_response = qa_chain.run(
-        "Cezaların türleri nelerdir?",
-        metadata_filter={"book": "İKİNCİ KİTAP"}
-    )
-    print("\nA:", filtered_response)
+        # Add documents in batches
+        batch_size = 100
+        for i in range(0, len(documents), batch_size):
+            end_idx = min(i + batch_size, len(documents))
+            self.law_collection.add(
+                documents=documents[i:end_idx],
+                ids=ids[i:end_idx],
+                metadatas=metadatas[i:end_idx],
+            )
