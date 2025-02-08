@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Dict
 
 README_PATH = "README.md"
-ROADMAP_PATH = "ROADMAP.md"
+ROADMAP_PATH = "docs/ROADMAP.md"
 
 # Core features with their corresponding paths
 CORE_FEATURES = {

@@ -1,13 +1,17 @@
 # Development Roadmap
 
 ## Project Vision
+
 To create a comprehensive, user-friendly legal AI system that makes Turkish Criminal Law more accessible and understandable through modern technology and AI capabilities.
 
 ## Development Phases
 
 ### Phase 1: Core Infrastructure & Basic UI (1-2 weeks)
+
 #### 1. Web Interface (Priority: High)
+
 - [x] FastAPI Backend Setup
+
   - Basic project structure
   - Environment configuration
   - API endpoint architecture
@@ -17,6 +21,7 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
   - API documentation (Swagger/OpenAPI)
 
 - [x] React Frontend Development
+
   - Project initialization with TypeScript
   - Component architecture setup
   - Basic routing
@@ -32,12 +37,15 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
   - Environment variable management
 
 #### 2. Response Quality Improvements (Priority: High)
+
 - [x] Confidence Scoring System
+
   - Score calculation algorithm
   - Threshold management
   - Integration with existing QA chain
 
 - [x] Source Citation Enhancement
+
   - Standardized citation format
   - Article reference linking
   - Citation validation
@@ -62,8 +70,11 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
     - Clarification request system
 
 ### Phase 2: Enhanced Search & Performance (2-3 weeks)
+
 #### 1. Advanced Search Features (Priority: High)
+
 - [x] Multi-query Retrieval
+
   - Query decomposition
   - Sub-query processing
   - Result aggregation
@@ -75,13 +86,16 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
   - Search result ranking improvement
 
 #### 2. Performance Optimization (Priority: High)
+
 - [x] Vector Store Management
+
   - ChromaDB persistence implementation
   - Collection management
   - Embedding optimization
   - Query performance tuning
 
 - [ ] Vector Database Enhancement
+
   - Advanced metadata filtering
   - Hierarchical search implementation
   - Context-aware retrieval
@@ -95,8 +109,11 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
   - Query optimization
 
 ### Phase 3: Legal Knowledge Expansion (2-3 weeks)
+
 #### 1. Knowledge Base Enhancement (Priority: High)
+
 - [ ] Additional Legal Codes Integration
+
   - Turkish Civil Code
   - Code of Civil Procedure
   - Code of Criminal Procedure
@@ -111,7 +128,9 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
   - Relationship graph implementation
 
 #### 2. Content Quality (Priority: High)
+
 - [ ] Data Enrichment
+
   - Legal commentary integration
   - Academic sources inclusion
   - Expert annotation system
@@ -124,7 +143,9 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
   - Source verification
 
 ### Phase 4: User Experience & Analytics (2-3 weeks)
+
 #### 1. Enhanced UI Features (Priority: Medium)
+
 - [ ] User Interface Improvements
   - Session management
   - Query history tracking
@@ -133,6 +154,7 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
   - Legal term tooltip system
 
 #### 2. Analytics System (Priority: Medium)
+
 - [ ] Usage Tracking
   - Analytics dashboard
   - Query pattern analysis
@@ -140,7 +162,9 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
   - User feedback system
 
 ### Phase 5: Advanced Legal Features (3-4 weeks)
+
 #### 1. Legal Content Enhancement (Priority: Medium)
+
 - [ ] Case Law Integration
   - Case database setup
   - Precedent matching system
@@ -148,6 +172,7 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
   - Related regulation linking
 
 #### 2. Document Analysis (Priority: Medium)
+
 - [ ] Document Processing
   - Comparison tools
   - Change tracking
@@ -155,7 +180,9 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
   - Citation network visualization
 
 ### Phase 6: Multilingual & Security (2-3 weeks)
+
 #### 1. Multilingual Support (Priority: Low)
+
 - [ ] Language Features
   - English translation system
   - Cross-lingual query handling
@@ -163,6 +190,7 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
   - Multi-language content management
 
 #### 2. Security & Compliance (Priority: Medium)
+
 - [ ] Security Implementation
   - Authentication system
   - Authorization rules
@@ -171,7 +199,9 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
   - Data privacy controls
 
 ### Phase 7: Advanced Features & Integration (3-4 weeks)
+
 #### 1. Advanced Analytics (Priority: Low)
+
 - [ ] Enhanced Analytics
   - AI-powered insights
   - Trend analysis system
@@ -179,6 +209,7 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
   - Advanced feedback processing
 
 #### 2. External Integration (Priority: Low)
+
 - [ ] Integration Features
   - External API system
   - Export functionality
@@ -186,6 +217,7 @@ To create a comprehensive, user-friendly legal AI system that makes Turkish Crim
   - Collaboration tools
 
 ## Initial Project Structure
+
 ```
 legal-ai/
 ├── backend/
@@ -216,7 +248,9 @@ legal-ai/
 ```
 
 ## Development Guidelines
+
 1. **Branch Strategy**
+
    - `main`: Production-ready code
    - `develop`: Integration branch
    - Feature branches: `feature/feature-name`
@@ -224,6 +258,7 @@ legal-ai/
    - Releases: `release/version-number`
 
 2. **Commit Convention**
+
    - feat: New feature
    - fix: Bug fix
    - docs: Documentation
@@ -233,6 +268,7 @@ legal-ai/
    - chore: Maintenance
 
 3. **Code Quality**
+
    - TypeScript for frontend
    - Python type hints
    - Unit tests required
@@ -240,6 +276,7 @@ legal-ai/
    - Code review required
 
 4. **Testing Strategy**
+
    - Unit tests
    - Integration tests
    - End-to-end tests
@@ -249,4 +286,4 @@ legal-ai/
    - API documentation
    - Component documentation
    - Setup guides
-   - User guides 
+   - User guides

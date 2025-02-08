@@ -3,28 +3,34 @@
 ## Branch Strategy
 
 ### Main Branches
+
 - `main` - Production-ready code
 - `develop` - Integration branch for features
 
 ### Feature Branches
+
 Format: `feature/[issue-number]-brief-description`
 Example: `feature/123-add-authentication`
 
 ### Bug Fix Branches
+
 Format: `fix/[issue-number]-brief-description`
 Example: `fix/124-cors-error`
 
 ### Release Branches
+
 Format: `release/vX.Y.Z`
 Example: `release/v1.2.0`
 
 ### Hotfix Branches
+
 Format: `hotfix/[issue-number]-brief-description`
 Example: `hotfix/125-critical-security-fix`
 
 ## Workflow
 
 1. **Start New Work**
+
    ```bash
    git checkout develop
    git pull origin develop
@@ -32,6 +38,7 @@ Example: `hotfix/125-critical-security-fix`
    ```
 
 2. **Regular Development**
+
    ```bash
    git add .
    git commit -m "feat: add user authentication system"
@@ -39,16 +46,19 @@ Example: `hotfix/125-critical-security-fix`
    ```
 
 3. **Create Pull Request**
+
    - Create PR from feature branch to `develop`
    - Fill out PR template
    - Request reviews
    - Address feedback
 
 4. **Merge to Develop**
+
    - Squash and merge to keep history clean
    - Delete feature branch after merge
 
 5. **Release Process**
+
    ```bash
    git checkout develop
    git checkout -b release/v1.2.0
@@ -69,6 +79,7 @@ Example: `hotfix/125-critical-security-fix`
 Format: `<type>(<scope>): <description>`
 
 ### Types
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation changes
@@ -78,6 +89,7 @@ Format: `<type>(<scope>): <description>`
 - `chore`: Maintenance tasks
 
 ### Scopes
+
 - `backend`
 - `frontend`
 - `docs`
@@ -87,6 +99,7 @@ Format: `<type>(<scope>): <description>`
 - `deps`
 
 ### Examples
+
 ```
 feat(backend): add user authentication system
 fix(frontend): resolve CORS issues in API calls
@@ -101,23 +114,28 @@ chore(deps): update dependencies
 
 ```markdown
 ## Description
+
 [Describe the changes made in this PR]
 
 ## Type of Change
+
 - [ ] Bug fix (non-breaking change that fixes an issue)
 - [ ] New feature (non-breaking change that adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 - [ ] Documentation update
 
 ## Related Issues
+
 Fixes #[issue number]
 
 ## Testing
+
 - [ ] Unit tests added/updated
 - [ ] Integration tests added/updated
 - [ ] Manual testing performed
 
 ## Checklist
+
 - [ ] Code follows project style guidelines
 - [ ] Documentation updated
 - [ ] Tests added/updated
@@ -128,18 +146,21 @@ Fixes #[issue number]
 ## Branch Protection Rules
 
 ### `main` Branch
+
 - Require pull request reviews
 - Require status checks to pass
 - No direct pushes
 - No force pushes
 
 ### `develop` Branch
+
 - Require pull request reviews
 - Require status checks to pass
 - No direct pushes
 - Allow force pushes with lease
 
 ### Feature/Fix Branches
+
 - No special protection
 - Delete after merge
 
@@ -148,6 +169,7 @@ Fixes #[issue number]
 To transition to this workflow:
 
 1. Create develop branch:
+
    ```bash
    git checkout main
    git checkout -b develop
@@ -155,10 +177,12 @@ To transition to this workflow:
    ```
 
 2. Set up branch protection:
+
    - Go to repository settings
    - Add protection rules for main and develop
 
 3. Update local repositories:
+
    ```bash
    git fetch origin
    git checkout develop
@@ -173,6 +197,7 @@ To transition to this workflow:
 ## Best Practices
 
 1. **Keep Branches Updated**
+
    ```bash
    git checkout develop
    git pull origin develop
@@ -181,16 +206,19 @@ To transition to this workflow:
    ```
 
 2. **Clean Commits**
+
    - Write meaningful commit messages
    - Squash related commits
    - Keep commits focused
 
 3. **Code Review**
+
    - Review all changes thoroughly
    - Use PR templates
    - Address all comments
 
 4. **Documentation**
+
    - Update docs with code changes
    - Keep CHANGELOG.md current
    - Document breaking changes
@@ -198,4 +226,4 @@ To transition to this workflow:
 5. **Testing**
    - Run tests before pushing
    - Add tests for new features
-   - Update existing tests 
+   - Update existing tests

@@ -1,46 +1,50 @@
-"""
-Basic usage example of the Turkish Legal QA system.
-This script demonstrates the core functionality of the system.
-"""
+"""Example usage of the Turkish Legal RAG system. This module demonstrates basic usage patterns and common operations."""
 
-import os
-from dotenv import load_dotenv
-from legal_ai.rag import TurkishLegalRAG, LegalQAChain
-from langchain_openai import ChatOpenAI
+import logging
+
+from src.rag import LegalQAChain, TurkishLegalRAG
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
-def main():
-    # Load environment variables
-    load_dotenv()
+def main() -> None:
+    """Run the example usage demonstration.
 
-    # Initialize the RAG system
-    rag_system = TurkishLegalRAG("data/processed/processed_law.json")
+    This function demonstrates:
+    - Setting up the RAG system
+    - Creating a QA chain
+    - Processing a sample question
+    - Retrieving and displaying results
+    """
+    try:
+        # Initialize RAG system
+        rag_system = TurkishLegalRAG(
+            law_json_path="data/processed/processed_law.json",
+            terms_json_path="data/processed/legal_terms/legal_terms.json",
+        )
 
-    # Initialize LLM
-    llm = ChatOpenAI(
-        model_name="gpt-3.5-turbo",
-        temperature=0
-    )
+        # Create QA chain
+        qa_chain = LegalQAChain(rag_system)
 
-    # Create QA chain
-    qa_chain = LegalQAChain(rag_system, llm)
+        # Example question
+        question = "TCK'da taksir nedir ve nasıl düzenlenmiştir?"
+        logger.info(f"Processing question: {question}")
 
-    # Example questions
-    questions = [
-        "Ceza kanununun temel amacı nedir?",
-        "Türk Ceza Kanunu hangi durumlarda yabancı ülkelerde işlenen suçlara uygulanır?",
-        "Ceza sorumluluğunun esasları nelerdir?"
-    ]
+        # Get answer
+        answer = qa_chain.run(question=question)
+        logger.info(f"Answer: {answer}")
 
-    # Process each question
-    for question in questions:
-        print(f"\nQ: {question}")
-        try:
-            answer = qa_chain.run(question)
-            print(f"\nA: {answer}")
-        except Exception as e:
-            print(f"Error processing question: {str(e)}")
-        print("-" * 50)
+        # Get relevant sources
+        sources = rag_system.retrieve(query=question, n_results=3)
+        logger.info("Relevant sources:")
+        for source in sources:
+            logger.info(f"- {source['content'][:200]}...")
+
+    except Exception as e:
+        logger.error(f"Error in example: {str(e)}")
+        raise
 
 
 if __name__ == "__main__":

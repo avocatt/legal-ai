@@ -1,9 +1,11 @@
-"""
-Tests for the RAG system components.
-"""
+"""Tests for the Turkish Legal RAG system."""
 
 import pytest
-from legal_ai.rag import TurkishLegalRAG, LegalQAChain
+from src.rag import TurkishLegalRAG
+
+# Test data
+TEST_LAW_JSON = "tests/data/test_law.json"
+TEST_TERMS_JSON = "tests/data/test_terms.json"
 
 
 def test_rag_initialization():
@@ -36,10 +38,7 @@ def test_metadata_filtering():
     rag = TurkishLegalRAG("data/processed/processed_law.json")
 
     # Test with valid metadata filter
-    results = rag.retrieve(
-        "ceza",
-        metadata_filter={"book": "İKİNCİ KİTAP"}
-    )
+    results = rag.retrieve("ceza", metadata_filter={"book": "İKİNCİ KİTAP"})
     assert all(r["metadata"]["book"] == "İKİNCİ KİTAP" for r in results)
 
     # Test with invalid metadata filter
@@ -58,5 +57,6 @@ def test_context_formatting():
     context = rag.format_context(results)
     assert isinstance(context, str)
     assert len(context) > 0
+
 
 # Add more tests as needed
