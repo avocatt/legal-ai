@@ -1,109 +1,177 @@
 # Development Tools
 
-This directory contains various tools and utilities used for data processing, scraping, and maintenance of the Turkish Legal AI system.
+This directory contains various tools and utilities for the Turkish Legal AI system, organized by functionality.
 
-## Available Tools
+## Directory Structure
 
-### Legal Terminology Dictionary
-Location: `/legal-terminology-dict/`
-
-A tool for scraping and processing legal terminology from official Turkish legal resources.
-
-#### Features
-- Automated scraping of legal terms
-- Term cleaning and normalization
-- JSON output in both raw and processed formats
-- Error handling and logging
-
-#### Usage
-```bash
-cd legal-terminology-dict
-pip install -r requirements.txt
-python scraper.py
+```
+tools/
+├── data_processing/           # Data processing pipeline tools
+│   ├── filter_criminal_law_articles.py
+│   ├── clean_criminal_law_articles.py
+│   ├── analyze_criminal_law_content.py
+│   └── README.md
+├── vector_store/             # Vector store management tools
+│   ├── create_vector_store.py
+│   └── README.md
+├── hierarchy/                # Hierarchy implementation tools
+│   ├── implement_hierarchy.py
+│   └── README.md
+└── README.md                 # This file
 ```
 
-Output:
-- Raw terms: `data/raw/legal_terms/legal_terms.json`
-- Processed terms: `data/processed/legal_terms/legal_terms.json`
+## Tool Categories
 
-### Future Tools (Planned)
+### 1. Data Processing Tools
 
-#### PDF Processor
-- Extract structured data from legal PDFs
-- Convert to JSON format
-- Extract article references
-- Generate metadata
+Tools for processing raw data into structured formats.
 
-#### Data Validator
-- Validate JSON schemas
-- Check data consistency
-- Verify references
-- Generate validation reports
+- [Documentation](data_processing/README.md)
+- Input: Raw blog articles
+- Output: Processed and analyzed articles
 
-#### Vector Store Manager
-- Manage ChromaDB collections
-- Backup and restore functionality
-- Performance optimization
-- Index maintenance
+### 2. Vector Store Tools
+
+Tools for managing ChromaDB vector stores.
+
+- [Documentation](vector_store/README.md)
+- Input: Processed articles
+- Output: Vector embeddings and collections
+
+### 3. Hierarchy Tools
+
+Tools for implementing content hierarchy.
+
+- [Documentation](hierarchy/README.md)
+- Input: Analyzed articles
+- Output: Hierarchical structure and validation
+
+## Complete Pipeline
+
+```mermaid
+graph TD
+    A[Raw Blog Data] --> B[Data Processing]
+    B --> C[Content Analysis]
+    C --> D[Hierarchy Implementation]
+    D --> E[Vector Store Creation]
+    E --> F[RAG System]
+```
+
+## Usage
+
+### 1. Process Raw Data
+
+```bash
+# 1. Filter articles
+python -m tools.data_processing.filter_criminal_law_articles
+
+# 2. Clean articles
+python -m tools.data_processing.clean_criminal_law_articles
+
+# 3. Analyze content
+python -m tools.data_processing.analyze_criminal_law_content
+```
+
+### 2. Implement Hierarchy
+
+```bash
+python -m tools.hierarchy.implement_hierarchy
+```
+
+### 3. Create Vector Store
+
+```bash
+python -m tools.vector_store.create_vector_store
+```
 
 ## Development Guidelines
 
 ### Adding New Tools
 
-1. Create a new directory for your tool
-2. Include a `requirements.txt`
+1. Choose appropriate category directory
+2. Create tool script
 3. Add comprehensive documentation
-4. Implement error handling
-5. Add logging
-6. Include usage examples
+4. Update category README
+5. Update this README
 
 ### Code Style
-- Follow PEP 8 guidelines
+
+- Follow PEP 8
 - Add type hints
-- Document functions
-- Include error handling
-- Add logging
+- Include docstrings
+- Add error handling
+- Include logging
 
 ### Testing
-- Include unit tests
-- Add integration tests
+
+- Add unit tests
+- Include integration tests
+- Test with sample data
 - Document test cases
-- Include sample data
 
-## Data Processing Flow
+## Data Flow
 
-1. Raw Data Collection
-   - Scraping
-   - PDF processing
-   - Manual input
+### Input Data
 
-2. Data Processing
-   - Cleaning
-   - Normalization
-   - Validation
-   - Transformation
+- Raw blog articles (CSV)
+- Turkish Criminal Code (JSON)
+- Legal terminology (JSON)
 
-3. Output Generation
-   - JSON formatting
-   - Data validation
-   - Documentation updates
+### Intermediate Data
+
+- Filtered articles
+- Cleaned content
+- Analyzed metadata
+- Hierarchical structure
+
+### Output Data
+
+- Vector store collections
+- Validation results
+- Processing logs
+- Error reports
 
 ## Maintenance
 
 ### Regular Tasks
-- Update scraping patterns
-- Validate outputs
+
+- Update documentation
+- Verify data flow
+- Check error logs
+- Monitor performance
 - Update dependencies
-- Check for API changes
 
 ### Error Handling
+
 - Log all errors
 - Implement retries
 - Validate outputs
 - Report issues
 
-### Documentation
-- Keep README updated
-- Document changes
-- Include examples
-- Update requirements 
+## Dependencies
+
+### Python Packages
+
+- pandas
+- chromadb
+- beautifulsoup4
+- sentence-transformers
+- numpy
+- typing
+- json
+
+### System Requirements
+
+- Python 3.9+
+- Sufficient disk space
+- Adequate RAM (8GB+)
+- Internet connection
+
+## Support
+
+For issues or questions:
+
+1. Check documentation
+2. Review error logs
+3. Open GitHub issue
+4. Contact maintainers
