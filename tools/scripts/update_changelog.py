@@ -11,12 +11,46 @@ This script updates the CHANGELOG.md file by:
 import os
 import re
 import subprocess
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 CHANGELOG_PATH = "CHANGELOG.md"
 UNRELEASED_PATTERN = r"\[Unreleased\]"
 VERSION_PATTERN = r"\[(\d+\.\d+\.\d+)\]"
 GIT_LOG_FMT = "%s"  # Simple format for commit messages
+
+# Commit type mappings
+TYPE_MAPPINGS = {
+    "feat": "Added",
+    "feature": "Added",
+    "add": "Added",
+    "fix": "Fixed",
+    "docs": "Changed",
+    "style": "Changed",
+    "refactor": "Changed",
+    "perf": "Changed",
+    "test": "Changed",
+    "chore": "Changed",
+    "remove": "Removed",
+    "delete": "Removed",
+}
+
+
+def parse_commit_message(message: str) -> Tuple[str, str]:
+    """Parse conventional commit message.
+
+    Format: type(scope): description
+    Example: feat(api): add new endpoint
+    """
+    # Match conventional commit format
+    match = re.match(r"^(\w+)(?:\(([^)]+)\))?: (.+)$", message)
+    if match:
+        type_, scope, desc = match.groups()
+        # Clean up description
+        desc = desc.strip()
+        if scope:
+            desc = f"{scope}: {desc}"
+        return type_.lower(), desc
+    return "other", message
 
 
 def get_latest_version() -> Optional[str]:
@@ -45,19 +79,13 @@ def get_commit_messages() -> List[str]:
 
 def categorize_commits(commits: List[str]) -> Dict[str, List[str]]:
     """Categorize commits by type (Added, Changed, Fixed, etc.)."""
-    categories = {"Added": [], "Changed": [], "Fixed": [], "Removed": [], "Other": []}
+    categories = {"Added": [], "Changed": [], "Fixed": [], "Removed": []}
 
     for commit in commits:
-        if commit.startswith("feat"):
-            categories["Added"].append(commit)
-        elif commit.startswith(("refactor", "style")):
-            categories["Changed"].append(commit)
-        elif commit.startswith("fix"):
-            categories["Fixed"].append(commit)
-        elif commit.startswith("remove"):
-            categories["Removed"].append(commit)
-        else:
-            categories["Other"].append(commit)
+        type_, desc = parse_commit_message(commit)
+        category = TYPE_MAPPINGS.get(type_, "Changed")
+        if desc not in categories[category]:  # Avoid duplicates
+            categories[category].append(desc)
 
     return {k: v for k, v in categories.items() if v}
 
@@ -68,11 +96,11 @@ def update_changelog(categories: Dict[str, List[str]]) -> None:
         print(f"Creating new {CHANGELOG_PATH}")
         header = "# Changelog\n\n"
         desc = (
-            "All notable changes to this project will be documented "
-            "in this file.\n\n"
+            "All notable changes to this project will be documented in this file.\n\n"
+            "The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),\n"
+            "and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).\n\n"
         )
-        initial = "[Unreleased]\n"
-
+        initial = "## [Unreleased]\n"
         with open(CHANGELOG_PATH, "w") as f:
             f.write(header + desc + initial)
 
@@ -80,20 +108,23 @@ def update_changelog(categories: Dict[str, List[str]]) -> None:
         content = f.read()
 
     # Remove existing unreleased section if it exists
-    pattern = rf"{UNRELEASED_PATTERN}.*?(?=\[|$)"
+    pattern = rf"{UNRELEASED_PATTERN}.*?(?=##|$)"
     content = re.sub(pattern, "", content, flags=re.DOTALL)
 
     # Add new unreleased section
-    unreleased = "[Unreleased]\n"
+    unreleased = "## [Unreleased]\n\n"
     for category, commits in categories.items():
         if commits:
-            unreleased += f"\n### {category}\n"
+            unreleased += f"### {category}\n\n"
             for commit in commits:
                 unreleased += f"- {commit}\n"
+            unreleased += "\n"
 
     # Insert unreleased section after header
-    header_end = content.find("\n\n") + 2
-    content = content[:header_end] + unreleased + "\n" + content[header_end:]
+    header_end = content.find("\n## ")
+    if header_end == -1:
+        header_end = len(content)
+    content = content[:header_end] + unreleased + content[header_end:]
 
     with open(CHANGELOG_PATH, "w") as f:
         f.write(content.strip() + "\n")
@@ -107,6 +138,10 @@ def main() -> None:
         return
 
     categories = categorize_commits(commits)
+    if not categories:
+        print("No categorizable changes found.")
+        return
+
     update_changelog(categories)
     print("Successfully updated CHANGELOG.md")
 
