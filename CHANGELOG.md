@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+- implement legal terminology integration
+- integrate legal terminology vector database
+- Complete Phase 1 Web Interface implementation - Add Docker development environment with hot reload - Update project documentation - Complete FastAPI backend setup - Complete React frontend setup - Add health checks and container orchestration - Pre-cache models for faster development
+- Add Turkish Criminal Law data files
+- Add modular project structure with RAG components, tests, and documentation
+
+### Changed
+
+- add comprehensive prompt system documentation
+- add git workflow and documentation standards
+- Remove deprecated files related to law processing and extraction
+
+### Added
+
 - Comprehensive prompt testing framework
 - Multiple prompt templates (Basic, Structured, Multi-step)
 - Prompt evaluation metrics and scoring system
@@ -27,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Vector store management features
 
 ### Changed
+
 - Enhanced prompt template architecture
 - Improved prompt evaluation system
 - Added structured and multi-step reasoning
@@ -42,6 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Restructured main README
 
 ### Fixed
+
 - Prompt template inheritance issues
 - Evaluation metric calculations
 - File path issues in data processing
@@ -52,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2024-02-06
 
 ### Added
+
 - Initial RAG system implementation
 - Basic FastAPI backend
 - React frontend with Material-UI
@@ -65,4 +83,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Error handling middleware
 
 [Unreleased]: https://github.com/yourusername/legal-ai/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/yourusername/legal-ai/releases/tag/v0.1.0 
+[0.1.0]: https://github.com/yourusername/legal-ai/releases/tag/v0.1.0
