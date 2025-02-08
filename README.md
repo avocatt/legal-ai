@@ -13,6 +13,7 @@
 
 ## Documentation
 
+- [Contributing](docs/CONTRIBUTING.md)
 - [Documentation Standards](docs/DOCUMENTATION_STANDARDS.md)
 - [Git Workflow](docs/GIT_WORKFLOW.md)
 - [Readme](docs/README.md)
