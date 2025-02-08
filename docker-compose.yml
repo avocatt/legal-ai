@@ -42,4 +42,4 @@ networks:
     driver: bridge
 
 volumes:
-  chroma_data: 
+  chroma_data:

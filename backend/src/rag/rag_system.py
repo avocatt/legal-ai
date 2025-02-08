@@ -1,179 +1,145 @@
-"""Turkish Legal RAG system implementation."""
+"""Turkish Legal RAG system implementation.
+
+This module provides the core RAG system for Turkish legal question answering,
+integrating document retrieval, legal terminology, and context management.
+"""
 
 import json
-import os
 from typing import Any, Dict, List, Optional
 
-import chromadb
-from chromadb.utils import embedding_functions
-
 from .legal_terms import LegalTerminology
-
-# Create persistent storage directory if it doesn't exist
-CHROMA_DB_DIR = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "chroma_db"
-)
-os.makedirs(CHROMA_DB_DIR, exist_ok=True)
+from .retriever import DocumentRetriever
 
 
 class TurkishLegalRAG:
-    """RAG system for Turkish Criminal Law."""
+    """Turkish Legal RAG system for retrieving and managing legal content.
+
+    This class provides a comprehensive RAG system specifically designed for
+    Turkish legal content. It combines document retrieval with legal terminology
+    management to provide accurate and relevant context for question answering.
+
+    Attributes:
+        retriever: Document retriever for law articles and blog content
+        terminology: Legal terminology manager for term definitions
+    """
 
     def __init__(
         self,
         law_json_path: str,
-        terms_json_path: Optional[str] = None,
-        law_collection_name: str = "turkish_criminal_law",
-        blog_collection_name: str = "turkish_criminal_law_blog",
+        terms_json_path: str,
+        collection_name: str = "turkish_criminal_law",
         embedding_model: str = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
     ):
-        """Initialize the RAG system.
+        """Initialize the Turkish Legal RAG system.
 
         Args:
-            law_json_path: Path to the processed law JSON file
+            law_json_path: Path to the law articles JSON file
             terms_json_path: Path to the legal terms JSON file
-            law_collection_name: Name for the law articles collection
-            blog_collection_name: Name for the blog articles collection
+            collection_name: Name for the vector store collection
             embedding_model: Name of the embedding model to use
         """
-        self.law_data = self._load_law_data(law_json_path)
-        self.embedding_function = (
-            embedding_functions.SentenceTransformerEmbeddingFunction(
-                model_name=embedding_model
-            )
+        self.retriever = DocumentRetriever(
+            law_json_path=law_json_path,
+            collection_name=collection_name,
+            embedding_model=embedding_model,
         )
-
-        # Initialize Chroma client with persistent storage
-        self.chroma_client = chromadb.PersistentClient(path=CHROMA_DB_DIR)
-
-        # Initialize law collection
-        try:
-            self.law_collection = self.chroma_client.get_collection(
-                name=law_collection_name, embedding_function=self.embedding_function
-            )
-        except ValueError:
-            self.law_collection = self.chroma_client.create_collection(
-                name=law_collection_name,
-                embedding_function=self.embedding_function,
-                metadata={"description": "Turkish Criminal Law Articles"},
-            )
-            self._initialize_law_collection()
-
-        # Initialize legal terminology if path provided
-        self.legal_terms = None
-        if terms_json_path:
-            self.legal_terms = LegalTerminology(
-                terms_json_path=terms_json_path, embedding_model=embedding_model
-            )
-
-    def _validate_blog_against_law(self, blog_doc: Dict, law_docs: List[Dict]) -> bool:
-        """Validate blog content against law articles.
-
-        Args:
-            blog_doc: Blog document to validate
-            law_docs: List of relevant law articles
-
-        Returns:
-            bool: True if blog content is valid, False otherwise
-        """
-        try:
-            # Extract TCK references from blog
-            blog_refs = blog_doc["metadata"].get("tck_references", [])
-            if not blog_refs:
-                return False
-
-            # Check if referenced articles are in law_docs
-            law_refs = {doc["metadata"]["number"] for doc in law_docs}
-            return any(ref in law_refs for ref in blog_refs)
-
-        except KeyError:
-            return False
+        self.terminology = LegalTerminology(
+            terms_json_path=terms_json_path,
+            embedding_model=embedding_model,
+        )
 
     def retrieve(
         self,
         query: str,
         n_results: int = 5,
         metadata_filter: Optional[Dict[str, str]] = None,
-        include_blog: bool = True,
     ) -> List[Dict]:
-        """Retrieve relevant documents based on semantic similarity.
+        """Retrieve relevant documents and legal terms for a query.
 
         Args:
-            query: Search query
-            n_results: Number of results to return
+            query: The search query
+            n_results: Number of results to retrieve (default: 5)
             metadata_filter: Optional filters for document retrieval
-            include_blog: Whether to include blog articles
 
         Returns:
-            List of relevant documents with metadata
+            List[Dict]: Combined list of relevant documents and terms
+
+        Raises:
+            ValueError: If the query is empty or invalid
+            Exception: If there's an error during retrieval
         """
-        # Get relevant law articles
-        law_results = self.law_collection.query(
-            query_texts=[query], n_results=n_results, where=metadata_filter
+        # Get relevant documents
+        docs = self.retriever.retrieve(
+            query=query,
+            n_results=n_results,
+            metadata_filter=metadata_filter,
         )
 
-        # Convert to list of dictionaries
-        documents = []
-        for idx, doc in enumerate(law_results["documents"][0]):
-            metadata = law_results["metadatas"][0][idx]
-            distance = (
-                law_results["distances"][0][idx] if "distances" in law_results else None
-            )
-            documents.append(
+        # Get relevant legal terms
+        terms = self.terminology.get_relevant_terms(query, n_results=3)
+
+        # Combine and format results
+        results = []
+        for doc in docs:
+            results.append(
                 {
-                    "id": law_results["ids"][0][idx],
-                    "content": doc,
-                    "metadata": metadata,
-                    "distance": distance,
+                    "id": doc["id"],
+                    "content": doc["content"],
+                    "metadata": doc["metadata"],
+                    "distance": doc["distance"],
                 }
             )
 
-        # Get relevant legal terms if available
-        if self.legal_terms:
-            term_results = self.legal_terms.get_relevant_terms(
-                context=query, n_results=2
+        for term in terms:
+            results.append(
+                {
+                    "id": f"term_{term['term']}",
+                    "content": f"{term['term']}: {term['definition']}",
+                    "metadata": {"type": "legal_term"},
+                    "distance": term["distance"],
+                }
             )
-            for term in term_results:
-                documents.append(
-                    {
-                        "id": f"term_{len(documents)}",
-                        "content": f"{term['term']}: {term['definition']}",
-                        "metadata": {"type": "legal_term"},
-                        "distance": term.get("distance"),
-                    }
-                )
 
-        return sorted(documents, key=lambda x: x.get("distance", 1))
+        return sorted(
+            results, key=lambda x: x["distance"] if x["distance"] else float("inf")
+        )
 
     def format_context(self, retrieved_docs: List[Dict]) -> str:
         """Format retrieved documents into a context string.
 
         Args:
-            retrieved_docs: List of retrieved documents
+            retrieved_docs: List of retrieved documents and terms
 
         Returns:
-            str: Formatted context string
+            str: Formatted context string for the language model
+
+        Raises:
+            ValueError: If retrieved_docs is empty or invalid
         """
+        if not retrieved_docs:
+            return ""
+
         context_parts = []
 
-        # Process law articles
-        law_articles = [
-            doc for doc in retrieved_docs if doc["metadata"].get("type") != "legal_term"
-        ]
-        if law_articles:
-            context_parts.append("TCK Maddeleri:")
-            for doc in law_articles:
-                article_num = doc["metadata"].get("number", "?")
-                context_parts.append(f"Madde {article_num}: {doc['content']}")
+        # Group documents by type
+        articles = []
+        terms = []
 
-        # Process legal terms
-        legal_terms = [
-            doc for doc in retrieved_docs if doc["metadata"].get("type") == "legal_term"
-        ]
-        if legal_terms:
-            context_parts.append("\nHukuki Terimler:")
-            for doc in legal_terms:
-                context_parts.append(doc["content"])
+        for doc in retrieved_docs:
+            if doc["metadata"].get("type") == "legal_term":
+                terms.append(doc["content"])
+            else:
+                articles.append(doc["content"])
+
+        # Format articles
+        if articles:
+            context_parts.append("İlgili Kanun Maddeleri:")
+            context_parts.extend(articles)
+
+        # Format terms
+        if terms:
+            context_parts.append("\nİlgili Hukuki Terimler:")
+            context_parts.extend(terms)
 
         return "\n\n".join(context_parts)
 

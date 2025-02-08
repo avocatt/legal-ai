@@ -27,10 +27,12 @@ data/
 ## Data Processing Flow
 
 1. **Raw Data Collection**
+
    - Criminal law documents are stored in PDF format
    - Legal terms are scraped and stored in JSON format
 
 2. **Data Processing**
+
    - Raw PDFs are processed into structured JSON
    - Legal terms are cleaned and normalized
    - All processed data maintains references to source material
@@ -43,15 +45,18 @@ data/
 ## File Descriptions
 
 ### Raw Data
+
 - `türk-ceza-kanunu.pdf`: Original Turkish Criminal Law document
 - `legal_terms.json`: Raw scraped legal terminology
 
 ### Processed Data
+
 - `processed_law.json`: Extracted and processed law articles
 - `structured_law.json`: Hierarchical structure of the law
 - `legal_terms.json`: Cleaned and normalized legal terms
 
 ### Vector Store
+
 - Contains ChromaDB collections for efficient similarity search
 - Separate indices for law articles and legal terminology
 
@@ -74,4 +79,4 @@ data/
 - Regular backups of all data directories
 - Version control for processed data
 - Periodic validation of data integrity
-- Documentation of any manual data corrections 
+- Documentation of any manual data corrections

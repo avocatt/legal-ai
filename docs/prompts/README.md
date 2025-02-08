@@ -7,12 +7,14 @@ The Turkish Legal AI Assistant uses a sophisticated prompt engineering system wi
 ## Prompt Templates
 
 ### 1. Basic Legal Prompt
+
 - Simple, direct question-answering
 - Context-aware responses
 - Source citations
 - Legal terminology integration
 
 ### 2. Structured Legal Prompt
+
 - Organized response sections:
   - Question Scope
   - Relevant Laws
@@ -23,6 +25,7 @@ The Turkish Legal AI Assistant uses a sophisticated prompt engineering system wi
 - Term definitions
 
 ### 3. Multi-step Reasoning Prompt
+
 - Step-by-step legal analysis
 - Complex question decomposition
 - Cross-reference handling
@@ -31,26 +34,32 @@ The Turkish Legal AI Assistant uses a sophisticated prompt engineering system wi
 ## Testing Framework
 
 ### Evaluation Metrics
+
 1. **Length Score**
+
    - Optimal response length
    - Content completeness
 
 2. **Structure Score**
+
    - Section organization
    - Format adherence
    - Logical flow
 
 3. **Legal Reference Score**
+
    - Citation accuracy
    - Reference relevance
    - Source integration
 
 4. **Term Usage Score**
+
    - Legal terminology
    - Term definitions
    - Context appropriateness
 
 5. **Formatting Score**
+
    - Markdown formatting
    - Visual organization
    - Readability
@@ -63,11 +72,13 @@ The Turkish Legal AI Assistant uses a sophisticated prompt engineering system wi
 ### Testing Pipeline
 
 1. **Automated Testing**
+
    ```python
    python -m src.rag.prompt_testing
    ```
 
 2. **Test Cases**
+
    - Basic legal questions
    - Complex scenarios
    - Edge cases
@@ -82,6 +93,7 @@ The Turkish Legal AI Assistant uses a sophisticated prompt engineering system wi
 ## Usage Examples
 
 ### Basic Prompt
+
 ```python
 from src.rag.prompts import BasicLegalPrompt
 
@@ -93,6 +105,7 @@ formatted = prompt.format(
 ```
 
 ### Structured Prompt
+
 ```python
 from src.rag.prompts import StructuredLegalPrompt
 
@@ -104,6 +117,7 @@ formatted = prompt.format(
 ```
 
 ### Multi-step Prompt
+
 ```python
 from src.rag.prompts import MultiStepLegalPrompt
 
@@ -131,16 +145,19 @@ metrics = evaluator.evaluate_response(
 ## Best Practices
 
 1. **Template Selection**
+
    - Use Basic for simple questions
    - Use Structured for comprehensive answers
    - Use Multi-step for complex analysis
 
 2. **Context Management**
+
    - Provide relevant context
    - Include necessary references
    - Maintain context window size
 
 3. **Legal Accuracy**
+
    - Verify citations
    - Check terminology
    - Validate references
@@ -153,11 +170,13 @@ metrics = evaluator.evaluate_response(
 ## Future Improvements
 
 1. **Template Enhancements**
+
    - Dynamic template selection
    - Context-aware formatting
    - Adaptive structuring
 
 2. **Testing Framework**
+
    - Additional metrics
    - Real-time evaluation
    - User feedback integration
@@ -165,4 +184,4 @@ metrics = evaluator.evaluate_response(
 3. **Performance Optimization**
    - Response time improvement
    - Memory usage reduction
-   - Caching implementation 
+   - Caching implementation

@@ -1,12 +1,14 @@
 """Script for testing and evaluating different prompt templates."""
 import os
-from typing import List, Dict
+from typing import Dict, List
+
 from langchain_openai import ChatOpenAI
+
 from .prompts import (
     BasicLegalPrompt,
-    StructuredLegalPrompt,
     MultiStepLegalPrompt,
-    PromptEvaluator
+    PromptEvaluator,
+    StructuredLegalPrompt,
 )
 from .rag_system import TurkishLegalRAG
 
@@ -20,63 +22,91 @@ def get_test_questions() -> List[Dict[str, str]]:
     return [
         {
             "question": "Ceza sorumluluğunun esasları nelerdir?",
-            "expected_structure": ["SORU KAPSAMI", "İLGİLİ KANUN MADDELERİ", "HUKUKİ ANALİZ", "SONUÇ"],
+            "expected_structure": [
+                "SORU KAPSAMI",
+                "İLGİLİ KANUN MADDELERİ",
+                "HUKUKİ ANALİZ",
+                "SONUÇ",
+            ],
             "metadata": {
                 "complexity": "high",
                 "expected_terms": ["kusur", "isnat yeteneği", "kast", "taksir"],
-                "min_articles": 3
-            }
+                "min_articles": 3,
+            },
         },
         {
             "question": "Türk Ceza Kanunu'nda taksir nasıl düzenlenmiştir?",
-            "expected_structure": ["SORU KAPSAMI", "İLGİLİ KANUN MADDELERİ", "HUKUKİ ANALİZ", "SONUÇ"],
+            "expected_structure": [
+                "SORU KAPSAMI",
+                "İLGİLİ KANUN MADDELERİ",
+                "HUKUKİ ANALİZ",
+                "SONUÇ",
+            ],
             "metadata": {
                 "complexity": "medium",
                 "expected_terms": ["taksir", "ihmal", "öngörme"],
-                "min_articles": 2
-            }
+                "min_articles": 2,
+            },
         },
         {
             "question": "Hukuka uygunluk nedenleri nelerdir?",
-            "expected_structure": ["SORU KAPSAMI", "İLGİLİ KANUN MADDELERİ", "HUKUKİ ANALİZ", "SONUÇ"],
+            "expected_structure": [
+                "SORU KAPSAMI",
+                "İLGİLİ KANUN MADDELERİ",
+                "HUKUKİ ANALİZ",
+                "SONUÇ",
+            ],
             "metadata": {
                 "complexity": "high",
-                "expected_terms": ["meşru müdafaa", "zorunluluk hali", "hakkın kullanılması", "görevin ifası"],
-                "min_articles": 4
-            }
+                "expected_terms": [
+                    "meşru müdafaa",
+                    "zorunluluk hali",
+                    "hakkın kullanılması",
+                    "görevin ifası",
+                ],
+                "min_articles": 4,
+            },
         },
         {
             "question": "Teşebbüs halinde ceza nasıl belirlenir?",
-            "expected_structure": ["SORU KAPSAMI", "İLGİLİ KANUN MADDELERİ", "HUKUKİ ANALİZ", "SONUÇ"],
+            "expected_structure": [
+                "SORU KAPSAMI",
+                "İLGİLİ KANUN MADDELERİ",
+                "HUKUKİ ANALİZ",
+                "SONUÇ",
+            ],
             "metadata": {
                 "complexity": "medium",
                 "expected_terms": ["teşebbüs", "hazırlık hareketi", "icra hareketi"],
-                "min_articles": 2
-            }
+                "min_articles": 2,
+            },
         },
         {
             "question": "İştirak halinde işlenen suçlarda sorumluluk nasıl belirlenir?",
-            "expected_structure": ["SORU KAPSAMI", "İLGİLİ KANUN MADDELERİ", "HUKUKİ ANALİZ", "SONUÇ"],
+            "expected_structure": [
+                "SORU KAPSAMI",
+                "İLGİLİ KANUN MADDELERİ",
+                "HUKUKİ ANALİZ",
+                "SONUÇ",
+            ],
             "metadata": {
                 "complexity": "high",
                 "expected_terms": ["iştirak", "fail", "azmettirme", "yardım etme"],
-                "min_articles": 3
-            }
-        }
+                "min_articles": 3,
+            },
+        },
     ]
 
 
 def test_prompts(
-    rag_system: TurkishLegalRAG,
-    llm: ChatOpenAI,
-    evaluator: PromptEvaluator
+    rag_system: TurkishLegalRAG, llm: ChatOpenAI, evaluator: PromptEvaluator
 ) -> None:
     """Test different prompt templates and evaluate their performance."""
     # Initialize prompt templates
     prompts = {
         "basic": BasicLegalPrompt(),
         "structured": StructuredLegalPrompt(),
-        "multi_step": MultiStepLegalPrompt()
+        "multi_step": MultiStepLegalPrompt(),
     }
 
     # Get test questions
@@ -102,12 +132,12 @@ def test_prompts(
             try:
                 # Format prompt and get response
                 formatted_prompt = prompt.format(
-                    context=formatted_context,
-                    question=question
+                    context=formatted_context, question=question
                 )
                 response = llm.invoke(formatted_prompt)
-                answer = response.content if hasattr(
-                    response, 'content') else str(response)
+                answer = (
+                    response.content if hasattr(response, "content") else str(response)
+                )
 
                 # Evaluate response
                 metrics = evaluator.evaluate_response(
@@ -115,7 +145,7 @@ def test_prompts(
                     question=question,
                     answer=answer,
                     expected_structure=expected_structure,
-                    metadata=metadata
+                    metadata=metadata,
                 )
 
                 # Add result
@@ -128,8 +158,8 @@ def test_prompts(
                         "template_type": prompt_name,
                         "expected_structure": expected_structure,
                         "complexity": metadata.get("complexity", "medium"),
-                        "expected_terms": metadata.get("expected_terms", [])
-                    }
+                        "expected_terms": metadata.get("expected_terms", []),
+                    },
                 )
 
                 print("\nMetrics:")
@@ -138,7 +168,8 @@ def test_prompts(
 
             except Exception as e:
                 print(
-                    f"Error testing prompt {prompt_name} with question '{question}': {str(e)}")
+                    f"Error testing prompt {prompt_name} with question '{question}': {str(e)}"
+                )
 
     # Save results
     evaluator.save_results()
@@ -149,38 +180,37 @@ def test_prompts(
     print(f"Total evaluations: {summary['total_evaluations']}")
     print(f"Prompts evaluated: {summary['prompts_evaluated']}")
     print("\nAverage scores per prompt:")
-    for prompt_name, score in summary['average_scores'].items():
+    for prompt_name, score in summary["average_scores"].items():
         print(f"{prompt_name}: {score:.3f}")
     print(f"\nBest performing prompt: {summary['best_performing_prompt']}")
 
     # Print detailed analysis
     print("\nDetailed Analysis:")
     for prompt_name in prompts:
-        prompt_results = [
-            r for r in evaluator.results if r.prompt_name == prompt_name]
+        prompt_results = [r for r in evaluator.results if r.prompt_name == prompt_name]
         print(f"\n{prompt_name.upper()} PROMPT:")
 
         # Analyze performance by complexity
         for complexity in ["low", "medium", "high"]:
-            complexity_results = [r for r in prompt_results
-                                  if r.metadata.get("complexity") == complexity]
+            complexity_results = [
+                r for r in prompt_results if r.metadata.get("complexity") == complexity
+            ]
             if complexity_results:
-                avg_score = sum(r.metrics["overall_score"]
-                                for r in complexity_results) / len(complexity_results)
-                print(
-                    f"- {complexity.title()} complexity questions: {avg_score:.3f}")
+                avg_score = sum(
+                    r.metrics["overall_score"] for r in complexity_results
+                ) / len(complexity_results)
+                print(f"- {complexity.title()} complexity questions: {avg_score:.3f}")
 
         # Analyze term usage
         term_scores = [r.metrics["term_usage_score"] for r in prompt_results]
-        avg_term_score = sum(term_scores) / \
-            len(term_scores) if term_scores else 0
+        avg_term_score = sum(term_scores) / len(term_scores) if term_scores else 0
         print(f"- Average term usage score: {avg_term_score:.3f}")
 
         # Analyze structure adherence
-        structure_scores = [r.metrics["structure_score"]
-                            for r in prompt_results]
-        avg_structure_score = sum(structure_scores) / \
-            len(structure_scores) if structure_scores else 0
+        structure_scores = [r.metrics["structure_score"] for r in prompt_results]
+        avg_structure_score = (
+            sum(structure_scores) / len(structure_scores) if structure_scores else 0
+        )
         print(f"- Average structure score: {avg_structure_score:.3f}")
 
 
@@ -188,15 +218,14 @@ if __name__ == "__main__":
     # Initialize components
     rag_system = TurkishLegalRAG(
         law_json_path=os.path.join(
-            DATA_DIR, "processed", "criminal_law", "processed_law.json"),
+            DATA_DIR, "processed", "criminal_law", "processed_law.json"
+        ),
         terms_json_path=os.path.join(
-            DATA_DIR, "processed", "legal_terms", "legal_terms.json")
+            DATA_DIR, "processed", "legal_terms", "legal_terms.json"
+        ),
     )
 
-    llm = ChatOpenAI(
-        model_name="gpt-3.5-turbo",
-        temperature=0
-    )
+    llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
 
     evaluator = PromptEvaluator(output_dir="evaluation_results")
 

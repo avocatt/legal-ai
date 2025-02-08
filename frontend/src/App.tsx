@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import { 
-  Container, 
-  TextField, 
-  Button, 
-  Box, 
-  Typography, 
+import { useState } from "react";
+import {
+  Container,
+  TextField,
+  Button,
+  Box,
+  Typography,
   Paper,
   CircularProgress,
-} from '@mui/material';
-import { askQuestion } from './services/api';
-import { QuestionResponse } from './types/api';
-import ReactMarkdown from 'react-markdown';
+} from "@mui/material";
+import { askQuestion } from "./services/api";
+import { QuestionResponse } from "./types/api";
+import ReactMarkdown from "react-markdown";
 
 function App() {
-  const [question, setQuestion] = useState('');
+  const [question, setQuestion] = useState("");
   const [response, setResponse] = useState<QuestionResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -24,12 +24,12 @@ function App() {
 
     setLoading(true);
     setError(null);
-    
+
     try {
       const result = await askQuestion({ question });
       setResponse(result);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -58,12 +58,19 @@ function App() {
           disabled={loading || !question.trim()}
           sx={{ minWidth: 120 }}
         >
-          {loading ? <CircularProgress size={24} /> : 'Ask'}
+          {loading ? <CircularProgress size={24} /> : "Ask"}
         </Button>
       </Box>
 
       {error && (
-        <Paper sx={{ p: 2, mb: 2, bgcolor: 'error.light', color: 'error.contrastText' }}>
+        <Paper
+          sx={{
+            p: 2,
+            mb: 2,
+            bgcolor: "error.light",
+            color: "error.contrastText",
+          }}
+        >
           <Typography>{error}</Typography>
         </Paper>
       )}
@@ -77,7 +84,8 @@ function App() {
             <ReactMarkdown>{response.answer}</ReactMarkdown>
             {response.confidence_score && (
               <Typography variant="body2" color="text.secondary">
-                Confidence Score: {(response.confidence_score * 100).toFixed(1)}%
+                Confidence Score: {(response.confidence_score * 100).toFixed(1)}
+                %
               </Typography>
             )}
             <Typography variant="body2" color="text.secondary">
@@ -94,7 +102,7 @@ function App() {
               <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
                 {Object.entries(source.metadata)
                   .map(([key, value]) => `${key}: ${value}`)
-                  .join(' | ')}
+                  .join(" | ")}
               </Typography>
             </Paper>
           ))}

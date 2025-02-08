@@ -1,5 +1,6 @@
 """Different prompt templates for legal reasoning."""
-from typing import Dict, Any, List
+from typing import List
+
 from .base import BasePromptTemplate
 
 
@@ -7,8 +8,13 @@ class BasicLegalPrompt(BasePromptTemplate):
     """Basic prompt template for legal questions."""
 
     def __init__(self):
+        """Initialize the basic legal prompt template.
+
+        Sets up a simple template that focuses on using context to answer
+        legal questions with proper terminology and article references.
+        """
         template = """Sen Türk Ceza Kanunu konusunda uzmanlaşmış bir hukuk asistanısın.
-        
+
 Bağlam:
 {context}
 
@@ -38,6 +44,11 @@ class StructuredLegalPrompt(BasePromptTemplate):
     """Structured prompt template with explicit sections."""
 
     def __init__(self):
+        """Initialize the structured legal prompt template.
+
+        Sets up a comprehensive template that breaks down the response
+        into clearly defined sections for thorough legal analysis.
+        """
         template = """Sen Türk Ceza Kanunu konusunda uzmanlaşmış bir hukuk asistanısın.
 
 Bağlam:
@@ -86,7 +97,7 @@ Yanıt:"""
             "SORU KAPSAMI",
             "İLGİLİ KANUN MADDELERİ",
             "HUKUKİ ANALİZ",
-            "SONUÇ"
+            "SONUÇ",
         ]
 
     def format(self, **kwargs) -> str:
@@ -108,6 +119,11 @@ class MultiStepLegalPrompt(BasePromptTemplate):
     """Multi-step reasoning prompt template for complex legal questions."""
 
     def __init__(self):
+        """Initialize the multi-step legal prompt template.
+
+        Sets up a template that guides the model through a step-by-step
+        reasoning process for complex legal questions.
+        """
         template = """Sen Türk Ceza Kanunu konusunda uzmanlaşmış bir hukuk asistanısın.
 
 Bağlam:
@@ -150,7 +166,7 @@ Yanıt:"""
             "Soru Analizi",
             "Yasal Çerçeve",
             "Hukuki Değerlendirme",
-            "Sonuç"
+            "Sonuç",
         ]
 
     def format(self, **kwargs) -> str:
