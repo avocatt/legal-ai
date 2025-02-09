@@ -1,0 +1,58 @@
+{
+    "books": [
+        {
+            "title": "BİRİNCİ KİTAP",
+            "parts": [
+                {
+                    "title": "GENEL HÜKÜMLER",
+                    "chapters": [
+                        {
+                            "title": "Temel İlkeler",
+                            "articles": [
+                                {
+                                    "number": 1,
+                                    "content": "Ceza Kanununun amacı; kişi hak ve özgürlüklerini korumaktır.",
+                                    "type": "article",
+                                    "metadata": {
+                                        "type": "article",
+                                        "number": 1,
+                                        "book": "BİRİNCİ KİTAP",
+                                        "part": "GENEL HÜKÜMLER",
+                                        "chapter": "Temel İlkeler"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "İKİNCİ KİTAP",
+            "parts": [
+                {
+                    "title": "ÖZEL HÜKÜMLER",
+                    "chapters": [
+                        {
+                            "title": "Genel Tehlike Yaratan Suçlar",
+                            "articles": [
+                                {
+                                    "number": 170,
+                                    "content": "Genel güvenliğin kasten tehlikeye sokulması suçtur.",
+                                    "type": "article",
+                                    "metadata": {
+                                        "type": "article",
+                                        "number": 170,
+                                        "book": "İKİNCİ KİTAP",
+                                        "part": "ÖZEL HÜKÜMLER",
+                                        "chapter": "Genel Tehlike Yaratan Suçlar"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

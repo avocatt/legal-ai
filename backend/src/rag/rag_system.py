@@ -75,6 +75,10 @@ class TurkishLegalRAG:
             metadata_filter=metadata_filter,
         )
 
+        # If metadata filter is set, only return documents
+        if metadata_filter:
+            return docs
+
         # Get relevant legal terms
         terms = self.terminology.get_relevant_terms(query, n_results=3)
 

@@ -58,7 +58,7 @@ class DocumentRetriever:
             raise Exception(f"Error loading law data: {str(e)}")
 
     def _initialize_vector_store(self):
-        """Initialize the vector store with articles and provisions."""
+        """Initialize the vector store with articles."""
         documents = []
         ids = []
         metadatas = []
@@ -85,25 +85,9 @@ class DocumentRetriever:
                             }
                         )
 
-                        # Create documents for key provisions
-                        if "key_provisions" in article:
-                            for idx, provision in enumerate(article["key_provisions"]):
-                                provision_id = f"provision_{article['number']}_{idx}"
-                                documents.append(provision)
-                                ids.append(provision_id)
-                                metadatas.append(
-                                    {
-                                        "type": "provision",
-                                        "article_number": article["number"],
-                                        "provision_index": idx,
-                                        "book": book["title"],
-                                        "part": part["title"],
-                                        "chapter": chapter["title"],
-                                    }
-                                )
-
         # Add documents to the collection
-        self.collection.add(documents=documents, ids=ids, metadatas=metadatas)
+        if documents:
+            self.collection.add(documents=documents, ids=ids, metadatas=metadatas)
 
     def retrieve(
         self,
