@@ -6,7 +6,7 @@ to generate accurate answers to legal questions.
 
 from typing import Dict, Optional
 
-from langchain.schema import BaseLanguageModel
+from langchain_core.language_models.base import BaseLanguageModel
 
 from .prompts import StructuredLegalPrompt
 from .rag_system import TurkishLegalRAG

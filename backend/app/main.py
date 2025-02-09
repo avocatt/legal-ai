@@ -8,8 +8,8 @@ import logging
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import APIRouter
 
-from .api.v1.api import api_router
 from .core.config import get_settings
 
 # Set up logging
@@ -18,6 +18,13 @@ logger = logging.getLogger(__name__)
 
 # Get settings
 settings = get_settings()
+
+# Create API router
+api_router = APIRouter()
+
+# Import and include endpoints
+from .api.endpoints.qa import router as qa_router
+api_router.include_router(qa_router, prefix="/qa", tags=["qa"])
 
 # Create FastAPI app
 app = FastAPI(
