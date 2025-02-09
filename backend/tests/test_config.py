@@ -8,7 +8,15 @@ from typing import Generator
 import pytest
 from pydantic import ValidationError
 
-from app.core.config import Environment, LogLevel, Settings
+from src.core.config import Environment, LogLevel, Settings, get_settings, clear_settings_cache
+
+
+@pytest.fixture(autouse=True)
+def clear_cache():
+    """Clear settings cache before and after each test."""
+    clear_settings_cache()
+    yield
+    clear_settings_cache()
 
 
 @pytest.fixture
@@ -57,16 +65,16 @@ def mock_env(tmp_path: Path) -> Generator[None, None, None]:
 
 def test_settings_validation(mock_env):
     """Test settings validation with valid configuration."""
-    settings = Settings()
+    settings = get_settings()
     
     assert settings.ENVIRONMENT == Environment.DEVELOPMENT
     assert settings.DEBUG is True
     assert settings.PROJECT_NAME == "Test API"
-    assert settings.SECRET_KEY.get_secret_value() == "test-secret-key"
+    assert settings.SECRET_KEY == "test-secret-key"
     assert settings.POSTGRES_USER == "test_user"
-    assert settings.POSTGRES_PASSWORD.get_secret_value() == "test_password"
+    assert settings.POSTGRES_PASSWORD == "test_password"
     assert settings.POSTGRES_DB == "test_db"
-    assert settings.OPENAI_API_KEY.get_secret_value() == "test-api-key"
+    assert settings.OPENAI_API_KEY == "test-api-key"
 
 
 def test_missing_required_settings():
@@ -74,7 +82,7 @@ def test_missing_required_settings():
     os.environ.clear()
     
     with pytest.raises(ValidationError) as exc_info:
-        Settings()
+        get_settings()
     
     errors = exc_info.value.errors()
     required_fields = {"SECRET_KEY", "POSTGRES_USER", "POSTGRES_PASSWORD", "POSTGRES_DB", "OPENAI_API_KEY"}
@@ -84,15 +92,20 @@ def test_missing_required_settings():
 
 def test_cors_origins_validation(mock_env):
     """Test CORS origins validation."""
-    # Test with JSON string input
-    origins = ["http://localhost:3000", "http://localhost:8000"]
-    os.environ["BACKEND_CORS_ORIGINS"] = json.dumps(origins)
+    # Test with empty string
+    os.environ["BACKEND_CORS_ORIGINS"] = ""
+    settings = Settings()
+    assert len(settings.BACKEND_CORS_ORIGINS) == 0
+
+    # Test with comma-separated string input
+    os.environ["BACKEND_CORS_ORIGINS"] = "http://localhost:3000,http://localhost:8000"
     settings = Settings()
     assert len(settings.BACKEND_CORS_ORIGINS) == 2
     assert all(str(url).startswith("http://") for url in settings.BACKEND_CORS_ORIGINS)
 
-    # Test with comma-separated string input
-    os.environ["BACKEND_CORS_ORIGINS"] = "http://localhost:3000,http://localhost:8000"
+    # Test with JSON string input
+    origins = ["http://localhost:3000", "http://localhost:8000"]
+    os.environ["BACKEND_CORS_ORIGINS"] = json.dumps(origins)
     settings = Settings()
     assert len(settings.BACKEND_CORS_ORIGINS) == 2
     assert all(str(url).startswith("http://") for url in settings.BACKEND_CORS_ORIGINS)
@@ -105,7 +118,7 @@ def test_cors_origins_validation(mock_env):
 
 def test_database_uri_construction(mock_env):
     """Test database URI construction."""
-    settings = Settings()
+    settings = get_settings()
     db_uri = settings.SQLALCHEMY_DATABASE_URI
     
     assert "postgresql://" in str(db_uri)
@@ -115,7 +128,7 @@ def test_database_uri_construction(mock_env):
 
 def test_log_file_creation(mock_env):
     """Test log file and directory creation."""
-    settings = Settings()
+    settings = get_settings()
     log_file = settings.LOG_FILE
     
     assert log_file.parent.exists()
@@ -126,31 +139,35 @@ def test_environment_enum_validation(mock_env):
     """Test environment enum validation."""
     # Test valid environment
     os.environ["ENVIRONMENT"] = "production"
-    settings = Settings()
+    clear_settings_cache()
+    settings = get_settings()
     assert settings.ENVIRONMENT == Environment.PRODUCTION
     
     # Test invalid environment
     os.environ["ENVIRONMENT"] = "invalid"
+    clear_settings_cache()
     with pytest.raises(ValidationError):
-        Settings()
+        get_settings()
 
 
 def test_log_level_enum_validation(mock_env):
     """Test log level enum validation."""
     # Test valid log level
     os.environ["LOG_LEVEL"] = "DEBUG"
-    settings = Settings()
+    clear_settings_cache()
+    settings = get_settings()
     assert settings.LOG_LEVEL == LogLevel.DEBUG
     
     # Test invalid log level
     os.environ["LOG_LEVEL"] = "INVALID"
+    clear_settings_cache()
     with pytest.raises(ValidationError):
-        Settings()
+        get_settings()
 
 
 def test_data_paths_validation(mock_env, tmp_path: Path):
     """Test data paths validation."""
-    settings = Settings()
+    settings = get_settings()
     
     # Test that paths are properly resolved
     assert settings.LAW_JSON_PATH.name == "processed_law.json"
@@ -158,8 +175,9 @@ def test_data_paths_validation(mock_env, tmp_path: Path):
     
     # Test validation error for non-existent files
     os.environ["DATA_DIR"] = str(tmp_path / "nonexistent")
+    clear_settings_cache()
     with pytest.raises(ValidationError) as exc_info:
-        Settings()
+        get_settings()
     
     errors = exc_info.value.errors()
     assert any("Data file not found" in str(error["msg"]) for error in errors) 
