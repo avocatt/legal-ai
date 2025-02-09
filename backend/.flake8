@@ -1,8 +1,0 @@
-[flake8]
-max-line-length = 100
-exclude = .git,__pycache__,build,dist
-per-file-ignores =
-    # Allow unused imports in __init__.py files
-    __init__.py: F401
-    # Allow long lines in test files
-    tests/*: E501 
