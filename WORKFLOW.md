@@ -56,7 +56,7 @@ The AI will:
 - Show test results
 - Ensure all tests pass
 
-### 4. Commit Phase
+### 4. Commit and Push Phase
 The AI will propose a commit with:
 ```
 <type>(<scope>): <summary>
@@ -69,7 +69,14 @@ Changes:
 Tests:
 - <list of tests added/modified>
 - <test results>
+
+Shall I commit these changes? (y/n)
 ```
+
+After commit approval, the AI will automatically:
+1. Execute the commit
+2. Push to the current branch
+3. Show push results
 
 ## Commit Message Standards
 
@@ -107,7 +114,7 @@ Related: #issue_number
 - `tools`: Development tools
 - `root`: Project-level changes
 
-## Example Workflow
+## Example Complete Workflow
 
 1. Request:
 ```
@@ -140,7 +147,7 @@ TESTING
 - All tests passing
 ```
 
-4. Commit:
+4. Commit and Push:
 ```
 feat(rag): add specialized legal question prompt template
 
@@ -156,4 +163,16 @@ Tests:
 - Added template validation tests
 - Added response format tests
 - All tests passing
+
+Shall I commit these changes? (y/n)
+```
+
+After approval:
+```
+[restore-documentation abc1234] feat(rag): add specialized legal question prompt template
+ 2 files changed, 45 insertions(+), 0 deletions(-)
+
+Pushing changes to current branch...
+To github.com:username/legal-ai.git
+   def5678..abc1234  restore-documentation -> restore-documentation
 ``` 
