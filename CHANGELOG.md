@@ -9,17 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- implement legal terminology integration
-- integrate legal terminology vector database
-- Complete Phase 1 Web Interface implementation - Add Docker development environment with hot reload - Update project documentation - Complete FastAPI backend setup - Complete React frontend setup - Add health checks and container orchestration - Pre-cache models for faster development
-- Add Turkish Criminal Law data files
-- Add modular project structure with RAG components, tests, and documentation
+- Move ROADMAP.md to docs directory for better organization
+- Update documentation structure
 
-### Changed
-
-- add comprehensive prompt system documentation
-- add git workflow and documentation standards
-- Remove deprecated files related to law processing and extraction
+## [0.2.0] - 2024-02-08
 
 ### Added
 
@@ -30,16 +23,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Git workflow documentation and standards
 - Branch strategy with main and develop branches
 - Pull request templates and guidelines
-- Standardized commit message format
-- Branch protection rules
 - Documentation standards and templates
-- Standardized documentation update process
 - Component-level README structure
 - Technical documentation guidelines
 - Support section in main README
 - Architecture overview section
-- Markdown rendering support in frontend
 - Vector store management features
+- Legal terminology integration
+- Legal terminology vector database
+- Turkish Criminal Law data files
+- Modular project structure with RAG components, tests, and documentation
 
 ### Changed
 
@@ -66,6 +59,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - README formatting and structure
 - Missing prerequisites in setup guide
 
+## [0.1.1] - 2024-02-07
+
+### Added
+
+- Complete Phase 1 Web Interface implementation
+- Docker development environment with hot reload
+- Health checks and container orchestration
+- Pre-cache models for faster development
+- Markdown rendering support in frontend
+
+### Changed
+
+- Update project documentation
+- Complete FastAPI backend setup
+- Complete React frontend setup
+- Remove deprecated files related to law processing and extraction
+
 ## [0.1.0] - 2024-02-06
 
 ### Added
@@ -82,5 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Basic prompt templates
 - Error handling middleware
 
-[Unreleased]: https://github.com/yourusername/legal-ai/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/yourusername/legal-ai/releases/tag/v0.1.0
+[Unreleased]: https://github.com/avocatt/legal-ai/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/avocatt/legal-ai/compare/v0.1.1...v0.2.0
+[0.1.1]: https://github.com/avocatt/legal-ai/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/avocatt/legal-ai/releases/tag/v0.1.0

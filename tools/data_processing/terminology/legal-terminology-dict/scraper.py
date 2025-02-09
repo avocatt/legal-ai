@@ -1,31 +1,43 @@
-import os
+# flake8: noqa: D401
+"""Download and process legal terminology from Turkish legal resources.
+
+This module provides functionality to scrape and process legal terminology
+from various Turkish legal resources, creating a comprehensive dictionary.
+"""
+
 import json
+import os
+from typing import Dict
+
 import requests
 from bs4 import BeautifulSoup
-import time
-from typing import Dict, List, Tuple
 
 # Update output path to use the new data structure
-DATA_DIR = os.path.join(os.path.dirname(
-    os.path.dirname(os.path.dirname(__file__))), "data")
-RAW_OUTPUT_PATH = os.path.join(
-    DATA_DIR, "raw", "legal_terms", "legal_terms.json")
+DATA_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data"
+)
+RAW_OUTPUT_PATH = os.path.join(DATA_DIR, "raw", "legal_terms", "legal_terms.json")
 PROCESSED_OUTPUT_PATH = os.path.join(
-    DATA_DIR, "processed", "legal_terms", "legal_terms.json")
+    DATA_DIR, "processed", "legal_terms", "legal_terms.json"
+)
 
 
 def scrape_legal_terms() -> Dict[str, str]:
-    """Scrape legal terms and their definitions from the website."""
+    """Download legal terms and their definitions from the website.
+
+    Returns:
+        Dict[str, str]: Dictionary mapping terms to their definitions
+    """
     base_url = "https://www.hukukiyardim.gov.tr/hukuk-sozlugu"
 
     try:
         response = requests.get(base_url)
         response.raise_for_status()
-        soup = BeautifulSoup(response.content, 'html.parser')
+        soup = BeautifulSoup(response.content, "html.parser")
 
         terms_dict = {}
-        term_elements = soup.find_all('dt')
-        definition_elements = soup.find_all('dd')
+        term_elements = soup.find_all("dt")
+        definition_elements = soup.find_all("dd")
 
         for term, definition in zip(term_elements, definition_elements):
             term_text = term.get_text(strip=True)
@@ -64,7 +76,7 @@ def save_terms(terms: Dict[str, str], is_processed: bool = False) -> None:
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
     try:
-        with open(output_path, 'w', encoding='utf-8') as f:
+        with open(output_path, "w", encoding="utf-8") as f:
             json.dump(terms, f, ensure_ascii=False, indent=2)
         print(f"Terms saved to {output_path}")
     except Exception as e:

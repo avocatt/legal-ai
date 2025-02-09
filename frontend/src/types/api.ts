@@ -16,4 +16,4 @@ export interface QuestionResponse {
   confidence_score?: number;
   sources: SearchResult[];
   processing_time: number;
-} 
+}

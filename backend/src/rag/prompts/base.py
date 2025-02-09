@@ -1,6 +1,6 @@
-"""Base class for prompt templates."""
+"""Define base classes for prompt templates."""
 from abc import ABC, abstractmethod
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
 
 
 class BasePromptTemplate(ABC):
@@ -16,7 +16,7 @@ class BasePromptTemplate(ABC):
         self.metadata: Dict[str, Any] = {
             "name": self.__class__.__name__,
             "description": self.__doc__ or "",
-            "version": "1.0"
+            "version": "1.0",
         }
 
     @abstractmethod
@@ -64,5 +64,5 @@ class BasePromptTemplate(ABC):
         return self.metadata.get(key)
 
     def __str__(self) -> str:
-        """String representation of the prompt template."""
+        """Get string representation of the prompt template."""
         return f"{self.__class__.__name__}(template={self.template})"

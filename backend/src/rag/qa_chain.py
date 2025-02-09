@@ -1,68 +1,91 @@
-"""Chain for question answering over Turkish legal documents."""
+"""Question answering chain implementation for the Turkish Legal RAG system.
+
+This module provides the QA chain that combines the RAG system with a language model
+to generate accurate answers to legal questions.
+"""
 
 from typing import Dict, Optional
 
-from langchain_core.language_models import BaseLanguageModel
-from langchain_core.prompts import ChatPromptTemplate
+from langchain.schema import BaseLanguageModel
 
+from .prompts import StructuredLegalPrompt
 from .rag_system import TurkishLegalRAG
 
 
 class LegalQAChain:
-    """Chain for question answering over Turkish legal documents using a RAG system."""
+    """Chain for answering legal questions using RAG and LLM.
 
-    def __init__(self, rag_system: TurkishLegalRAG, llm: BaseLanguageModel):
+    This class combines the Turkish Legal RAG system with a language model to
+    generate accurate and well-structured answers to legal questions. It uses
+    a structured prompt template to ensure consistent and comprehensive responses.
+
+    Attributes:
+        rag_system: Turkish Legal RAG system for retrieving relevant documents
+        llm: Language model for generating answers
+        prompt_template: Template for structuring the prompts
+    """
+
+    def __init__(
+        self,
+        rag_system: TurkishLegalRAG,
+        llm: Optional[BaseLanguageModel] = None,
+    ):
         """Initialize the QA chain.
 
         Args:
-            rag_system: The RAG system to use for document retrieval
-            llm: The language model to use for question answering
+            rag_system: Turkish Legal RAG system instance
+            llm: Optional language model (if not provided, will use default)
         """
         self.rag_system = rag_system
         self.llm = llm
-
-        # Define the prompt template
-        self.prompt = ChatPromptTemplate.from_messages(
-            [
-                (
-                    "system",
-                    "You are a Turkish legal expert assistant. Use the following "
-                    "context to answer the question. If you cannot find the answer "
-                    "in the context, say so. Do not make up information.\n\n"
-                    "Context:\n{context}\n\n",
-                ),
-                ("human", "{question}"),
-            ]
-        )
+        self.prompt_template = StructuredLegalPrompt()
 
     def run(
         self,
         question: str,
         metadata_filter: Optional[Dict[str, str]] = None,
-        include_blog: bool = True,
+        n_results: int = 5,
     ) -> str:
-        """Run the QA chain on a question.
+        """Run the QA chain to get an answer.
 
         Args:
-            question: The question to answer
-            metadata_filter: Optional metadata filters for document retrieval
-            include_blog: Whether to include blog articles in retrieval
+            question: The legal question to answer
+            metadata_filter: Optional filters for document retrieval
+            n_results: Number of documents to retrieve (default: 5)
 
         Returns:
-            str: The answer to the question
+            str: Generated answer to the question
+
+        Raises:
+            ValueError: If the question is empty or invalid
+            Exception: If there's an error during processing
         """
-        # Retrieve relevant documents
-        docs = self.rag_system.retrieve(
-            query=question,
-            metadata_filter=metadata_filter,
-            include_blog=include_blog,
-        )
+        if not question or not isinstance(question, str):
+            raise ValueError("Question must be a non-empty string")
 
-        # Format the context
-        context = self.rag_system.format_context(docs)
+        try:
+            # Retrieve relevant documents
+            docs = self.rag_system.retrieve(
+                query=question,
+                n_results=n_results,
+                metadata_filter=metadata_filter,
+            )
 
-        # Generate the answer
-        chain = self.prompt | self.llm
-        response = chain.invoke({"context": context, "question": question})
+            # Format context from retrieved documents
+            context = self.rag_system.format_context(docs)
 
-        return response.content
+            # Format prompt
+            prompt = self.prompt_template.format(
+                context=context,
+                question=question,
+            )
+
+            # Generate answer using LLM
+            if self.llm:
+                response = self.llm.invoke(prompt)
+                return response.content
+
+            return "No language model provided. Please initialize with a valid LLM."
+
+        except Exception as e:
+            raise Exception(f"Error in QA chain: {str(e)}")
