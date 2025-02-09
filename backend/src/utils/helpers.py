@@ -13,7 +13,7 @@ def ensure_directory(path: str) -> None:
 
 def get_project_root() -> Path:
     """Get the project root directory."""
-    return Path(__file__).parent.parent.parent
+    return Path(__file__).parent.parent.parent.parent
 
 
 def get_data_dir() -> Path:
@@ -21,13 +21,6 @@ def get_data_dir() -> Path:
     data_dir = get_project_root() / "data"
     ensure_directory(str(data_dir))
     return data_dir
-
-
-def get_vector_store_path() -> Path:
-    """Get the vector store directory path."""
-    vector_store_path = get_data_dir() / "vector_store"
-    ensure_directory(str(vector_store_path))
-    return vector_store_path
 
 
 def validate_api_keys() -> None:

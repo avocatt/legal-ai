@@ -27,9 +27,6 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
     SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
 
-    # Vector Store
-    VECTOR_STORE_PATH: Path = Field(default=PROJECT_ROOT / "data" / "vector_store")
-
     # Logging
     LOG_LEVEL: str = "INFO"
     LOG_FILE: Path = Field(default=PROJECT_ROOT / "logs" / "app.log")
@@ -48,7 +45,7 @@ class Settings(BaseSettings):
             path=f"/{values.get('POSTGRES_DB') or ''}",
         )
 
-    @validator("VECTOR_STORE_PATH", "LOG_FILE")
+    @validator("LOG_FILE")
     def create_directories(cls, v: Path) -> Path:
         """Ensure directories exist."""
         v.parent.mkdir(parents=True, exist_ok=True)

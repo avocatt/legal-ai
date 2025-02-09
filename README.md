@@ -65,6 +65,7 @@ Key features:
 │   ├── src/                  # Core business logic
 │   ├── tests/                # Test files
 │   ├── migrations/           # Database migrations
+│   ├── chroma_db/           # Vector store data
 │   └── logs/                 # Application logs
 ├── frontend/                  # Frontend service
 │   ├── src/                  # Source code
