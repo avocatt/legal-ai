@@ -29,10 +29,16 @@ Key features:
    cd legal-ai
    ```
 
-2. **Run Setup Script**
+2. **Set Up Environment**
 
    ```bash
-   ./scripts/setup/setup_dev.sh
+   # Create and activate virtual environment
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+   # Install dependencies
+   cd backend
+   pip install -r requirements.txt
    ```
 
 3. **Start Services**
@@ -40,7 +46,7 @@ Key features:
    ```bash
    # Start backend
    cd backend
-   poetry run uvicorn app.main:app --reload
+   python -m uvicorn app.main:app --reload
 
    # Start frontend (in another terminal)
    cd frontend
@@ -112,7 +118,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed information.
 ```bash
 # Backend tests
 cd backend
-poetry run pytest
+python -m pytest
 
 # Frontend tests
 cd frontend
