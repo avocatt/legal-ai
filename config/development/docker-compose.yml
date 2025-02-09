@@ -1,17 +1,17 @@
 services:
   backend:
     build:
-      context: ./backend
+      context: ../../backend
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app
-      - ./data:/app/data
-      - ./tools:/app/tools
+      - ../../backend:/app
+      - ../../data:/app/data
+      - ../../tools:/app/tools
       - chroma_data:/app/chroma_db
     env_file:
-      - ./backend/.env
+      - ./.env
     environment:
       - PYTHONPATH=/app:/app/src
     networks:
@@ -25,7 +25,7 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: ../../frontend
       dockerfile: Dockerfile
     ports:
       - "80:80"
