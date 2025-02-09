@@ -35,8 +35,8 @@ class QAService:
         """
         self.settings = get_settings()
         self.rag_system = TurkishLegalRAG(
-            law_json_path="data/processed/processed_law.json",
-            terms_json_path="tools/legal-terminology-dict/output/legal_terms.json",
+            law_json_path="data/processed/criminal_law/processed_law.json",
+            terms_json_path="data/processed/legal_terms/legal_terms.json",
             collection_name=self.settings.COLLECTION_NAME,
             embedding_model=self.settings.EMBEDDING_MODEL,
         )

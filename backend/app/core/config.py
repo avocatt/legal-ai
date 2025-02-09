@@ -6,7 +6,7 @@ This module handles environment variables and application settings using Pydanti
 from functools import lru_cache
 from typing import Optional
 
-from pydantic import validator
+from pydantic import field_validator
 from pydantic_settings import BaseSettings
 
 
@@ -43,24 +43,23 @@ class Settings(BaseSettings):
     COLLECTION_NAME: str = "turkish_criminal_law"
 
     # RAG Settings
-    LAW_JSON_PATH: str = "data/processed/law.json"
-    TERMS_JSON_PATH: str = "data/processed/legal_terms.json"
+    LAW_JSON_PATH: str = "data/processed/criminal_law/processed_law.json"
+    TERMS_JSON_PATH: str = "data/processed/legal_terms/legal_terms.json"
 
-    class Config:
-        """Pydantic configuration for settings."""
+    model_config = {
+        "case_sensitive": True,
+        "env_file": ".env",
+        "env_file_encoding": "utf-8",
+        "extra": "ignore"
+    }
 
-        case_sensitive = True
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        extra = "ignore"
-
-    @validator("OPENAI_API_KEY", "HUGGINGFACE_TOKEN")
-    def validate_required_env_vars(cls, v: Optional[str], field: str) -> str:
+    @field_validator("OPENAI_API_KEY", "HUGGINGFACE_TOKEN")
+    @classmethod
+    def validate_required_env_vars(cls, v: Optional[str]) -> str:
         """Validate that required environment variables are provided.
 
         Args:
             v (Optional[str]): The value to validate
-            field (str): The field name being validated
 
         Returns:
             str: The validated value
@@ -69,7 +68,7 @@ class Settings(BaseSettings):
             ValueError: If the required environment variable is not provided
         """
         if not v:
-            raise ValueError(f"{field} environment variable must be provided")
+            raise ValueError("Environment variable must be provided")
         return v
 
 

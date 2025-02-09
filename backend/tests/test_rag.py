@@ -17,7 +17,7 @@ def test_rag_initialization():
 
 def test_retrieval():
     """Test document retrieval."""
-    rag = TurkishLegalRAG("data/processed/processed_law.json")
+    rag = TurkishLegalRAG("data/processed/criminal_law/processed_law.json")
 
     # Test with valid query
     results = rag.retrieve("ceza kanunu")
@@ -35,7 +35,7 @@ def test_retrieval():
 
 def test_metadata_filtering():
     """Test metadata filtering in retrieval."""
-    rag = TurkishLegalRAG("data/processed/processed_law.json")
+    rag = TurkishLegalRAG("data/processed/criminal_law/processed_law.json")
 
     # Test with valid metadata filter
     results = rag.retrieve("ceza", metadata_filter={"book": "İKİNCİ KİTAP"})
@@ -48,7 +48,7 @@ def test_metadata_filtering():
 
 def test_context_formatting():
     """Test context formatting."""
-    rag = TurkishLegalRAG("data/processed/processed_law.json")
+    rag = TurkishLegalRAG("data/processed/criminal_law/processed_law.json")
 
     # Get some results
     results = rag.retrieve("ceza")

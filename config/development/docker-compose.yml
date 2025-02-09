@@ -4,9 +4,11 @@ services:
       context: ../../backend
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "8002:8000"
     volumes:
-      - ../../backend:/app
+      - ../../backend/app:/app/app
+      - ../../backend/src:/app/src
+      - ../../backend/tests:/app/tests
       - ../../data:/app/data
       - ../../tools:/app/tools
       - chroma_data:/app/chroma_db
