@@ -1,0 +1,49 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    - cron: "0 0 * * 0" # Run weekly
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+
+      - name: Run Bandit
+        run: |
+          pip install bandit
+          bandit -r backend/ -ll -ii -f json -o bandit-results.json || true
+
+      - name: Run npm audit
+        run: |
+          cd frontend
+          npm audit --json > npm-audit.json || true
+
+      - name: Run OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: "Legal-AI"
+          path: "."
+          format: "HTML"
+
+      - name: Upload security results
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-scan-results
+          path: |
+            bandit-results.json
+            npm-audit.json
+            dependency-check-report.html
+          retention-days: 90

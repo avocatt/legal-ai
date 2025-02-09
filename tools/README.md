@@ -1,177 +1,61 @@
-# Development Tools
+# Project Tools
 
-This directory contains various tools and utilities for the Turkish Legal AI system, organized by functionality.
+This directory contains various tools and utilities for the Legal AI project.
 
 ## Directory Structure
 
 ```
 tools/
-├── data_processing/           # Data processing pipeline tools
+├── data_processing/          # Data processing utilities
+│   ├── vector_store/        # Vector store management
+│   ├── terminology/         # Legal terminology processing
+│   ├── analyze_criminal_law_content.py
 │   ├── filter_criminal_law_articles.py
 │   ├── clean_criminal_law_articles.py
-│   ├── analyze_criminal_law_content.py
 │   └── README.md
-├── vector_store/             # Vector store management tools
-│   ├── create_vector_store.py
-│   └── README.md
-├── hierarchy/                # Hierarchy implementation tools
-│   ├── implement_hierarchy.py
-│   └── README.md
-└── README.md                 # This file
+├── analysis/                # Analysis tools
+├── deployment/              # Deployment utilities
+├── scripts/                 # Utility scripts
+└── hierarchy/               # Hierarchy management
 ```
 
-## Tool Categories
+## Tools Overview
 
-### 1. Data Processing Tools
+### Data Processing
 
-Tools for processing raw data into structured formats.
+The `data_processing` directory contains tools for processing legal documents and managing the vector store:
 
-- [Documentation](data_processing/README.md)
-- Input: Raw blog articles
-- Output: Processed and analyzed articles
+- `vector_store/`: Tools for managing and maintaining the vector database
+- `terminology/`: Tools for processing and managing legal terminology
+- `analyze_criminal_law_content.py`: Analyzes criminal law content
+- `filter_criminal_law_articles.py`: Filters relevant criminal law articles
+- `clean_criminal_law_articles.py`: Cleans and preprocesses criminal law articles
 
-### 2. Vector Store Tools
+### Analysis Tools
 
-Tools for managing ChromaDB vector stores.
+The `analysis` directory contains tools for analyzing the system's performance and data quality.
 
-- [Documentation](vector_store/README.md)
-- Input: Processed articles
-- Output: Vector embeddings and collections
+### Deployment Tools
 
-### 3. Hierarchy Tools
+The `deployment` directory contains utilities for deploying the application in various environments.
 
-Tools for implementing content hierarchy.
+### Scripts
 
-- [Documentation](hierarchy/README.md)
-- Input: Analyzed articles
-- Output: Hierarchical structure and validation
+The `scripts` directory contains various utility scripts for development and maintenance.
 
-## Complete Pipeline
+### Hierarchy
 
-```mermaid
-graph TD
-    A[Raw Blog Data] --> B[Data Processing]
-    B --> C[Content Analysis]
-    C --> D[Hierarchy Implementation]
-    D --> E[Vector Store Creation]
-    E --> F[RAG System]
-```
+The `hierarchy` directory contains tools for managing the legal document hierarchy.
 
 ## Usage
 
-### 1. Process Raw Data
+Each tool directory contains its own README with specific usage instructions.
 
-```bash
-# 1. Filter articles
-python -m tools.data_processing.filter_criminal_law_articles
+## Contributing
 
-# 2. Clean articles
-python -m tools.data_processing.clean_criminal_law_articles
+When adding new tools:
 
-# 3. Analyze content
-python -m tools.data_processing.analyze_criminal_law_content
-```
-
-### 2. Implement Hierarchy
-
-```bash
-python -m tools.hierarchy.implement_hierarchy
-```
-
-### 3. Create Vector Store
-
-```bash
-python -m tools.vector_store.create_vector_store
-```
-
-## Development Guidelines
-
-### Adding New Tools
-
-1. Choose appropriate category directory
-2. Create tool script
-3. Add comprehensive documentation
-4. Update category README
-5. Update this README
-
-### Code Style
-
-- Follow PEP 8
-- Add type hints
-- Include docstrings
-- Add error handling
-- Include logging
-
-### Testing
-
-- Add unit tests
-- Include integration tests
-- Test with sample data
-- Document test cases
-
-## Data Flow
-
-### Input Data
-
-- Raw blog articles (CSV)
-- Turkish Criminal Code (JSON)
-- Legal terminology (JSON)
-
-### Intermediate Data
-
-- Filtered articles
-- Cleaned content
-- Analyzed metadata
-- Hierarchical structure
-
-### Output Data
-
-- Vector store collections
-- Validation results
-- Processing logs
-- Error reports
-
-## Maintenance
-
-### Regular Tasks
-
-- Update documentation
-- Verify data flow
-- Check error logs
-- Monitor performance
-- Update dependencies
-
-### Error Handling
-
-- Log all errors
-- Implement retries
-- Validate outputs
-- Report issues
-
-## Dependencies
-
-### Python Packages
-
-- pandas
-- chromadb
-- beautifulsoup4
-- sentence-transformers
-- numpy
-- typing
-- json
-
-### System Requirements
-
-- Python 3.9+
-- Sufficient disk space
-- Adequate RAM (8GB+)
-- Internet connection
-
-## Support
-
-For issues or questions:
-
-1. Check documentation
-2. Review error logs
-3. Open GitHub issue
-4. Contact maintainers
+1. Follow the established directory structure
+2. Use consistent naming (use underscores for Python-related directories)
+3. Include proper documentation
+4. Add tests where appropriate
