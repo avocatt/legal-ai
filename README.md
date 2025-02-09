@@ -69,25 +69,98 @@ Key features:
 ├── backend/                   # Backend service
 │   ├── app/                  # Application entry
 │   ├── src/                  # Core business logic
+│   │   └── domain/          # Domain layer
+│   │       ├── models/      # Domain models and entities
+│   │       ├── services/    # Domain services
+│   │       ├── repositories/# Repository interfaces
+│   │       └── exceptions/  # Domain-specific exceptions
 │   ├── tests/                # Test files
 │   ├── migrations/           # Database migrations
 │   ├── chroma_db/           # Vector store data
 │   └── logs/                 # Application logs
 ├── frontend/                  # Frontend service
 │   ├── src/                  # Source code
-│   ├── public/               # Static files
-│   └── tests/                # Test files
+│   │   ├── components/      # React components
+│   │   │   ├── common/     # Shared components
+│   │   │   ├── layout/     # Layout components
+│   │   │   └── forms/      # Form components
+│   │   ├── hooks/          # Custom React hooks
+│   │   ├── services/       # API and external services
+│   │   ├── store/          # State management
+│   │   ├── utils/          # Utility functions
+│   │   ├── i18n/           # Internationalization
+│   │   └── types/          # TypeScript types
+│   ├── public/              # Static files
+│   └── tests/               # Test files
 ├── data/                      # Project data
 │   ├── raw/                  # Raw data files
 │   └── processed/            # Processed data
+├── tools/                     # Project tools
+│   ├── data_processing/      # Data processing utilities
+│   │   ├── terminology/     # Legal terminology processing
+│   │   ├── analyze_criminal_law_content.py
+│   │   ├── filter_criminal_law_articles.py
+│   │   └── clean_criminal_law_articles.py
+│   ├── analysis/            # Analysis tools
+│   ├── deployment/          # Deployment utilities
+│   └── scripts/             # Utility scripts
 ├── docs/                      # Documentation
 │   ├── api/                  # API documentation
 │   ├── backend/              # Backend documentation
 │   └── frontend/             # Frontend documentation
-├── config/                    # Configuration files
-├── scripts/                   # Development scripts
-└── tools/                     # Project tools
+└── config/                    # Configuration files
+
 ```
+
+## Architecture Guidelines
+
+### Backend Domain Layer
+
+1. **Domain Models**
+   - Independent of infrastructure
+   - Use value objects where appropriate
+   - Rich domain models with validation
+   - Follow DDD principles
+
+2. **Domain Services**
+   - Handle complex business operations
+   - Coordinate between entities
+   - Implement business rules
+   - Remain persistence-agnostic
+
+### Frontend Architecture
+
+1. **Components**
+   - Use functional components
+   - Implement proper prop types
+   - Keep components focused
+   - Write unit tests
+
+2. **State Management**
+   - React Query for server state
+   - Zustand for client state
+   - Keep state minimal
+   - Document state shape
+
+3. **Best Practices**
+   - Follow React best practices
+   - Use proper error boundaries
+   - Implement loading states
+   - Handle edge cases
+
+### Tools and Utilities
+
+1. **Data Processing**
+   - Tools for managing legal documents
+   - Terminology processing utilities
+   - Content analysis and filtering
+   - Data cleaning and preprocessing
+
+2. **Contributing Guidelines**
+   - Follow established directory structure
+   - Use consistent naming conventions
+   - Include proper documentation
+   - Add tests for new functionality
 
 ## Prerequisites
 
@@ -111,8 +184,6 @@ We welcome contributions! Please follow these steps:
 5. Run tests and checks
 6. Submit a pull request
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed information.
-
 ## Testing
 
 ```bash
@@ -127,7 +198,9 @@ npm test
 
 ## Documentation
 
-- [Readme](docs/README.md)
+- [API Documentation](docs/api/README.md)
+- [Backend Documentation](docs/backend/README.md)
+- [Frontend Documentation](docs/frontend/README.md)
 - [Roadmap](docs/ROADMAP.md)
 
 ## License
