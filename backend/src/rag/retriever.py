@@ -5,8 +5,15 @@ import os
 from typing import Any, Dict, List, Optional
 
 import chromadb
+from chromadb.errors import InvalidCollectionException
 
 from .embeddings import get_embedding_function
+
+# Create persistent storage directory if it doesn't exist
+CHROMA_DB_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "chroma_db"
+)
+os.makedirs(CHROMA_DB_DIR, exist_ok=True)
 
 
 class DocumentRetriever:
@@ -25,14 +32,14 @@ class DocumentRetriever:
         hf_token = os.getenv("HUGGINGFACE_TOKEN")
         self.embedding_function = get_embedding_function(embedding_model, hf_token)
 
-        # Initialize Chroma client and collection
-        self.chroma_client = chromadb.Client()
+        # Initialize Chroma client with persistent storage
+        self.chroma_client = chromadb.PersistentClient(path=CHROMA_DB_DIR)
         try:
             self.collection = self.chroma_client.get_collection(
                 name=collection_name, embedding_function=self.embedding_function
             )
             print(f"Using existing collection: {collection_name}")
-        except (ValueError, chromadb.errors.InvalidCollectionException):
+        except (ValueError, InvalidCollectionException):
             print(f"Creating new collection: {collection_name}")
             self.collection = self.chroma_client.create_collection(
                 name=collection_name,
