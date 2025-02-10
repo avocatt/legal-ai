@@ -1,4 +1,7 @@
-"""Turkish Legal RAG retriever implementation."""
+"""Criminal Code Vectorizer.
+
+This module handles the vectorization and retrieval of Turkish Criminal Code articles.
+"""
 
 import json
 import os
@@ -7,49 +10,48 @@ from typing import Any, Dict, List, Optional
 import chromadb
 from chromadb.errors import InvalidCollectionException
 
-from .embeddings import get_embedding_function
-
-# Create persistent storage directory if it doesn't exist
-CHROMA_DB_DIR = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "chroma_db"
-)
-os.makedirs(CHROMA_DB_DIR, exist_ok=True)
+from ..core.config import get_settings
+from .embeddings import get_embeddings_model
 
 
-class DocumentRetriever:
-    """Handles document retrieval and vector store management."""
+class CriminalCodeVectorizer:
+    """Vectorizer for Turkish Criminal Code articles."""
 
     def __init__(
         self,
-        law_json_path: str,
+        law_json_path: str = "data/criminal_code.json",
         collection_name: str = "turkish_criminal_law",
         embedding_model: str = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
     ):
-        """Initialize the retriever with law data and embedding model."""
+        """Initialize the Criminal Code vectorizer.
+        
+        Args:
+            law_json_path: Path to the law articles JSON file
+            collection_name: Name for the vector store collection
+            embedding_model: Name of the embedding model to use
+        """
+        self.settings = get_settings()
         self.law_data = self._load_law_data(law_json_path)
-
-        # Get embedding function
-        hf_token = os.getenv("HUGGINGFACE_TOKEN")
-        self.embedding_function = get_embedding_function(embedding_model, hf_token)
+        self.embeddings = get_embeddings_model(embedding_model)
 
         # Initialize Chroma client with persistent storage
-        self.chroma_client = chromadb.PersistentClient(path=CHROMA_DB_DIR)
+        self.chroma_client = chromadb.PersistentClient(path=str(self.settings.CHROMA_DB_DIR))
         try:
             self.collection = self.chroma_client.get_collection(
-                name=collection_name, embedding_function=self.embedding_function
+                name=collection_name, embedding_function=self.embeddings
             )
             print(f"Using existing collection: {collection_name}")
         except (ValueError, InvalidCollectionException):
             print(f"Creating new collection: {collection_name}")
             self.collection = self.chroma_client.create_collection(
                 name=collection_name,
-                embedding_function=self.embedding_function,
+                embedding_function=self.embeddings,
                 metadata={"description": "Turkish Legal Text Embeddings"},
             )
             self._initialize_vector_store()
 
     def _load_law_data(self, json_path: str) -> Dict[str, Any]:
-        """Load the processed law data from JSON."""
+        """Load law data from JSON file."""
         if not os.path.exists(json_path):
             raise FileNotFoundError(f"Law data file not found: {json_path}")
 
@@ -99,48 +101,34 @@ class DocumentRetriever:
     def retrieve(
         self,
         query: str,
-        n_results: int = 5,
         metadata_filter: Optional[Dict[str, str]] = None,
+        n_results: int = 5,
     ) -> List[Dict]:
-        """Retrieve relevant documents for a query with optional metadata filtering."""
-        if not query or not isinstance(query, str):
-            raise ValueError("Query must be a non-empty string")
-
-        if n_results < 1:
-            raise ValueError("n_results must be a positive integer")
-
-        query_params = {"query_texts": [query], "n_results": n_results}
-
-        if metadata_filter:
-            if not isinstance(metadata_filter, dict):
-                raise ValueError("metadata_filter must be a dictionary")
-            query_params["where"] = metadata_filter
-
-        try:
-            results = self.collection.query(**query_params)
-            return self._format_search_results(results)
-        except Exception as e:
-            print(f"Error during retrieval: {str(e)}")
-            return []
-
-    def _format_search_results(self, results: Dict) -> List[Dict]:
-        """Format search results into a more usable structure."""
-        formatted_results = []
-        if not results["ids"]:
-            return formatted_results
-
-        for idx, doc_id in enumerate(results["ids"][0]):
-            formatted_results.append(
-                {
-                    "id": doc_id,
-                    "content": results["documents"][0][idx],
-                    "metadata": results["metadatas"][0][idx],
-                    "distance": results.get("distances", [[]])[0][idx]
-                    if "distances" in results
-                    else None,
-                }
-            )
-        return formatted_results
+        """Retrieve relevant criminal code articles.
+        
+        Args:
+            query: The search query
+            metadata_filter: Optional filters for specific sections
+            n_results: Number of results to retrieve
+            
+        Returns:
+            List of relevant articles with metadata
+        """
+        results = self.collection.query(
+            query_texts=[query],
+            n_results=n_results,
+            where=metadata_filter,
+        )
+        
+        return [
+            {
+                "id": result["id"],
+                "content": result["content"],
+                "metadata": result["metadata"],
+                "distance": result["distance"],
+            }
+            for result in results
+        ]
 
     def format_context(self, retrieved_docs: List[Dict]) -> str:
         """Format retrieved documents into a context string."""
