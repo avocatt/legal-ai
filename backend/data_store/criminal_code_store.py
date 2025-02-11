@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Optional
 import chromadb
 from chromadb.errors import InvalidCollectionException
 
-from core.config import get_settings
+from api.config import get_settings
 from .embeddings import get_embeddings_model
 
 
@@ -19,7 +19,7 @@ class CriminalCodeVectorizer:
 
     def __init__(
         self,
-        law_json_path: str = "data/criminal_code.json",
+        law_json_path: str = None,
         collection_name: str = "turkish_criminal_law",
         embedding_model: str = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
     ):
@@ -31,7 +31,8 @@ class CriminalCodeVectorizer:
             embedding_model: Name of the embedding model to use
         """
         self.settings = get_settings()
-        self.law_data = self._load_law_data(law_json_path)
+        self.law_data = self._load_law_data(
+            law_json_path or self.settings.CRIMINAL_CODE_PATH)
         self.embeddings = get_embeddings_model(embedding_model)
 
         # Initialize Chroma client with persistent storage
