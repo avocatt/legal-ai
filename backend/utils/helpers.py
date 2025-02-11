@@ -3,7 +3,9 @@
 import json
 import os
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Union
+
+from api.config import get_settings
 
 
 def ensure_directory(path: str) -> None:
@@ -25,17 +27,16 @@ def get_data_dir() -> Path:
 
 def validate_api_keys() -> None:
     """Validate that necessary API keys are present."""
-    openai_key = os.getenv("OPENAI_API_KEY")
-    if not openai_key:
+    settings = get_settings()
+
+    if not settings.OPENAI_API_KEY:
         raise ValueError("OPENAI_API_KEY not found in environment variables")
 
-    # Hugging Face token is optional but recommended
-    hf_token = os.getenv("HUGGINGFACE_TOKEN")
-    if not hf_token:
+    if not settings.HUGGINGFACE_TOKEN:
         print("Warning: HUGGINGFACE_TOKEN not found. Some features may be slower.")
 
 
-def load_json_file(file_path: str) -> Dict[str, Any]:
+def load_json_file(file_path: Union[str, Path]) -> Dict[str, Any]:
     """Load and parse a JSON file.
 
     Args:

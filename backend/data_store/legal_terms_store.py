@@ -6,6 +6,7 @@ This module handles the vectorization and retrieval of Turkish legal terminology
 import json
 import numpy as np
 from typing import Dict, List
+from pathlib import Path
 
 from api.config import get_settings
 from .embeddings import get_embeddings_model
@@ -17,7 +18,7 @@ class LegalTermsVectorizer:
 
     def __init__(
         self,
-        terms_json_path: str = None,
+        terms_json_path: str | Path | None = None,
         embedding_model: str = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
     ):
         """Initialize the Legal Terms vectorizer.
@@ -66,12 +67,12 @@ class LegalTermsVectorizer:
             for term, similarity, definition in similarities[:n_results]
         ]
 
-    def _load_terms(self, json_path: str) -> Dict:
+    def _load_terms(self, json_path: str | Path) -> Dict:
         """Load terms from JSON file."""
         try:
-            return load_json_file(json_path)
+            return load_json_file(str(json_path))
         except Exception as e:
-            raise ValueError(f"Error loading terms: {str(e)}")
+            raise ValueError(f"Error loading terms from {json_path}: {str(e)}")
 
     def _initialize_embeddings(self):
         """Initialize embeddings for all terms."""
