@@ -4,13 +4,13 @@ This module handles the vectorization and retrieval of Turkish Criminal Code art
 """
 
 import json
-import os
 from typing import Any, Dict, List, Optional
 
 import chromadb
 from chromadb.errors import InvalidCollectionException
 
 from api import get_settings
+from utils.helpers import load_json_file
 from .embeddings import get_embeddings_model
 
 
@@ -23,13 +23,7 @@ class CriminalCodeVectorizer:
         collection_name: str = "turkish_criminal_law",
         embedding_model: str = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
     ):
-        """Initialize the Criminal Code vectorizer.
-
-        Args:
-            law_json_path: Path to the law articles JSON file
-            collection_name: Name for the vector store collection
-            embedding_model: Name of the embedding model to use
-        """
+        """Initialize the Criminal Code vectorizer."""
         self.settings = get_settings()
         self.law_data = self._load_law_data(
             law_json_path or self.settings.CRIMINAL_CODE_PATH)
@@ -54,15 +48,10 @@ class CriminalCodeVectorizer:
 
     def _load_law_data(self, json_path: str) -> Dict[str, Any]:
         """Load law data from JSON file."""
-        if not os.path.exists(json_path):
-            raise FileNotFoundError(f"Law data file not found: {json_path}")
-
         try:
-            with open(json_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            if not isinstance(data, dict):
-                raise ValueError("Invalid law data format")
-            return data
+            return load_json_file(json_path)
+        except FileNotFoundError:
+            raise FileNotFoundError(f"Law data file not found: {json_path}")
         except json.JSONDecodeError as e:
             raise ValueError(f"Invalid JSON format in law data: {str(e)}")
         except Exception as e:

@@ -9,6 +9,7 @@ from typing import Dict, List
 
 from api.config import get_settings
 from .embeddings import get_embeddings_model
+from utils.helpers import load_json_file
 
 
 class LegalTermsVectorizer:
@@ -68,8 +69,7 @@ class LegalTermsVectorizer:
     def _load_terms(self, json_path: str) -> Dict:
         """Load terms from JSON file."""
         try:
-            with open(json_path, "r", encoding="utf-8") as f:
-                return json.load(f)
+            return load_json_file(json_path)
         except Exception as e:
             raise ValueError(f"Error loading terms: {str(e)}")
 
@@ -78,15 +78,17 @@ class LegalTermsVectorizer:
         self.term_embeddings = {}
         texts = []
         terms = []
+
         for term_data in self.terms_data:
             term = term_data["term"]
             definition = term_data["definition"]
-            texts.append(term + ": " + definition)
+            texts.append(f"{term}: {definition}")
             terms.append(term)
 
         # Get embeddings for all texts at once
         embeddings = self.embeddings(texts)
 
+        # Store embeddings with term data
         for term, embedding in zip(terms, embeddings):
             term_data = next(t for t in self.terms_data if t["term"] == term)
             self.term_embeddings[term] = {
