@@ -11,6 +11,7 @@ import {
 import { askQuestion } from "@services/api";
 import type { QuestionResponse } from "@/types/api";
 import ReactMarkdown from "react-markdown";
+import { QAService } from "@services/qa/qaService";
 
 function App() {
   const [question, setQuestion] = useState("");
@@ -26,7 +27,10 @@ function App() {
     setError(null);
 
     try {
-      const result = await askQuestion({ text: question });
+      const result = await QAService.askQuestion({ 
+        text: question,
+        n_results: 5 
+      });
       setResponse(result);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");

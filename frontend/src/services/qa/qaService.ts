@@ -1,5 +1,5 @@
 import { api, ApiException } from '../config/axios';
-import { QuestionRequest, QuestionResponse } from '../../types/api';
+import { QuestionRequest, QuestionResponse } from '@domain/types/api';
 
 export class QAService {
   static async askQuestion(request: QuestionRequest): Promise<QuestionResponse> {
