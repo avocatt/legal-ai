@@ -26,7 +26,7 @@ function App() {
     setError(null);
 
     try {
-      const result = await askQuestion({ question });
+      const result = await askQuestion({ text: question });
       setResponse(result);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");

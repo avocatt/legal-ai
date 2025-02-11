@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Optional
 import chromadb
 from chromadb.errors import InvalidCollectionException
 
-from ..core.config import get_settings
+from core.config import get_settings
 from .embeddings import get_embeddings_model
 
 
@@ -24,7 +24,7 @@ class CriminalCodeVectorizer:
         embedding_model: str = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
     ):
         """Initialize the Criminal Code vectorizer.
-        
+
         Args:
             law_json_path: Path to the law articles JSON file
             collection_name: Name for the vector store collection
@@ -35,7 +35,8 @@ class CriminalCodeVectorizer:
         self.embeddings = get_embeddings_model(embedding_model)
 
         # Initialize Chroma client with persistent storage
-        self.chroma_client = chromadb.PersistentClient(path=str(self.settings.CHROMA_DB_DIR))
+        self.chroma_client = chromadb.PersistentClient(
+            path=str(self.settings.CHROMA_DB_DIR))
         try:
             self.collection = self.chroma_client.get_collection(
                 name=collection_name, embedding_function=self.embeddings
@@ -96,7 +97,8 @@ class CriminalCodeVectorizer:
 
         # Add documents to the collection
         if documents:
-            self.collection.add(documents=documents, ids=ids, metadatas=metadatas)
+            self.collection.add(documents=documents,
+                                ids=ids, metadatas=metadatas)
 
     def retrieve(
         self,
@@ -105,12 +107,12 @@ class CriminalCodeVectorizer:
         n_results: int = 5,
     ) -> List[Dict]:
         """Retrieve relevant criminal code articles.
-        
+
         Args:
             query: The search query
             metadata_filter: Optional filters for specific sections
             n_results: Number of results to retrieve
-            
+
         Returns:
             List of relevant articles with metadata
         """
@@ -119,7 +121,7 @@ class CriminalCodeVectorizer:
             n_results=n_results,
             where=metadata_filter,
         )
-        
+
         return [
             {
                 "id": result["id"],

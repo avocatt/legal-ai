@@ -50,6 +50,6 @@ api.interceptors.response.use(
 export const askQuestion = async (
   request: QuestionRequest,
 ): Promise<QuestionResponse> => {
-  const response = await api.post<QuestionResponse>("/question", request);
+  const response = await api.post<QuestionResponse>("/qa/ask", request);
   return response.data;
 };

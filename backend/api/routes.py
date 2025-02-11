@@ -1,15 +1,18 @@
 """API routes and schemas for the Turkish Legal AI application."""
 
 from typing import Any, Dict, List, Optional
+import time
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
+from core.rag_system import TurkishLegalRAG
 from utils.logging import get_logger
 
-# Initialize router
+# Initialize router and RAG system
 router = APIRouter()
 logger = get_logger(__name__)
+rag_system = TurkishLegalRAG()
 
 
 class Question(BaseModel):
@@ -82,20 +85,26 @@ async def ask_question(question: Question) -> Answer:
     try:
         logger.info(f"Processing question: {question.text}")
 
-        # TODO: Implement actual QA logic here
-        # This is a placeholder response
+        start_time = time.time()
+        result = await rag_system.answer_question(
+            question=question.text,
+            metadata_filter=question.metadata_filter,
+            n_results=question.n_results
+        )
+
         return Answer(
-            answer="This is a placeholder answer. The actual QA system needs to be implemented.",
+            answer=result["answer"],
             sources=[
                 SearchResult(
-                    id="placeholder_id",
-                    content="Placeholder content",
-                    metadata={"type": "placeholder"},
-                    distance=0.0
+                    id=doc["id"],
+                    content=doc["content"],
+                    metadata=doc["metadata"],
+                    distance=doc.get("distance")
                 )
+                for doc in result["sources"]
             ],
-            processing_time=0.0,
-            confidence_score=0.0
+            processing_time=result["processing_time"],
+            confidence_score=result.get("confidence_score")
         )
 
     except Exception as e:

@@ -6,14 +6,14 @@ export interface SearchResult {
 }
 
 export interface QuestionRequest {
-  question: string;
+  text: string;
   metadata_filter?: Record<string, string>;
   n_results?: number;
 }
 
 export interface QuestionResponse {
   answer: string;
-  confidence_score?: number;
   sources: SearchResult[];
   processing_time: number;
+  confidence_score?: number;
 }
