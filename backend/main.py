@@ -1,15 +1,15 @@
 """FastAPI application entry point for the Turkish Legal AI API."""
 
-import logging
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import APIRouter
 
-from src.core.config import get_settings
+from api.config import get_settings
+from api.routes import router as qa_router
+from utils.logging import setup_logging, get_logger
 
 # Set up logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+setup_logging()
+logger = get_logger(__name__)
 
 # Get settings
 settings = get_settings()
@@ -17,8 +17,7 @@ settings = get_settings()
 # Create API router
 api_router = APIRouter()
 
-# Import and include endpoints
-from src.api.endpoints.qa import router as qa_router
+# Include endpoints
 api_router.include_router(qa_router, prefix="/qa", tags=["qa"])
 
 # Create FastAPI app
@@ -40,6 +39,7 @@ app.add_middleware(
 
 # Include API router
 app.include_router(api_router, prefix=settings.API_V1_STR)
+
 
 @app.on_event("startup")
 async def startup_event():

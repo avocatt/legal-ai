@@ -4,24 +4,60 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
-develop-eggs/
+backend/venv/
+venv/
+ENV/
+.env
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+backend/logs/
+backend/data/chroma_db/
+backend/cache/
+data/
+!data/criminal_code.json
+!data/legal_terms.json
+
+# Distribution / packaging
 dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
+build/
 *.egg-info/
-.installed.cfg
-*.egg
+
+# Unit test / coverage reports
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+
+# Environments
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Environment variables
-.env
 .env.*
 !.env.example
 
