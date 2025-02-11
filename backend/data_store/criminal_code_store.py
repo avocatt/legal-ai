@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Optional
 import chromadb
 from chromadb.errors import InvalidCollectionException
 
-from api.config import get_settings
+from api import get_settings
 from .embeddings import get_embeddings_model
 
 

@@ -3,9 +3,8 @@
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.config import get_settings
-from api.routes import router as qa_router
-from utils.logging import setup_logging, get_logger
+from api import get_settings, router as qa_router
+from utils import setup_logging, get_logger
 
 # Set up logging
 setup_logging()

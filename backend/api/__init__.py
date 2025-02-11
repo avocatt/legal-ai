@@ -1,10 +1,6 @@
-"""API package for the Turkish Legal AI system."""
+"""API package for Turkish Legal AI."""
 
-from .routes import router as qa_router, Question, Answer, SearchResult
+from .config import Settings, get_settings
+from .routes import router
 
-__all__ = [
-    "qa_router",
-    "Question",
-    "Answer",
-    "SearchResult",
-]
+__all__ = ["Settings", "get_settings", "router"]
