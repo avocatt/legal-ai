@@ -17,7 +17,13 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@domain/*": ["src/domain/*"]
+      "@components/*": ["src/components/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@utils/*": ["src/utils/*"],
+      "@services/*": ["src/services/*"],
+      "@types/*": ["src/types/*"],
+      "@domain/*": ["src/domain/*"],
+      "@assets/*": ["src/assets/*"]
     },
     "allowJs": true,
     "esModuleInterop": true

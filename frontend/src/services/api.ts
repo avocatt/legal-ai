@@ -1,5 +1,5 @@
 import axios from "axios";
-import { QuestionRequest, QuestionResponse } from "../types/api";
+import type { QuestionRequest, QuestionResponse } from "@/types/api";
 
 declare global {
   interface ImportMeta {

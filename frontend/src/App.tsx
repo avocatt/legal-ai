@@ -8,8 +8,8 @@ import {
   Paper,
   CircularProgress,
 } from "@mui/material";
-import { askQuestion } from "./services/api";
-import { QuestionResponse } from "./types/api";
+import { askQuestion } from "@services/api";
+import type { QuestionResponse } from "@/types/api";
 import ReactMarkdown from "react-markdown";
 
 function App() {

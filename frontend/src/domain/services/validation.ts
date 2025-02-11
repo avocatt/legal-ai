@@ -2,8 +2,8 @@
  * Validation services for domain entities
  */
 
-import { LegalArticle, ArticleMetadata } from '../models/legal';
-import { LegalTerm } from '../models/terminology';
+import { LegalArticle, ArticleMetadata } from '@domain/models/legal';
+import { LegalTerm } from '@domain/models/terminology';
 
 export function isValidArticle(article: LegalArticle): boolean {
   return (

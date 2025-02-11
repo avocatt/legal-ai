@@ -2,8 +2,8 @@
  * Formatting services for domain entities
  */
 
-import { LegalArticle, SearchResult } from '../models/legal';
-import { LegalTerm } from '../models/terminology';
+import { LegalArticle, SearchResult } from '@domain/models/legal';
+import { LegalTerm } from '@domain/models/terminology';
 
 export function formatArticleReference(article: LegalArticle): string {
   return `Article ${article.articleNumber} - ${article.book}, ${article.part}, ${article.chapter}`;
